@@ -29,6 +29,11 @@
                 </li>
             @endif
 
+            <li>
+                <a href="{!! route('app.clients.index') !!}">
+                    <i class="fa fa-user"></i> <span>Clientes</span>
+                </a>
+            </li>
         </ul>
 
     </section>
