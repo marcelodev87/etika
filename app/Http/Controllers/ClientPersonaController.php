@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
+use Validator;
 use App\ClientPersona;
 use Illuminate\Http\Request;
 
@@ -12,9 +14,9 @@ class ClientPersonaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Client $client)
     {
-        //
+        return view('clients.members.index', compact('client'));
     }
 
     /**
@@ -22,9 +24,9 @@ class ClientPersonaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Client $client)
     {
-        //
+        return view('clients.members.create');
     }
 
     /**

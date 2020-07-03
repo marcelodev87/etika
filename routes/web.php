@@ -41,9 +41,20 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
     # rota de cliente
     Route::group(['prefix' => 'clientes', 'as' => 'clients.'], function () {
         Route::get('/', ['uses' => 'ClientController@index', 'as' => 'index']);
-        Route::get('/{id}', ['uses' => 'ClientController@show', 'as' => 'show', 'roles' => ['adm']]);
+        Route::get('/{client}', ['uses' => 'ClientController@show', 'as' => 'show', 'roles' => ['adm']]);
         Route::post('/', ['uses' => 'ClientController@store', 'as' => 'store', 'roles' => ['adm']]);
         Route::put('/{client}', ['uses' => 'ClientController@update', 'as' => 'update', 'roles' => ['adm']]);
+
+        Route::group(['prefix' => '{client}/membros', 'as' => 'members.'], function () {
+            Route::get('/', ['uses' => 'ClientPersonaController@index', 'as' => 'index']);
+            Route::get('/adicionar', ['uses' => 'ClientPersonaController@create', 'as' => 'create', 'roles' => ['adm']]);
+            Route::get('/{client}/editar', ['uses' => 'ClientPersonaController@edit', 'as' => 'edit', 'roles' => ['adm']]);
+            Route::get('/{client}', ['uses' => 'ClientPersonaController@show', 'as' => 'show', 'roles' => ['adm']]);
+            Route::post('/', ['uses' => 'ClientPersonaController@store', 'as' => 'store', 'roles' => ['adm']]);
+            Route::put('/{client}', ['uses' => 'ClientPersonaController@update', 'as' => 'update', 'roles' => ['adm']]);
+            Route::delete('/{client}', ['uses' => 'ClientPersonaController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
+        });
+
     });
 
 });

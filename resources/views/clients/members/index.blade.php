@@ -12,11 +12,12 @@
     </li>
     @endbreadcrumb
 @endsection
+
 @section('content')
     <div class="row">
         <div class="col-md-12 text-right mb-1">
             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-form-cadastrar">
-                Criar
+                Cadastrar
               </button>
         </div>
         <div class="col-md-12">
@@ -26,24 +27,22 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Codigo interno</th>
                             <th>Nome Completo</th>
                             <th>Documento</th>
-                            <th>Tipo</th>
-                            <th></th>
+                            <th>Cargo</th>
+                            <th>Estado Civil</th>
+                            <th>Profissão</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($clients as $client)
+                        @foreach ($client->members as $member)
                             <tr>
                                 <td>{{ $client->id }}</td>
-                                <td>{{ $client->internal_code }}</td>
                                 <td>{{ $client->name }}</td>
                                 <td>{{ $client->document }}</td>
-                                <td>{{ $client->type }}</td>
-                                <td class="text-right">
-                                    <a href="{!! route('app.clients.show', $client->id) !!}" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="left" title="Ver"><i class="fa fa-eye"></i></a>
-                                </td>
+                                <td>{{ $client->role }}</td>
+                                <td>{{ $client->marital_status }}</td>
+                                <td>{{ $client->profession }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -54,23 +53,17 @@
     </div>
 
 
-    {{-- Modal de criação --}}
-    <div class="modal fade" tabindex="-1" role="dialog" id="modal-form-cadastrar">
+     {{-- Modal de criação --}}
+     <div class="modal fade" tabindex="-1" role="dialog" id="modal-form-cadastrar">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Cadastro</h4>
+              <h4 class="modal-title">Cargo da Empresa</h4>
             </div>
-            <form action="{{ route('app.clients.store') }}" method="post" id="form-cadastrar">
+            <form action="{{ route('app.clients.members.store') }}" method="post" id="form-cadastrar">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-3">
-                            <fieldset class="form-group">
-                                <label>Codigo Interno</label>
-                                <input class="form-control" name="internal_code" type="text">
-                            </fieldset>
-                        </div>
 
                         <div class="col-md-xs-12 col-md-sm-6 col-md-6 col-lg-9 ">
                             <fieldset class="form-group">
@@ -88,8 +81,22 @@
 
                         <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-3">
                             <fieldset class="form-group">
-                                <label>Tipo</label>
-                                <input class="form-control" name="type" type="text">
+                                <label>Cargo</label>
+                                <input class="form-control" name="role" type="text">
+                            </fieldset>
+                        </div>
+
+                        <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-3">
+                            <fieldset class="form-group">
+                                <label>Estado Civil</label>
+                                <input class="form-control" name="marital_status" type="text">
+                            </fieldset>
+                        </div>
+
+                        <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-3">
+                            <fieldset class="form-group">
+                                <label>Profissão</label>
+                                <input class="form-control" name="profession" type="text">
                             </fieldset>
                         </div>
                     </div>
@@ -103,6 +110,9 @@
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
     {{-- Modal de criação --}}
+
+
+
 
 @endsection
 
