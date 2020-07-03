@@ -16,7 +16,7 @@
     <div class="row">
         <div class="col-md-12 text-right mb-1">
             <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal-form-cadastrar">
-                Launch demo modal
+                Criar
               </button>
         </div>
         <div class="col-md-12">
@@ -27,7 +27,7 @@
                         <tr>
                             <th>#</th>
                             <th>Codigo interno</th>
-                            <th>Nome</th>
+                            <th>Nome Completo</th>
                             <th>Documento</th>
                             <th>Tipo</th>
 
@@ -42,25 +42,7 @@
                                 <td>{{ $client->name }}</td>
                                 <td>{{ $client->document }}</td>
                                 <td>{{ $client->type }}</td>
-                                <td></td>
-                                <td>{{ ($client->status) ? 'Liberado' : 'Bloqueado' }}</td>
                                 <td class="text-right">
-
-                                    <form class="form-inline" action="{!! route('app.clients.updateStatus', $client->id) !!}" method="post" id="formID">
-                                        @csrf
-                                        @method('patch')
-                                        <button type="submit" class="btn btn-xs btn-{{ ($client->status) ? 'warning' : 'success' }}" data-toggle="tooltip" data-placement="left" title="Mudar o status">
-                                            <i class="fa fa-retweet"></i>
-                                        </button>
-                                    </form>
-
-                                    <a href="{!! route('app.clients.edit', $client->id) !!}" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="left" title="Editar"><i class="fa fa-edit"></i></a>
-                                    <form class="form-inline" action="{!! route('app.clients.delete', $client->id) !!}" method="post">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="button" class="btn btn-xs btn-danger formConfirmDelete" data-nome="{{ $client->name }}" data-toggle="tooltip" data-placement="left" title="Deletar">
-                                            <i class="fa fa-trash"></i></button>
-                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -80,10 +62,36 @@
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 class="modal-title">Cadastro</h4>
             </div>
-            <form action="" method="post" id="form-cadastrar">
+            <form action="{{ route('app.clients.store') }}" method="post" id="form-cadastrar">
                 <div class="modal-body">
                     <div class="row">
+                        <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-3">
+                            <fieldset class="form-group">
+                                <label>Codigo Interno</label>
+                                <input class="form-control" name="internal_code" type="text">
+                            </fieldset>
+                        </div>
 
+                        <div class="col-md-xs-12 col-md-sm-6 col-md-6 col-lg-9 ">
+                            <fieldset class="form-group">
+                                <label>Nome Completo</label>
+                                <input class="form-control" name="name" type="text">
+                            </fieldset>
+                        </div>
+
+                        <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-9">
+                            <fieldset class="form-group">
+                                <label>Documento</label>
+                                <input class="form-control" name="document" type="text">
+                            </fieldset>
+                        </div>
+
+                        <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-3">
+                            <fieldset class="form-group">
+                                <label>Tipo</label>
+                                <input class="form-control" name="type" type="text">
+                            </fieldset>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -100,7 +108,7 @@
 
 @section('script')
     <script type="text/javascript">
-            $("formID").on('submit', function(e){
+            $("#form-cadastrar").on('submit', function(e){
                 e.preventDefault();
                 var $form = $(this);
                 var $button = $form.find('button[type="submit"]');
@@ -119,10 +127,13 @@
                     },
                     success: (response) => { // aqui vai o que der certo
                        console.log(response);
+                       alert(response.message);
 
                     },
-                    error: (xhr, response) => { // aqui vai o que acontece quando ocorrer o erro
+                    error: (response) => { // aqui vai o que acontece quando ocorrer o erro
                        console.log(response)
+                       var json = $.parseJSON(response.responseText);
+                       alert(json.message);
                     },
                     complete: () => { // aqui vai o que acontece quando tudo acabar
                        $button.removeAttr('disabled').html($buttonText);

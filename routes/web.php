@@ -41,12 +41,9 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
     # rota de cliente
     Route::group(['prefix' => 'clientes', 'as' => 'clients.'], function () {
         Route::get('/', ['uses' => 'ClientController@index', 'as' => 'index']);
-
-        Route::get('/criar', ['uses' => 'ClientController@create', 'as' => 'create', 'roles' =>  ['adm']]);
-        Route::get('/{id}', ['uses' => 'ClientController@show', 'as' => 'show', 'roles' => ['dev', 'adm']]);
-        Route::post('/', ['uses' => 'ClientController@store', 'as' => 'store', 'roles' => ['dev', 'adm']]);
-        Route::get('/{client}/editar', ['uses' => 'ClientController@edit', 'as' => 'edit', 'roles' => ['dev', 'adm']]);
-        Route::put('/{client}', ['uses' => 'ClientController@update', 'as' => 'update', 'roles' => ['dev', 'adm']]);
+        Route::get('/{id}', ['uses' => 'ClientController@show', 'as' => 'show', 'roles' => ['adm']]);
+        Route::post('/', ['uses' => 'ClientController@store', 'as' => 'store', 'roles' => ['adm']]);
+        Route::put('/{client}', ['uses' => 'ClientController@update', 'as' => 'update', 'roles' => ['adm']]);
     });
 
 });

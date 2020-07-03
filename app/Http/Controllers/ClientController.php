@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
@@ -14,7 +15,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        $clients = Client::all();
+        return view('clients.index', compact('clients'));
     }
 
     /**
@@ -24,7 +26,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        return view('clients.create');
     }
 
     /**
@@ -35,7 +37,37 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name' => 'required|string|min:5|max:50',
+            'document' => 'required|string|min:14|max:18',
+            'type' => 'required',
+            'internal_code' => 'nullable|integer',
+        ];
+
+        $errors = [];
+        $fields = [
+            'name' => '\'nome completo\'',
+            'document' => '\'documento\'',
+            'type' => '\'tipo\'',
+            'internal_code' => '\'codigo interno\'',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $errors, $fields);
+        if($validator->fails()){
+            return response()->json(['message' => $validator->errors()->first()], 400);
+        }
+
+        try {
+            Client::create([
+                'name' => $request->name,
+                'document' => $request->document,
+                'type' => $request->type,
+                'internal_code' => $request->internal_code,
+            ]);
+            return response()->json(['message' => 'Novo cliente criado com sucesso'], 201);
+        } catch (\Exception $e) {
+            return response()->json(['message' =>  $e->getMessage()], 400);
+        }
     }
 
     /**
