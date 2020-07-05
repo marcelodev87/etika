@@ -17,7 +17,7 @@
     <div class="row">
         <div class="col-md-12 text-right mb-1">
             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-form-cadastrar">
-                Cadastrar
+                Novo Membro
               </button>
         </div>
         <div class="col-md-12">
@@ -59,41 +59,41 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Cargo da Empresa</h4>
+              <h4 class="modal-title">Novo Membro</h4>
             </div>
-            <form action="{{ route('app.clients.members.store') }}" method="post" id="form-cadastrar">
+            <form action="{{ route('app.clients.members.store', $client->id) }}" method="post" id="form-cadastrar">
                 <div class="modal-body">
                     <div class="row">
 
-                        <div class="col-md-xs-12 col-md-sm-6 col-md-6 col-lg-9 ">
+                        <div class="col-md-xs-12 col-md-sm-6 col-md-8 col-lg-8">
                             <fieldset class="form-group">
                                 <label>Nome Completo</label>
                                 <input class="form-control" name="name" type="text">
                             </fieldset>
                         </div>
 
-                        <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-9">
+                        <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-4">
                             <fieldset class="form-group">
                                 <label>Documento</label>
                                 <input class="form-control" name="document" type="text">
                             </fieldset>
                         </div>
 
-                        <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-3">
+                        <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-4">
                             <fieldset class="form-group">
                                 <label>Cargo</label>
                                 <input class="form-control" name="role" type="text">
                             </fieldset>
                         </div>
 
-                        <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-3">
+                        <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-4">
                             <fieldset class="form-group">
                                 <label>Estado Civil</label>
                                 <input class="form-control" name="marital_status" type="text">
                             </fieldset>
                         </div>
 
-                        <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-3">
+                        <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-4">
                             <fieldset class="form-group">
                                 <label>Profissão</label>
                                 <input class="form-control" name="profession" type="text">
@@ -102,16 +102,14 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-warning" data-dismiss="modal">Fechar</button>
-                  <button type="submit" class="btn btn-primary">Cadastrar</button>
+                  <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal">Fechar</button>
+                  <button type="submit" class="btn btn-primary btn-sm">Cadastrar</button>
                 </div>
             </form>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
     {{-- Modal de criação --}}
-
-
 
 
 @endsection
