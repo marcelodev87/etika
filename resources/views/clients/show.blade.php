@@ -7,8 +7,14 @@
             <i class="fa fa-th"></i> Dashboard
         </a>
     </li>
+    <li>
+        <a href="{!! route('app.clients.index') !!}">
+            <i class="fa fa-user"></i> Clientes
+        </a>
+    </li>
+
     <li class="active">
-        <i class="fa fa-users"></i> Clientes
+        {{ $client->name }}
     </li>
     @endbreadcrumb
 @endsection

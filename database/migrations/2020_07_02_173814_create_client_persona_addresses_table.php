@@ -23,6 +23,7 @@ class CreateClientPersonaAddressesTable extends Migration
             $table->string('street')->nullable();
             $table->integer('number')->nullable();
             $table->string('complement')->nullable();
+            $table->boolean('main')->default(0);
             $table->timestamps();
 
             $table->foreign('client_persona_id')->references('id')->on('client_personas')->onDelete('cascade');

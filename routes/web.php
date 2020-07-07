@@ -47,12 +47,34 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
 
         Route::group(['prefix' => '{client}/membros', 'as' => 'members.'], function () {
             Route::get('/', ['uses' => 'ClientPersonaController@index', 'as' => 'index']);
-            Route::get('/adicionar', ['uses' => 'ClientPersonaController@create', 'as' => 'create', 'roles' => ['adm']]);
-            Route::get('/{client}/editar', ['uses' => 'ClientPersonaController@edit', 'as' => 'edit', 'roles' => ['adm']]);
-            Route::get('/{client}', ['uses' => 'ClientPersonaController@show', 'as' => 'show', 'roles' => ['adm']]);
             Route::post('/', ['uses' => 'ClientPersonaController@store', 'as' => 'store', 'roles' => ['adm']]);
-            Route::put('/{client}', ['uses' => 'ClientPersonaController@update', 'as' => 'update', 'roles' => ['adm']]);
-            Route::delete('/{client}', ['uses' => 'ClientPersonaController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
+            Route::get('/{clientPersona}', ['uses' => 'ClientPersonaController@show', 'as' => 'show', 'roles' => ['adm']]);
+            Route::put('/{clientPersona}', ['uses' => 'ClientPersonaController@update', 'as' => 'update', 'roles' => ['adm']]);
+            Route::delete('/{clientPersona}', ['uses' => 'ClientPersonaController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
+
+            // Address
+            Route::group(['prefix' => '{clientPersona}/address', 'as' => 'addresses.'], function () {
+                Route::get('/', ['uses' => 'ClientPersonaAddressController@index', 'as' => 'index']);
+                Route::post('/', ['uses' => 'ClientPersonaAddressController@store', 'as' => 'store', 'roles' => ['adm']]);
+                Route::delete('/{clientPersonaAddress}', ['uses' => 'ClientPersonaAddressController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
+            });
+
+            // E-mails
+            Route::group(['prefix' => '{clientPersona}/emails', 'as' => 'emails.'], function () {
+                Route::get('/', ['uses' => 'ClientPersonaEmailController@index', 'as' => 'index']);
+                Route::post('/', ['uses' => 'ClientPersonaEmailController@store', 'as' => 'store', 'roles' => ['adm']]);
+                Route::delete('/{clientPersonaEmail}', ['uses' => 'ClientPersonaEmailController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
+            });
+
+            // Phones
+            Route::group(['prefix' => '{clientPersona}/phones', 'as' => 'phones.'], function () {
+                Route::get('/', ['uses' => 'ClientPersonaPhoneController@index', 'as' => 'index']);
+                Route::post('/', ['uses' => 'ClientPersonaPhoneController@store', 'as' => 'store', 'roles' => ['adm']]);
+                Route::delete('/{clientPersonaPhone}', ['uses' => 'ClientPersonaPhoneController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
+            });
+
+
+
         });
 
     });

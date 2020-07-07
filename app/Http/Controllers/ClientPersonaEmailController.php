@@ -2,84 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
+use App\ClientPersona;
 use App\ClientPersonaEmail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ClientPersonaEmailController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index(Client $client, ClientPersona $clientPersona)
     {
-        //
+        return response()->json(['data' => $clientPersona->emails], 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function store(Client $client, ClientPersona $clientPersona, Request $request)
     {
-        //
+        $rules = [
+            'email' => 'required|email',
+        ];
+        $errors = [];
+        $fields = [
+            'email' => 'e-mail',
+        ];
+        $validator = Validator::make($request->all(), $rules, $errors, $fields);
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()->first()], 400);
+        }
+
+        try {
+            $new = $clientPersona->emails()->create([
+                'email' => $request->email,
+            ]);
+            return response()->json(['data' => $new], 201);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\ClientPersonaEmail  $clientPersonaEmail
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ClientPersonaEmail $clientPersonaEmail)
+    public function destroy(Client $client,  ClientPersona $clientPersona, ClientPersonaEmail $clientPersonaEmail)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\ClientPersonaEmail  $clientPersonaEmail
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ClientPersonaEmail $clientPersonaEmail)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ClientPersonaEmail  $clientPersonaEmail
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ClientPersonaEmail $clientPersonaEmail)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\ClientPersonaEmail  $clientPersonaEmail
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ClientPersonaEmail $clientPersonaEmail)
-    {
-        //
+        try {
+            $clientPersonaEmail->delete();
+            return response()->json(['message' => 'Deletado com sucesso'], 200);
+        }catch (\Exception $e){
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
     }
 }

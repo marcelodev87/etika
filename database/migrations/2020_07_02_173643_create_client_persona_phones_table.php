@@ -17,6 +17,7 @@ class CreateClientPersonaPhonesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('client_persona_id');
             $table->string('phone')->nullable();
+            $table->boolean('main')->default(0);
             $table->timestamps();
 
             $table->foreign('client_persona_id')->references('id')->on('client_personas')->onDelete('cascade');

@@ -2,84 +2,52 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
+use App\ClientPersona;
 use App\ClientPersonaPhone;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ClientPersonaPhoneController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Client $client, ClientPersona $clientPersona)
     {
-        //
+        return response()->json(['data' => $clientPersona->phones], 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function store(Client $client, ClientPersona $clientPersona, Request $request)
     {
-        //
+        $rules = [
+            'phone' => 'required|string|min:14|max:15',
+        ];
+        $errors = [];
+        $fields = [
+            'phone' => 'telefone',
+        ];
+        $validator = Validator::make($request->all(), $rules, $errors, $fields);
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()->first()], 400);
+        }
+
+        try {
+            $new = $clientPersona->phones()->create([
+                'phone' => $request->phone,
+            ]);
+            return response()->json(['data' => $new], 201);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\ClientPersonaPhone  $clientPersonaPhone
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ClientPersonaPhone $clientPersonaPhone)
+    public function destroy(Client $client,  ClientPersona $clientPersona, ClientPersonaPhone $clientPersonaPhone)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\ClientPersonaPhone  $clientPersonaPhone
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ClientPersonaPhone $clientPersonaPhone)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ClientPersonaPhone  $clientPersonaPhone
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ClientPersonaPhone $clientPersonaPhone)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\ClientPersonaPhone  $clientPersonaPhone
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ClientPersonaPhone $clientPersonaPhone)
-    {
-        //
+        try {
+            $clientPersonaPhone->delete();
+            return response()->json(['message' => 'Deletado com sucesso'], 200);
+        }catch (\Exception $e){
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
     }
 }

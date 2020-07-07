@@ -16,7 +16,7 @@
 }
 
 .main-header .logo.dark-bg .img-responsive {
-    display: table-cell !important;
+    display: inline-block !important;
 }
 
 /*

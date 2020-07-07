@@ -3,83 +3,97 @@
 namespace App\Http\Controllers;
 
 use App\Client;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use App\ClientPersona;
 use Illuminate\Http\Request;
 
 class ClientPersonaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Client $client)
     {
         return view('clients.members.index', compact('client'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Client $client)
+
+    public function store(Client $client, Request $request)
     {
-        return view('clients.members.create');
+        $rules = [
+            'name' => 'required|string|min:3|max:191',
+            'document' => 'required|string|min:14|max:14',
+            'role' => 'required|string|min:3|max:191',
+            'marital_status' => 'nullable|string|min:3',
+            'profession' => 'nullable|string|min:3',
+        ];
+        $errors = [];
+        $fields = [
+            'name' => 'nome completo',
+            'document' => 'documento',
+            'role' => 'cargo',
+            'marital_status' => 'estado civil',
+            'profession' => 'profissão',
+        ];
+        $validator = Validator::make($request->all(), $rules, $errors, $fields);
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()->first()], 400);
+        }
+        try {
+            $member = $client->members()->create([
+                'name' => $request->name,
+                'document' => $request->document,
+                'role' => $request->role,
+                'marital_status' => $request->marital_status,
+                'profession' => $request->profession
+            ]);
+            return response()->json(['data' => $member], 201);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function show(Client $client, ClientPersona $clientPersona)
     {
-        //
+        return response()->json(['data' => $clientPersona], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\ClientPersona  $clientPersona
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ClientPersona $clientPersona)
+
+    public function update(Request $request, Client $client, ClientPersona $clientPersona)
     {
-        //
+        $rules = [
+            'name' => 'required|string|min:3|max:191',
+            'document' => 'required|string|min:14|max:14',
+            'role' => 'required|string|min:3|max:191',
+            'marital_status' => 'nullable|string|min:3',
+            'profession' => 'nullable|string|min:3',
+        ];
+        $errors = [];
+        $fields = [
+            'name' => 'nome completo',
+            'document' => 'documento',
+            'role' => 'cargo',
+            'marital_status' => 'estado civil',
+            'profession' => 'profissão',
+        ];
+        $validator = Validator::make($request->all(), $rules, $errors, $fields);
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()->first()], 400);
+        }
+        try {
+            $clientPersona->update([
+                'name' => $request->name,
+                'document' => $request->document,
+                'role' => $request->role,
+                'marital_status' => $request->marital_status,
+                'profession' => $request->profession
+            ]);
+            return response()->json(['data' => $clientPersona], 201);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\ClientPersona  $clientPersona
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ClientPersona $clientPersona)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ClientPersona  $clientPersona
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ClientPersona $clientPersona)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\ClientPersona  $clientPersona
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(ClientPersona $clientPersona)
     {
         //
