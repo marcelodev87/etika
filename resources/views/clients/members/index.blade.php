@@ -71,8 +71,8 @@
                                         <i class="fa fa-phone"></i>
                                     </a>
 
-                                    <form class="form-inline" method="post" action="{{ route('app.clients.members.delete',[$client->id, $member->id]) }}">
-                                        <button class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Deletar">
+                                    <form class="form-inline member-delete" method="post" action="{{ route('app.clients.members.delete',[$client->id, $member->id]) }}">
+                                        <button type="submit" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Deletar">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
@@ -370,7 +370,6 @@
     </div>
     {{-- Modal de phones--}}
 
-
     {{-- Modal de edit--}}
     <div class="modal fade" tabindex="-1" role="dialog" id="modal-edit">
         <div class="modal-dialog modal-lg" role="document">
@@ -434,6 +433,31 @@
         </div>
     </div>
     {{-- Modal de edit--}}
+
+    {{-- Modal de show--}}
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal-show">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Informações</h4>
+                </div>
+
+                <div class="modal-body">
+
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal">
+                        <i class="fa fa-times"></i> Fechar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- Modal de show--}}
 
 
 
@@ -907,7 +931,6 @@
             var $form = $('#modal-form-edit');
             $form.attr('action', $linkStore);
             $.get($linkGet, function (response) {
-
                 $form.find('input[name="name"]').val(response.data.name);
                 $form.find('input[name="document"]').val(response.data.document);
                 $form.find('input[name="role"]').val(response.data.role);
@@ -969,6 +992,60 @@
                     $($form.closest('.modal')).modal('hide');
                 }
             });
+        });
+
+        // SHOW MEMBER
+        $('[data-modal="#modal-show"]').on('click', function (e) {
+            e.preventDefault();
+            var $target = $(e.currentTarget);
+            var $modal = $($target.attr('data-modal'));
+            var $member = $target.attr('data-member');
+
+            var $form = $('#modal-form-edit');
+            $form.attr('action', $linkStore);
+            $.get($linkGet, function (response) {
+
+                $form.find('input[name="name"]').val(response.data.name);
+                $form.find('input[name="document"]').val(response.data.document);
+                $form.find('input[name="role"]').val(response.data.role);
+                $form.find('input[name="marital_status"]').val(response.data.marital_status);
+                $form.find('input[name="profession"]').val(response.data.profession);
+            });
+            $modal.modal('show');
+        });
+
+        $('body').on('submit', '.member-delete', function (event) {
+            event.preventDefault();
+            var $form = $(this);
+            Swal.fire({
+                title: 'Você tem certeza que deseja deletar um membro?',
+                text: "Você não poderá reverter isso!",
+                type: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, exclua!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: $form.attr('action'),
+                        type: 'DELETE',
+                        dataType: 'json',
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        success: (response) => { // aqui vai o que der certo
+                            $form.closest('tr').remove();
+                        },
+                        error: (response) => { // aqui vai o que acontece quando ocorrer o erro
+                            var json = $.parseJSON(response.responseText);
+                            setTimeout(() => {
+                                alert(json.message);
+                            }, 100)
+                        }
+                    });
+                }
+            })
         });
     </script>
 @endsection

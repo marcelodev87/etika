@@ -94,8 +94,15 @@ class ClientPersonaController extends Controller
     }
 
 
-    public function destroy(ClientPersona $clientPersona)
+    public function destroy(Client $client, ClientPersona $clientPersona)
     {
-        //
+        $name = $clientPersona->name;
+        try {
+            $clientPersona->delete();
+            return response()->json(['message' => 'O cliente ' . $name . ' foi excluído.'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+
     }
 }
