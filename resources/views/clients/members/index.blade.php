@@ -39,9 +39,8 @@
                             <th>#</th>
                             <th>Nome Completo</th>
                             <th>Documento</th>
-                            <th>Cargo</th>
-                            <th>Estado Civil</th>
-                            <th>Profissão</th>
+                            <th>Email</th>
+                            <th>Telefone</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -51,9 +50,8 @@
                                 <td>{{ $member->id }}</td>
                                 <td>{{ $member->name }}</td>
                                 <td>{{ $member->document }}</td>
-                                <td>{{ $member->role }}</td>
-                                <td>{{ $member->marital_status }}</td>
-                                <td>{{ $member->profession }}</td>
+                                <td>{{ $member->email }}</td>
+                                <td>{{ $member->phone }}</td>
                                 <td class="text-right">
                                     <a href="javascript:void(0);" data-modal="#modal-show" data-member="{{ $member->id }}" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="bottom" title="Informações">
                                         <i class="fa fa-user"></i>
@@ -114,21 +112,32 @@
                                 </fieldset>
                             </div>
 
-                            <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-4">
+                            <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-3">
                                 <fieldset class="form-group">
                                     <label>Cargo</label>
                                     <input class="form-control" name="role" type="text">
                                 </fieldset>
                             </div>
 
-                            <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-4">
+                            <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-3">
+                                <fieldset class="form-group">
+                                    <label>Sexo</label>
+                                    <select class="form-control" name="gender">
+                                        <option value="">Selecione</option>
+                                        <option value="Feminino">Feminino</option>
+                                        <option value="Masculino">Masculino</option>
+                                    </select>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-3">
                                 <fieldset class="form-group">
                                     <label>Estado Civil</label>
                                     <input class="form-control" name="marital_status" type="text">
                                 </fieldset>
                             </div>
 
-                            <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-4">
+                            <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-3">
                                 <fieldset class="form-group">
                                     <label>Profissão</label>
                                     <input class="form-control" name="profession" type="text">

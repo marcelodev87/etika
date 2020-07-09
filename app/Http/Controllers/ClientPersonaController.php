@@ -22,6 +22,7 @@ class ClientPersonaController extends Controller
             'name' => 'required|string|min:3|max:191',
             'document' => 'required|string|min:14|max:14',
             'role' => 'required|string|min:3|max:191',
+            'gender' => 'required|string',
             'marital_status' => 'nullable|string|min:3',
             'profession' => 'nullable|string|min:3',
         ];
@@ -30,6 +31,7 @@ class ClientPersonaController extends Controller
             'name' => 'nome completo',
             'document' => 'documento',
             'role' => 'cargo',
+            'gender' => 'sexo',
             'marital_status' => 'estado civil',
             'profession' => 'profissão',
         ];
@@ -42,6 +44,7 @@ class ClientPersonaController extends Controller
                 'name' => $request->name,
                 'document' => $request->document,
                 'role' => $request->role,
+                'gender' => $request->gender,
                 'marital_status' => $request->marital_status,
                 'profession' => $request->profession
             ]);
@@ -64,6 +67,7 @@ class ClientPersonaController extends Controller
             'name' => 'required|string|min:3|max:191',
             'document' => 'required|string|min:14|max:14',
             'role' => 'required|string|min:3|max:191',
+            'gender' => 'required|string',
             'marital_status' => 'nullable|string|min:3',
             'profession' => 'nullable|string|min:3',
         ];
@@ -72,6 +76,7 @@ class ClientPersonaController extends Controller
             'name' => 'nome completo',
             'document' => 'documento',
             'role' => 'cargo',
+            'gender' => 'sexo',
             'marital_status' => 'estado civil',
             'profession' => 'profissão',
         ];
@@ -84,6 +89,7 @@ class ClientPersonaController extends Controller
                 'name' => $request->name,
                 'document' => $request->document,
                 'role' => $request->role,
+                'gender' => $request->gender,
                 'marital_status' => $request->marital_status,
                 'profession' => $request->profession
             ]);

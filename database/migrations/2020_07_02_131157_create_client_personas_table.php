@@ -20,6 +20,7 @@ class CreateClientPersonasTable extends Migration
             $table->string('document')->nullable();
             $table->string('role')->nullable();
             $table->string('marital_status')->nullable();
+            $table->string('gender');
             $table->string('profession')->nullable();
 
             $table->timestamps();
