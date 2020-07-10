@@ -57,7 +57,16 @@ class ClientPersonaController extends Controller
 
     public function show(Client $client, ClientPersona $clientPersona)
     {
-        return response()->json(['data' => $clientPersona], 200);
+        $persona = $clientPersona;
+        $emails = $clientPersona->emails;
+        $phones = $clientPersona->phones;
+        $addresses = $clientPersona->addresses;
+        return response()->json(['data' => [
+            'persona' => $persona,
+            'emails' => $emails,
+            'phones' => $phones,
+            'addresses' => $addresses,
+        ]], 200);
     }
 
 

@@ -454,9 +454,62 @@
                 </div>
 
                 <div class="modal-body">
+                    <div id="modal-show-area">
+                        <p>Nome Completo: <span class="persona-name"></span></p>
 
+                        <p>Documento: <span class="persona-document"></span></p>
 
-                </div>
+                        <p>Cargo: <span class="persona-role"></span></p>
+
+                        <p>Sexo: <span class="persona-gender"></span></p>
+
+                        <p>Estado Civil: <span class="persona-marital_status"></span></p>
+
+                        <p>Profissão: <span class="persona-profession"></span></p>
+
+                        <div>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Email</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tb-emails"></tbody>
+                            </table>
+                        </div>
+
+                        <div style="margin-top: 7px">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Telefone</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tb-phones"></tbody>
+                            </table>
+                        </div>
+
+                        <div style="margin-top: 7px">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Cep</th>
+                                        <th>Estado</th>
+                                        <th>Cidade</th>
+                                        <th>Bairro</th>
+                                        <th>Rua</th>
+                                        <th>Número</th>
+                                        <th>Complemeto</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tb-addresses"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 <div class="modal-footer">
 
                     <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal">
@@ -1010,15 +1063,88 @@
             var $modal = $($target.attr('data-modal'));
             var $member = $target.attr('data-member');
 
-            var $form = $('#modal-form-edit');
-            $form.attr('action', $linkStore);
-            $.get($linkGet, function (response) {
+            var $linkGet = "{{ route('app.clients.members.show', [$client->id,':MEMBER']) }}";
+            var $area = $('#modal-show-area');
 
-                $form.find('input[name="name"]').val(response.data.name);
-                $form.find('input[name="document"]').val(response.data.document);
-                $form.find('input[name="role"]').val(response.data.role);
-                $form.find('input[name="marital_status"]').val(response.data.marital_status);
-                $form.find('input[name="profession"]').val(response.data.profession);
+            $linkGet = $linkGet.replace(':MEMBER', $member);
+            $.get($linkGet, function (response) {
+                $area.find('.persona-name').html(response.data.persona.name);
+                $area.find('.persona-document').html(response.data.persona.document);
+                $area.find('.persona-role').html(response.data.persona.role);
+                $area.find('.persona-gender').html(response.data.persona.gender);
+                $area.find('.persona-marital_status').html(response.data.persona.marital_status);
+                $area.find('.persona-profession').html(response.data.persona.profession);
+
+                // Emails
+                var $tbEmails = $area.find('#tb-emails');
+                $tbEmails.html('');
+                if(response.data.emails.length)
+                {
+                    $.each(response.data.emails, function(i, e){
+                        var $type = (e.main) ? "check text-success" : "times text-danger";
+                        var $icon = '<i class="fa fa-'+$type+'"></i>'
+                        var $html = '<tr>';
+                        $html += '<td>'+e.email+'</td>';
+                        $html += '<td class="text-right">'+$icon+'</td>';
+                        $html += '</tr>';
+                        $tbEmails.append($html);
+                    });
+                }else{
+                     var $html = '<tr>';
+                        $html += '<td colspan="2">Não há emails registrados</td>';
+                        $html += '</tr>';
+                        $tbEmails.append($html);
+                }
+
+                // Telefones
+                var $tbPhones = $area.find('#tb-phones');
+                $tbPhones.html('');
+                if(response.data.phones.length)
+                {
+                    $.each(response.data.phones, function(i, e){
+                        var $type = (e.main) ? "check text-success" : "times text-danger";
+                        var $icon = '<i class="fa fa-'+$type+'"></i>'
+                        var $html = '<tr>';
+                        $html += '<td>'+e.phone+'</td>';
+                        $html += '<td text-right>'+$icon+'</td>';
+                        $html += '</tr>';
+                        $tbPhones.append($html);
+                    });
+                }else{
+                     var $html = '<tr>';
+                        $html += '<td colspan="2">Não há telefones registrados</td>';
+                        $html += '</tr>';
+                        $tbPhones.append($html);
+                }
+
+                // Endereços
+                var $tbAddresses = $area.find('#tb-addresses');
+                $tbAddresses.html('');
+                if(response.data.addresses.length)
+                {
+                    $.each(response.data.addresses, function(i, e){
+                        var $type = (e.main) ? "check text-success" : "times text-danger";
+                        var $icon = '<i class="fa fa-'+$type+'"></i>'
+                        var $html = '<tr>';
+                        $html += '<td>'+e.zip+'</td>';
+                        $html += '<td>'+e.state+'</td>';
+                        $html += '<td>'+e.city+'</td>';
+                        $html += '<td>'+e.neighborhood+'</td>';
+                        $html += '<td>'+e.street+'</td>';
+                        $html += '<td>'+e.number ?? ''+'</td>';
+                        $html += '<td>'+e.complement ?? ''+'</td>';
+                        $html += '<td text-right>'+$icon+'</td>';
+
+                        $html += '</tr>';
+                        $tbAddresses.append($html);
+                    });
+                }else{
+                     var $html = '<tr>';
+                        $html += '<td colspan="8">Não há endereços registrados</td>';
+                        $html += '</tr>';
+                        $tbAddresses.append($html);
+                }
+
             });
             $modal.modal('show');
         });
