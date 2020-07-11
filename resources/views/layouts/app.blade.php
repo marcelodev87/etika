@@ -46,7 +46,8 @@
 
 <script type="text/javascript">
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-
+    $.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';
+    $.fn.modal.prototype.constructor.Constructor.DEFAULTS.keyboard =  false;
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });

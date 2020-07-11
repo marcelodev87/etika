@@ -54,6 +54,12 @@
     color: #fff;
 }
 
+select.form-control{
+    padding-top: 9px !important;
+}
+
+
+
 /*
     Dashboard - Profile
 */

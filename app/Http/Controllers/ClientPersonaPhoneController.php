@@ -12,9 +12,8 @@ class ClientPersonaPhoneController extends Controller
 {
     public function index(Client $client, ClientPersona $clientPersona)
     {
-        return response()->json(['data' => $clientPersona->phones], 200);
+        return response()->json(['data' => $clientPersona->phones()->orderBy('main', 'desc')->get()], 200);
     }
-
 
     public function store(Client $client, ClientPersona $clientPersona, Request $request)
     {
@@ -40,6 +39,12 @@ class ClientPersonaPhoneController extends Controller
         }
     }
 
+    public function main(Client $client, ClientPersona $clientPersona, ClientPersonaPhone $clientPersonaPhone)
+    {
+        $clientPersona->phones()->update(['main' => 0]);
+        $clientPersonaPhone->update(['main' => 1]);
+        return response()->json(['data' => $clientPersona->phones()->orderBy('main', 'desc')->get()], 200);
+    }
 
     public function destroy(Client $client,  ClientPersona $clientPersona, ClientPersonaPhone $clientPersonaPhone)
     {

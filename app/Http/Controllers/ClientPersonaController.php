@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\ClientPersonaAddress;
 use Illuminate\Support\Facades\Validator;
 use App\ClientPersona;
 use Illuminate\Http\Request;
@@ -57,16 +58,8 @@ class ClientPersonaController extends Controller
 
     public function show(Client $client, ClientPersona $clientPersona)
     {
-        $persona = $clientPersona;
-        $emails = $clientPersona->emails;
-        $phones = $clientPersona->phones;
-        $addresses = $clientPersona->addresses;
-        return response()->json(['data' => [
-            'persona' => $persona,
-            'emails' => $emails,
-            'phones' => $phones,
-            'addresses' => $addresses,
-        ]], 200);
+
+        return response()->json(['data' => $clientPersona], 200);
     }
 
 
@@ -106,6 +99,21 @@ class ClientPersonaController extends Controller
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 400);
         }
+    }
+
+
+    public function information(Client $client, ClientPersona $clientPersona)
+    {
+        $persona = $clientPersona;
+        $emails = $clientPersona->emails;
+        $phones = $clientPersona->phones;
+        $addresses = $clientPersona->addresses;
+        return response()->json(['data' => [
+            'persona' => $persona,
+            'emails' => $emails,
+            'phones' => $phones,
+            'addresses' => $addresses,
+        ]], 200);
     }
 
 

@@ -13,9 +13,8 @@ class ClientPersonaAddressController extends Controller
 
     public function index(Client $client, ClientPersona $clientPersona)
     {
-        return response()->json(['data' => $clientPersona->addresses], 200);
+        return response()->json(['data' => $clientPersona->addresses()->orderBy('main', 'desc')->get()], 200);
     }
-
 
     public function store(Client $client, ClientPersona $clientPersona, Request $request)
     {
@@ -59,6 +58,12 @@ class ClientPersonaAddressController extends Controller
         }
     }
 
+    public function main(Client $client, ClientPersona $clientPersona, ClientPersonaAddress $clientPersonaAddress)
+    {
+        $clientPersona->addresses()->update(['main' => 0]);
+        $clientPersonaAddress->update(['main' => 1]);
+        return response()->json(['data' => $clientPersona->addresses()->orderBy('main', 'desc')->get()], 200);
+    }
 
     public function destroy(Client $client,  ClientPersona $clientPersona, ClientPersonaAddress $clientPersonaAddress)
     {

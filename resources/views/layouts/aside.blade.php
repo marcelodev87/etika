@@ -21,7 +21,7 @@
                 </a>
             </li>
 
-            @if (auth()->user()->hasAnyRole(['dev']))
+            @if (auth()->user()->hasAnyRole(['adm']))
                 <li>
                     <a href="{!! route('app.users.index') !!}">
                         <i class="fa fa-user-secret"></i> <span>Usuários</span>
@@ -31,7 +31,19 @@
 
             <li>
                 <a href="{!! route('app.clients.index') !!}">
-                    <i class="fa fa-user"></i> <span>Clientes</span>
+                    <i class="fa fa-users"></i> <span>Clientes</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{!! route('app.processes.index') !!}">
+                    <i class="fa fa-clipboard-check"></i> <span>Processos</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{!! route('app.tasks.index') !!}">
+                    <i class="fa fa-check-circle"></i> <span>Tarefas</span>
                 </a>
             </li>
         </ul>
