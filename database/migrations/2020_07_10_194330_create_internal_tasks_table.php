@@ -15,6 +15,9 @@ class CreateInternalTasksTable extends Migration
     {
         Schema::create('internal_tasks', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name')->nullable();
+            $table->string('slug')->unique();
+            $table->decimal('price', 10, 2)->default(0);
             $table->timestamps();
         });
     }

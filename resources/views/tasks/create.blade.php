@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
 @section('header')
-    @breadcrumb(['title' => 'Processos'])
+    @breadcrumb(['title' => 'Tarefas'])
     <li>
         <a href="{!! route('app.index') !!}">
             <i class="fa fa-th"></i> Dashboard
         </a>
     </li>
     <li>
-        <a href="{!! route('app.processes.index') !!}">
-            <i class="fa fa-clipboard-check"></i> Processos
+        <a href="{!! route('app.tasks.index') !!}">
+            <i class="fa fa-check-circle"></i> Tarefas
         </a>
     </li>
     <li class="active">
@@ -22,7 +22,7 @@
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-4 col-md-offset-4">
             <div class="chart-box">
-                <form class="row" method="post" action="{{ route('app.processes.store') }}">
+                <form class="row" method="post" action="{{ route('app.tasks.store') }}">
                     @csrf
                     <div class="col-xs-12">
                         <div class="form-group">
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6">
-                        <a href="{!! route('app.processes.index') !!}" class="btn btn-sm btn-block btn-default">
+                        <a href="{!! route('app.tasks.index') !!}" class="btn btn-sm btn-block btn-default">
                             <i class="fa fa-reply"></i> Voltar
                         </a>
                     </div>

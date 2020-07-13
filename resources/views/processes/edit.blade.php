@@ -13,7 +13,10 @@
         </a>
     </li>
     <li class="active">
-        <i class="fa fa-plus"></i> Adicionar
+        <i class="fa fa-edit"></i> Eitar
+    </li>
+    <li class="active">
+        <i class="fa fa-hashtag"></i> {{ $internalProcess->name }}
     </li>
     @endbreadcrumb
 @endsection
@@ -22,19 +25,20 @@
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-4 col-md-offset-4">
             <div class="chart-box">
-                <form class="row" method="post" action="{{ route('app.processes.store') }}">
+                <form class="row" method="post" action="{{ route('app.processes.update', $internalProcess->id) }}">
                     @csrf
+                    @method('put')
                     <div class="col-xs-12">
                         <div class="form-group">
                             <label>Nome</label>
-                            <input name="name" type="text" class="form-control" value="{{ old('name') }}">
+                            <input name="name" type="text" class="form-control" value="{{ old('name', $internalProcess->name) }}">
                         </div>
                     </div>
 
                     <div class="col-xs-12">
                         <div class="form-group">
                             <label>Preço</label>
-                            <input name="price" type="text" class="form-control" value="{{ old('price') }}" data-mask="##0.000,00" data-mask-reverse="true">
+                            <input name="price" type="text" class="form-control" value="{{ old('price', $internalProcess->price) }}" data-mask="##0.000,00" data-mask-reverse="true">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6">

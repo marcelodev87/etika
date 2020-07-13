@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class InternalTask extends Model
 {
-    //
+    protected  $guarded = [];
 }
