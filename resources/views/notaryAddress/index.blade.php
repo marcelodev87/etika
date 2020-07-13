@@ -1,21 +1,21 @@
 @extends('layouts.app')
 
 @section('header')
-    @breadcrumb(['title' => 'Processos'])
+    @breadcrumb(['title' => 'Cartórios'])
     <li>
         <a href="{!! route('app.index') !!}">
             <i class="fa fa-th"></i> Dashboard
         </a>
     </li>
     <li class="active">
-        <i class="fa fa-warehouse"></i> Cartórios
+        <i class="fa fa-clipboard-check"></i> Cartório
     </li>
     @endbreadcrumb
 @endsection
 @section('content')
     <div class="row">
         <div class="col-md-12 text-right mb-1">
-            <a href="{!! route('app..create') !!}" class="btn btn-sm btn-success">
+            <a href="{!! route('app.notaryAddresses.create') !!}" class="btn btn-sm btn-success">
                 <i class="fa fa-plus"></i> Adicionar
             </a>
         </div>
@@ -27,27 +27,33 @@
                         <tr>
                             <th>#</th>
                             <th>Nome</th>
-                            <th>Preço</th>
+                            <th>E-mail</th>
+                            <th>Telefone</th>
+                            <th>Endereço</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($processes as $process)
+                        @foreach($notaryAddresses as $notaryAddress)
                             <tr>
-                                <td>{{ $process->id }}</td>
-                                <td>{{ $process->name }}</td>
-                                <td>{{ $process->price }}</td>
+                                <td>{{ $notaryAddress->id }}</td>
+                                <td>{{ $notaryAddress->name }}</td>
+                                <td>{{ $notaryAddress->email_1 ?? '' }} {{ $notaryAddress->email_2 ?? '' }}</td>
+                                <td>{{ $notaryAddress->phone_1 ?? '' }} {{ $notaryAddress->phone_2 ?? '' }} {{ $notaryAddress->phone_3 ?? '' }}</td>
+                                <td>{{ $notaryAddress->getAddress() ?? '' }}</td>
                                 <td class="text-right">
 
+                                    <a href="{{ route('app.notaryAddresses.edit', $notaryAddress->id) }}" class="btn btn-xs btn-info">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
 
-
-                                    <a href="{!! route('app.processes.edit', $process->id) !!}" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="left" title="Editar"><i class="fa fa-edit"></i></a>
-                                    <form class="form-inline" action="{!! route('app.users.delete', $process->id) !!}" method="post">
+                                    <form class="form-inline" action="{!! route('app.notaryAddresses.delete', $notaryAddress->id) !!}" method="post">
                                         @csrf
                                         @method('delete')
-                                        <button type="button" class="btn btn-xs btn-danger formConfirmDelete" data-nome="{{ $process->name }}" data-toggle="tooltip" data-placement="left" title="Deletar">
+                                        <button type="button" class="btn btn-xs btn-danger formConfirmDelete" data-nome="{{ $notaryAddress->name }}" data-toggle="tooltip" data-placement="left" title="Deletar">
                                             <i class="fa fa-trash"></i></button>
                                     </form>
+
                                 </td>
                             </tr>
                         @endforeach
@@ -66,7 +72,7 @@
             var form = $(this).closest('form');
             var nome = $(this).attr('data-nome');
             Swal.fire({
-                title: 'Você tem certeza que deseja deletar o processo \'' + nome + '\'?',
+                title: 'Você tem certeza que deseja deletar o cartóriod \'' + nome + '\'?',
                 text: "Você não poderá reverter isso!",
                 type: 'question',
                 showCancelButton: true,

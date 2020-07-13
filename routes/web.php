@@ -82,7 +82,7 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
 
     });
 
-    # roda de processos internos
+    # rota de processos internos
     Route::group(['prefix' => 'processos', 'as' => 'processes.'], function(){
         Route::get('', ['uses' => 'InternalProcessController@index', 'as' => 'index', 'roles' => ['adm']]);
         Route::get('/adicionar', ['uses' => 'InternalProcessController@create', 'as' => 'create', 'roles' => ['adm']]);
@@ -92,7 +92,7 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
         Route::delete('/{internalProcess}', ['uses' => 'InternalProcessController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
     });
 
-    # roda de tarefas internos
+    # rota de tarefas internos
     Route::group(['prefix' => 'tarefas', 'as' => 'tasks.'], function(){
         Route::get('', ['uses' => 'InternalTaskController@index', 'as' => 'index', 'roles' => ['adm']]);
         Route::get('/adicionar', ['uses' => 'InternalTaskController@create', 'as' => 'create', 'roles' => ['adm']]);
@@ -100,6 +100,16 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
         Route::get('/{internalTask}/editar', ['uses' => 'InternalTaskController@edit', 'as' => 'edit', 'roles' => ['adm']]);
         Route::put('/{internalTask}', ['uses' => 'InternalTaskController@update', 'as' => 'update', 'roles' => ['adm']]);
         Route::delete('/{internalTask}', ['uses' => 'InternalTaskController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
+    });
+
+    # rota de cartórios
+    Route::group(['prefix' => 'cartorios', 'as' => 'notaryAddresses.'], function(){
+        Route::get('', ['uses' => 'NotaryAddressController@index', 'as' => 'index', 'roles' => ['adm']]);
+        Route::get('/adicionar', ['uses' => 'NotaryAddressController@create', 'as' => 'create', 'roles' => ['adm']]);
+        Route::post('/', ['uses' => 'NotaryAddressController@store', 'as' => 'store', 'roles' => ['adm']]);
+        Route::get('/{notaryAddress}/editar', ['uses' => 'NotaryAddressController@edit', 'as' => 'edit', 'roles' => ['adm']]);
+        Route::put('/{notaryAddress}', ['uses' => 'NotaryAddressController@update', 'as' => 'update', 'roles' => ['adm']]);
+        Route::delete('/{notaryAddress}', ['uses' => 'NotaryAddressController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
     });
 });
 

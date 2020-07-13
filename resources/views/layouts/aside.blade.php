@@ -29,23 +29,37 @@
                 </li>
             @endif
 
-            <li>
-                <a href="{!! route('app.clients.index') !!}">
-                    <i class="fa fa-users"></i> <span>Clientes</span>
-                </a>
-            </li>
+            @if(auth()->user()->hasAnyRole(['adm']))
+                <li>
+                    <a href="{!! route('app.clients.index') !!}">
+                        <i class="fa fa-users"></i> <span>Clientes</span>
+                    </a>
+                </li>
+            @endif
 
-            <li>
-                <a href="{!! route('app.processes.index') !!}">
-                    <i class="fa fa-clipboard-check"></i> <span>Processos</span>
-                </a>
-            </li>
+            @if(auth()->user()->hasAnyRole(['adm']))
+                <li>
+                    <a href="{!! route('app.processes.index') !!}">
+                        <i class="fa fa-clipboard-check"></i> <span>Processos</span>
+                    </a>
+                </li>
+            @endif
 
-            <li>
-                <a href="{!! route('app.tasks.index') !!}">
-                    <i class="fa fa-check-circle"></i> <span>Tarefas</span>
-                </a>
-            </li>
+            @if(auth()->user()->hasAnyRole(['adm']))
+                <li>
+                    <a href="{!! route('app.tasks.index') !!}">
+                        <i class="fa fa-check-circle"></i> <span>Tarefas</span>
+                    </a>
+                </li>
+            @endif
+
+            @if(auth()->user()->hasAnyRole(['adm']))
+                <li>
+                    <a href="{!! route('app.notaryAddresses.index') !!}">
+                        <i class="fa fa-warehouse"></i> <span>Catórios</span>
+                    </a>
+                </li>
+            @endif
         </ul>
 
     </section>
