@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\InternalProcess;
+use App\InternalTask;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -16,12 +17,10 @@ class InternalProcessController extends Controller
         return view('processes.index', compact('processes'));
     }
 
-
     public function create()
     {
         return view('processes.create');
     }
-
 
     public function store(Request $request)
     {
@@ -58,12 +57,12 @@ class InternalProcessController extends Controller
         }
     }
 
-
     public function edit(InternalProcess $internalProcess)
     {
-        return view('processes.edit', compact('internalProcess'));
+        $attached = $internalProcess->tasks()->pluck('id');
+        $tasks = InternalTask::whereNotIn('id', $attached)->get();
+        return view('processes.edit', compact('internalProcess', 'tasks'));
     }
-
 
     public function update(Request $request, InternalProcess $internalProcess)
     {
@@ -100,9 +99,49 @@ class InternalProcessController extends Controller
         }
     }
 
-
-    public function destroy(InternalProcess $internalProcess)
+    public function attachTask(Request $request, InternalProcess $internalProcess)
     {
-        //
+        $next = $internalProcess->tasks()->count();
+        $internalProcess->tasks()->attach($request->internal_task_id, ['position' => $next]);
+
+        return redirect()->route('app.processes.edit', $internalProcess->id);
     }
+
+    public function detachTask(Request $request, InternalProcess $internalProcess)
+    {
+        $internalProcess->tasks()->wherePivot('position', $request->key)->delete();
+
+            $x = $internalProcess->tasks()->wherePivot('position', '>', $request->key)->get();
+            foreach ($x as $y){
+                $internalProcess->tasks()->updateExistingPivot($y->id, ['position' => $y->pivot->position - 1]);
+            }
+
+        return redirect()->back();
+    }
+
+    public function putUp(Request $request, InternalProcess $internalProcess)
+    {
+        $key = $request->key;
+        $newKey = $key - 1;
+        $newOldKey = $key;
+        $taskOld = $internalProcess->tasks()->wherePivot('position', $key)->get();
+        $taskNew = $internalProcess->tasks()->wherePivot('position', $newKey)->get();
+        $internalProcess->tasks()->updateExistingPivot($taskOld, ['position' => $newKey]);
+        $internalProcess->tasks()->updateExistingPivot($taskNew, ['position' => $newOldKey]);
+        return redirect()->back();
+    }
+
+    public function putDown(Request $request, InternalProcess $internalProcess)
+    {
+        $key = $request->key;
+        $newKey = $key + 1;
+        $newOldKey = $key;
+        $taskOld = $internalProcess->tasks()->wherePivot('position', $key)->get();
+        $taskNew = $internalProcess->tasks()->wherePivot('position', $newKey)->get();
+        $internalProcess->tasks()->updateExistingPivot($taskOld, ['position' => $newKey]);
+        $internalProcess->tasks()->updateExistingPivot($taskNew, ['position' => $newOldKey]);
+        return redirect()->back();
+    }
+
+
 }

@@ -18,3 +18,14 @@ if (!function_exists('getDob')) {
         return ($user->dob) ? $user->dob->format('Y-m-d') : null;
     }
 }
+
+if (!function_exists('brl')) {
+    function brl($value, $flag = true)
+    {
+        $valor = number_format($value, 2, ',', '.');
+        if($flag){
+            return "R$ ".$valor;
+        }
+        return $valor;
+    }
+}

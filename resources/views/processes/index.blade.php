@@ -15,7 +15,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-12 text-right mb-1">
-            <a href="{!! route('app..create') !!}" class="btn btn-sm btn-success">
+            <a href="{!! route('app.processes.create') !!}" class="btn btn-sm btn-success">
                 <i class="fa fa-plus"></i> Adicionar
             </a>
         </div>
@@ -36,13 +36,10 @@
                             <tr>
                                 <td>{{ $process->id }}</td>
                                 <td>{{ $process->name }}</td>
-                                <td>{{ $process->price }}</td>
+                                <td>{{ brl($process->price) }}</td>
                                 <td class="text-right">
-
-
-
                                     <a href="{!! route('app.processes.edit', $process->id) !!}" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="left" title="Editar"><i class="fa fa-edit"></i></a>
-                                    <form class="form-inline" action="{!! route('app.users.delete', $process->id) !!}" method="post">
+                                    <form class="form-inline" action="{!! route('app.processes.delete', $process->id) !!}" method="post">
                                         @csrf
                                         @method('delete')
                                         <button type="button" class="btn btn-xs btn-danger formConfirmDelete" data-nome="{{ $process->name }}" data-toggle="tooltip" data-placement="left" title="Deletar">

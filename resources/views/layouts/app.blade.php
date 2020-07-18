@@ -11,6 +11,7 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/sweetalert.min.css') }}" rel="stylesheet"/>
+    @yield('style')
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet"/>
 
 </head>
@@ -33,7 +34,7 @@
             </section>
         </div>
     @endif
-
+    @yield('modal')
 </div>
 
 <!-- Scripts -->

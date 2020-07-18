@@ -23,7 +23,12 @@ class NotaryAddressController extends Controller
 
     public function store(Request $request)
     {
-        $rules = [];
+        $rules = [
+            'name' => 'required',
+            'email_1' => 'required|email',
+            'phone_1' => 'required|min:14',
+            'city' => 'required',
+        ];
         $errors = [];
         $fields = [];
         $validator = Validator::make($request->all(), $rules, $errors, $fields);

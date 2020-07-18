@@ -55,7 +55,7 @@
 }
 
 select.form-control{
-    padding-top: 9px !important;
+    padding-top: 8px !important;
 }
 
 
@@ -269,3 +269,7 @@ blockquote small {
 .ml-1 {
     margin-left: 7px !important;
 }
+.form-group-mt-0 .form-group{
+    margin-bottom: 0 !important;
+}
+

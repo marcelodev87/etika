@@ -12,4 +12,9 @@ class Client extends Model
     {
         return $this->hasMany(ClientPersona::class);
     }
+
+    public function processes()
+    {
+        return $this->hasMany(ClientProcess::class);
+    }
 }

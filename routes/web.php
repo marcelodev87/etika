@@ -45,6 +45,7 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
         Route::post('/', ['uses' => 'ClientController@store', 'as' => 'store', 'roles' => ['adm']]);
         Route::put('/{client}', ['uses' => 'ClientController@update', 'as' => 'update', 'roles' => ['adm']]);
 
+        // membros
         Route::group(['prefix' => '{client}/membros', 'as' => 'members.'], function () {
             Route::get('/', ['uses' => 'ClientPersonaController@index', 'as' => 'index']);
             Route::post('/', ['uses' => 'ClientPersonaController@store', 'as' => 'store', 'roles' => ['adm']]);
@@ -80,6 +81,21 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
 
         });
 
+        // processos
+        Route::group(['prefix' => '{client}/processos', 'as' => 'processes.'], function () {
+            Route::get('/{clientProcess}', ['uses' => 'ClientProcessController@index', 'as' => 'index']);
+            Route::post('/', ['uses' => 'ClientProcessController@store', 'as' => 'store']);
+
+            // add task
+            Route::post('/{clientProcess}/tasks', ['uses' => 'ClientProcessTaskController@store', 'as' => 'tasks.store']);
+            Route::put('/{clientProcess}/tasks/{clientProcessTask}/done', ['uses' => 'ClientProcessTaskController@done', 'as' => 'tasks.done']);
+            Route::delete('/{clientProcess}/tasks/{clientProcessTask}', ['uses' => 'ClientProcessTaskController@destroy', 'as' => 'tasks.delete']);
+
+            // payment
+            Route::post('/{clientProcess}/payments', ['uses' => 'ClientProcessPaymentController@store', 'as' => 'payments.store']);
+            Route::delete('/{clientProcess}/payments/{clientProcessPayment}', ['uses' => 'ClientProcessPaymentController@destroy', 'as' => 'payments.delete']);
+
+        });
     });
 
     # rota de processos internos
@@ -90,6 +106,13 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
         Route::get('/{internalProcess}/editar', ['uses' => 'InternalProcessController@edit', 'as' => 'edit', 'roles' => ['adm']]);
         Route::put('/{internalProcess}', ['uses' => 'InternalProcessController@update', 'as' => 'update', 'roles' => ['adm']]);
         Route::delete('/{internalProcess}', ['uses' => 'InternalProcessController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
+
+        Route::post('/{internalProcess}/attach-task', ['uses' => 'InternalProcessController@attachTask', 'as' => 'attach.task', 'roles' => ['adm']]);
+        Route::delete('/{internalProcess}/detach-task', ['uses' => 'InternalProcessController@detachTask', 'as' => 'detach.task', 'roles' => ['adm']]);
+
+        Route::put('/{internalProcess}/up', ['uses' => 'InternalProcessController@putUp', 'as' => 'task.up', 'roles' => ['adm']]);
+        Route::put('/{internalProcess}/down', ['uses' => 'InternalProcessController@putDown', 'as' => 'task.down', 'roles' => ['adm']]);
+
     });
 
     # rota de tarefas internos
