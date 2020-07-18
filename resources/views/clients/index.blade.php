@@ -90,7 +90,12 @@
                             <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-3">
                                 <fieldset class="form-group">
                                     <label>Tipo</label>
-                                    <input class="form-control" name="type" type="text">
+                                    <select class="form-control" name="type">
+                                        <option value="">Selecione</option>
+                                        <option value="Igreja">Igreja</option>
+                                        <option value="Empresa">Empresa</option>
+                                        <option value="Pessoa Física">Pessoa Física</option>
+                                    </select>
                                 </fieldset>
                             </div>
                         </div>
