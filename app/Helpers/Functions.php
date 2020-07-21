@@ -23,9 +23,17 @@ if (!function_exists('brl')) {
     function brl($value, $flag = true)
     {
         $valor = number_format($value, 2, ',', '.');
-        if($flag){
-            return "R$ ".$valor;
+        if ($flag) {
+            return "R$ " . $valor;
         }
         return $valor;
+    }
+}
+
+
+if (!function_exists('brlToNumeric')) {
+    function brlToNumeric($value)
+    {
+        return str_replace([' ', 'R$', '.', ','], ['', '', '', '.'], $value);
     }
 }

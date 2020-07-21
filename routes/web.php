@@ -96,6 +96,17 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
             Route::delete('/{clientProcess}/payments/{clientProcessPayment}', ['uses' => 'ClientProcessPaymentController@destroy', 'as' => 'payments.delete']);
 
         });
+
+        // tarefas
+        Route::group(['prefix' => '{client}/tasks', 'as' => 'tasks.'], function () {
+            Route::post('/', ['uses' => 'ClientTaskController@store', 'as' => 'store']);
+
+            // Comentários
+            Route::group(['prefix' => '{clientTask}/comments', 'as' => 'comments.'], function () {
+                Route::get('/', ['uses' => 'ClientTaskCommentController@index', 'as' => 'index']);
+                Route::post('/', ['uses' => 'ClientTaskCommentController@store', 'as' => 'store']);
+            });
+        });
     });
 
     # rota de processos internos

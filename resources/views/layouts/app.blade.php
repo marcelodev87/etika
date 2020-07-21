@@ -8,8 +8,10 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     {{-- Font Awesome --}}
     <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet"/>
+{{--    <link href="{{ asset('css/summernote-bs3.css') }}" rel="stylesheet">--}}
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/summernote.css') }}" rel="stylesheet">
     <link href="{{ asset('css/sweetalert.min.css') }}" rel="stylesheet"/>
     @yield('style')
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet"/>
@@ -44,6 +46,7 @@
 <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
 <script src="{{ asset('js/sweetalert.min.js') }}"></script>
 <script src="{{ asset('js/application.js') }}"></script>
+<script src="{{ asset('js/summernote.min.js') }}"></script>
 
 <script type="text/javascript">
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
@@ -52,6 +55,7 @@
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
+
 </script>
 
 @yield('script')

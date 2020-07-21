@@ -17,4 +17,9 @@ class Client extends Model
     {
         return $this->hasMany(ClientProcess::class);
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(ClientTask::class);
+    }
 }

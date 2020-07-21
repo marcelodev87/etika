@@ -54,10 +54,10 @@
     color: #fff;
 }
 
-select.form-control{
-    padding-top: 8px !important;
+select.form-control {
+    padding-top: 4px !important;
+    padding-bottom: 2px !important;
 }
-
 
 
 /*
@@ -114,14 +114,14 @@ select.form-control{
     color: #f1f1f1;
     width: 100%;
     transition: .5s ease;
-    opacity:0;
+    opacity: 0;
     color: white;
     font-size: 20px;
     padding: 20px;
     text-align: center;
 }
 
-.profile #linkUploadAvatar >.cover:hover .overlay {
+.profile #linkUploadAvatar > .cover:hover .overlay {
     opacity: 1;
 }
 
@@ -269,7 +269,56 @@ blockquote small {
 .ml-1 {
     margin-left: 7px !important;
 }
-.form-group-mt-0 .form-group{
+
+.form-group-mt-0 .form-group {
     margin-bottom: 0 !important;
 }
 
+
+#comments {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    width: 300px;
+    height: 100%;
+    padding: 14px;
+    z-index: 99999;
+    box-shadow: -1px -1px 10px 0 #666;
+    display: block;
+}
+#comments .header{
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid #ccc;
+}
+#comments .header > h3 {
+    margin-bottom: 0;
+    margin-top: 0;
+    text-align: center;
+}
+
+#comments .header > a {
+    position: absolute;
+    top: 20px;
+}
+#comments .body{
+    overflow-y:scroll !important;
+    height: calc(100% - 60px);
+}
+#comments .body > .panel{
+    margin-bottom: 7px;
+}
+#comments .body > .panel > .panel-heading{
+    font-size: 16px;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+#comments .body > .panel > .panel-heading >h4{
+    margin: 0;
+    padding: 0;
+}
+#comments .body > .panel > .panel-body{
+    padding: 7px;
+    margin-bottom: 2px;
+}
