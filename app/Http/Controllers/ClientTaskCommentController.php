@@ -44,11 +44,14 @@ class ClientTaskCommentController extends Controller
 
         try {
             $files = [];
-            foreach ($request->file('files') as $file) {
-                $name = 'comments/' . md5(uniqid(rand(), true)) . '.' . $file->extension();
-                $file->move(storage_path() . '/app/public/comments', $name);
-                array_push($files, $name);
+            if($request->has('files')){
+                foreach ($request->file('files') as $file) {
+                    $name = 'comments/' . md5(uniqid(rand(), true)) . '.' . $file->extension();
+                    $file->move(storage_path() . '/app/public/comments', $name);
+                    array_push($files, $name);
+                }
             }
+
             $comment = $clientTask->comments()->create([
                 'client_task_id' => $clientTask->id,
                 'comment' => $request->comment,

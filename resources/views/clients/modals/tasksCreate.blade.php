@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Processos</h4>
+                <h4 class="modal-title">Tarefas</h4>
             </div>
 
             <form method="post" action="{{ route('app.clients.tasks.store', $client->id) }}" id="form-task">

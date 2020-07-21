@@ -2,84 +2,70 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
+use App\ClientProcess;
+use App\ClientProcessTask;
 use App\ClientProcessTaskComment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ClientProcessTaskCommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index(Client $client, ClientProcess $clientProcess, ClientProcessTask $clientProcessTask)
     {
-        //
+        $rows = $clientProcessTask->comments()->orderBy('id', 'desc')->get();
+        $data = [];
+        foreach ($rows as $r) {
+            $arr = [
+                'user' => $r->user->name,
+                'date' => $r->created_at->format('d/m/Y H:i:s'),
+                'comment' => $r->comment,
+                'files' => []
+            ];
+            foreach (json_decode($r->files, true) as $f) {
+                array_push($arr['files'], Storage::disk('public')->url($f));
+            }
+            array_push($data, $arr);
+        }
+        return response()->json(['data' => $data], 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+
+    public function store(Request $request,Client $client, ClientProcess $clientProcess, ClientProcessTask $clientProcessTask)
     {
-        //
+        $rules = [
+            'comment' => 'required|string|min:10',
+        ];
+        $errors = [];
+        $fields = [];
+        $validator = Validator::make($request->all(), $rules, $errors, $fields);
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()->first()], 400);
+        }
+
+        try {
+            $files = [];
+            if($request->has('files')){
+                foreach ($request->file('files') as $file) {
+                    $name = 'comments/' . md5(uniqid(rand(), true)) . '.' . $file->extension();
+                    $file->move(storage_path() . '/app/public/comments', $name);
+                    array_push($files, $name);
+                }
+            }
+
+            $comment = $clientProcessTask->comments()->create([
+                'comment' => $request->comment,
+                'user_id' => auth()->user()->id,
+                'files' => json_encode($files),
+            ]);
+            return response()->json([], 201);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\ClientProcessTaskComment  $clientProcessTaskComment
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ClientProcessTaskComment $clientProcessTaskComment)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\ClientProcessTaskComment  $clientProcessTaskComment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ClientProcessTaskComment $clientProcessTaskComment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ClientProcessTaskComment  $clientProcessTaskComment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ClientProcessTaskComment $clientProcessTaskComment)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\ClientProcessTaskComment  $clientProcessTaskComment
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ClientProcessTaskComment $clientProcessTaskComment)
-    {
-        //
-    }
 }

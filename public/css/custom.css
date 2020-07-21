@@ -280,18 +280,20 @@ blockquote small {
     top: 0;
     right: 0;
     background-color: #fff;
-    width: 300px;
+    width: 350px;
     height: 100%;
     padding: 14px;
     z-index: 99999;
     box-shadow: -1px -1px 10px 0 #666;
     display: block;
 }
-#comments .header{
+
+#comments .header {
     padding-bottom: 14px;
     margin-bottom: 14px;
     border-bottom: 1px solid #ccc;
 }
+
 #comments .header > h3 {
     margin-bottom: 0;
     margin-top: 0;
@@ -302,23 +304,27 @@ blockquote small {
     position: absolute;
     top: 20px;
 }
-#comments .body{
-    overflow-y:scroll !important;
+
+#comments .body {
+    overflow-y: scroll !important;
     height: calc(100% - 60px);
 }
-#comments .body > .panel{
+
+#comments .body > .panel {
     margin-bottom: 7px;
 }
-#comments .body > .panel > .panel-heading{
-    font-size: 16px;
-    padding-bottom: 0;
-    padding-top: 0;
+
+#comments .body > .panel > .panel-heading {
+    padding: 7px;
 }
-#comments .body > .panel > .panel-heading >h4{
+
+#comments .body > .panel > .panel-heading > h4 {
     margin: 0;
     padding: 0;
+    font-size: 16px;
 }
-#comments .body > .panel > .panel-body{
+
+#comments .body > .panel > .panel-body {
     padding: 7px;
     margin-bottom: 2px;
 }

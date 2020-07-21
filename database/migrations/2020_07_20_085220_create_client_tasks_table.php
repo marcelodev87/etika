@@ -22,11 +22,13 @@ class CreateClientTasksTable extends Migration
             $table->decimal('price', 10, 2)->default(0);
             $table->boolean('closed')->default(0);
             $table->dateTime('closed_at')->nullable();
+            $table->unsignedBigInteger('closed_by')->nullable();
             $table->timestamps();
 
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('task_id')->references('id')->on('internal_tasks')->onDelete('cascade');
+            $table->foreign('closed_by')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

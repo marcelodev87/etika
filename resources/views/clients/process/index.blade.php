@@ -86,6 +86,7 @@
                     <th>Nome</th>
                     <th>Valor</th>
                     <th>Fechado</th>
+                    <th class="text-center"><i class="fa fa-comments"></i></th>
                     <th></th>
                 </tr>
                 </thead>
@@ -99,13 +100,23 @@
                                 <a href="javascript:void(0)" class="btn btn-success btn-xs">
                                     <i class="fa fa-check"></i> {{ $task->end_at->format('d/m/Y H:i:s') }} {{ $task->closedBy->name }}
                                 </a>
-                                @else
+                            @else
                                 <a class="btn btn-danger btn-xs">
                                     <i class="fa fa-times"></i> Aberto
                                 </a>
-                                @endif
+                            @endif
                         </td>
+                        <td class="text-center">{{$task->comments()->count() }}</td>
+
                         <td class="text-right">
+                            <a href="#modal-comment" data-toggle="modal" data-client-task="{{ $task->id }}" class="btn btn-xs btn-default">
+                                <i class="fa fa-plus"></i> <i class="fa fa-comment"></i>
+                            </a>
+
+                            <a href="javascript:void(0)" class="btn btn-xs btn-primary" onclick="showComments({{ $task->id }})">
+                                <i class="fa fa-eye"></i> <i class="fa fa-comment"></i>
+                            </a>
+
                             @if(!$task->closed)
                                 <form class="form-inline" action="{{ route('app.clients.processes.tasks.done', [$client->id, $clientProcess->id, $task->id]) }}" method="post" onsubmit="return confirm('Deseja mesmo finalizar?')">
                                     @csrf
@@ -225,8 +236,24 @@
         </div>
 
     </div>
+
+    <div id="comments" class="hide">
+        <div class="header">
+            <h3>Comentários</h3>
+            <a href="javascript:void(0)" onclick="hideComments()" class="text-danger">
+                <i class="fa fa-times"></i>
+            </a>
+        </div>
+        <div class="body">
+
+        </div>
+    </div>
 @endsection
 
+
+@section('modal')
+    @include('clients.process.modals.commentCreate')
+@endsection
 
 
 @section('script')
@@ -314,6 +341,104 @@
                     form.submit()
                 }
             })
+        });
+
+        function hideComments() {
+            var $comment = $('#comments');
+            $comment.addClass('hide');
+            $comment.find('.body').html('');
+        }
+
+        function showComments(task)  {
+
+
+            var $endpoint = "{{ route('app.clients.processes.tasks.comments.index', [$client->id, $clientProcess->id, ':TASK']) }}";
+            $endpoint = $endpoint.replace(':TASK', task);
+            $.get($endpoint, function (response) {
+                $.each(response.data, function (i, e) {
+                    console.log(e);
+                    var $html = '';
+                    $html += '<div class="panel panel-default">';
+                    $html += '<div class="panel-heading">';
+                    $html += '<h4>' + e.user + ' - ' + e.date + '</h4>';
+                    $html += '</div>';
+                    $html += '<div class="panel-body">' + e.comment;
+                    $html += '<div class="files">';
+
+                    $.each(e.files, function (x, z) {
+                        $html += '<a href="' + z + '" class="btn btn-xs btn-default" target="_blank">';
+                        $html += '<i class="fa fa-paperclip"></i> Anexo';
+                        $html += '</a>';
+                    })
+
+                    $html += '</div>';
+                    $html += '</div>';
+                    $html += '</div>';
+                    console.log($html)
+                    $('#comments').find('.body').append($html);
+                });
+            })
+
+            $('#comments').removeClass('hide');
+        }
+
+        $('#modal-comment').on('show.bs.modal', function (e) {
+            var $button = e.relatedTarget;
+            var $taskId = $($button).attr('data-client-task')
+            $('#form-comment').find('[name="task_id"]').val($taskId);
+        })
+
+        $(document).keyup(function (e) {
+            if (e.key === "Escape") { // escape key maps to keycode `27`
+                var $comment = $('#comments');
+                if (!$comment.hasClass('hide')) {
+                    hideComments()
+                }
+            }
+        });
+
+        $('.summernote').summernote({
+            height: 180,
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['misc', ['codeview']]
+            ]
+        });
+
+        $('#form-comment').on('submit', function (e) {
+            e.preventDefault();
+            var $form = $(this);
+            var $button = $form.find('button[type="submit"]');
+            var $buttonText = $button.html();
+            var $data = new FormData($form[0]);
+            var $endpoint = $form.attr('action').replace(':TASK', $form.find('[name="task_id"]').val());
+            $.ajax({
+                url: $endpoint,
+                type: $form.attr('method'),
+                data: $data,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                cache: false,
+                beforeSend: () => { // aqui vai o que tem que ser feito antes de chamar o endpoint
+                    $button.attr('disabled', 'disabled').html('<i class="fas fa-spinner fa-pulse"></i> Carregando...');
+                },
+                success: (response) => { // aqui vai o que der certo
+                    window.location.reload();
+                    return;
+
+                },
+                error: (response) => { // aqui vai o que acontece quando ocorrer o erro
+                    var json = $.parseJSON(response.responseText);
+                    alert(json.message);
+                    $button.removeAttr('disabled').html($buttonText);
+                },
+            });
         });
     </script>
 @endsection

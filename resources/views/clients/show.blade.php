@@ -139,6 +139,11 @@
                                 </td>
                                 <td>{{ $task->comments()->count()}}</td>
                                 <td class="text-right">
+                                    @if(!$task->closed)
+                                        <a href="{{ route('app.clients.tasks.done',[$client->id, $task->id]) }}" class="btn btn-xs btn-success" onclick="return confirm('Deseja realmente finalizar?')">
+                                            <i class="fa fa-check"></i> Finalizar
+                                        </a>
+                                    @endif
                                     <a href="#modal-comment" data-toggle="modal" data-client-task="{{ $task->id }}" class="btn btn-default btn-xs">
                                         <i class="fa fa-plus"></i> Comentário
                                     </a>

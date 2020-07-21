@@ -19,4 +19,9 @@ class ClientProcessTask extends Model
     {
         return $this->belongsTo(User::class, 'closed_by');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(ClientProcessTaskComment::class);
+    }
 }

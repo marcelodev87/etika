@@ -95,11 +95,15 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
             Route::post('/{clientProcess}/payments', ['uses' => 'ClientProcessPaymentController@store', 'as' => 'payments.store']);
             Route::delete('/{clientProcess}/payments/{clientProcessPayment}', ['uses' => 'ClientProcessPaymentController@destroy', 'as' => 'payments.delete']);
 
+            // comments
+            Route::get('/{clientProcess}/tasks/{clientProcessTask}', ['uses' => 'ClientProcessTaskCommentController@index', 'as' => 'tasks.comments.index']);
+            Route::post('/{clientProcess}/tasks/{clientProcessTask}', ['uses' => 'ClientProcessTaskCommentController@store', 'as' => 'tasks.comments.store']);
         });
 
         // tarefas
         Route::group(['prefix' => '{client}/tasks', 'as' => 'tasks.'], function () {
             Route::post('/', ['uses' => 'ClientTaskController@store', 'as' => 'store']);
+            Route::get('/{clientTask}/finalizar', ['uses' => 'ClientTaskController@done', 'as' => 'done']);
 
             // Comentários
             Route::group(['prefix' => '{clientTask}/comments', 'as' => 'comments.'], function () {

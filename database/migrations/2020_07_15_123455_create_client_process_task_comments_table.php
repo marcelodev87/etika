@@ -17,9 +17,12 @@ class CreateClientProcessTaskCommentsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('client_process_task_id');
             $table->text('comment')->nullable();
+            $table->jsonb('files')->nullable();
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
             $table->foreign('client_process_task_id')->references('id')->on('client_process_tasks');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

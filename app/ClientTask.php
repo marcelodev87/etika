@@ -28,7 +28,11 @@ class ClientTask extends Model
     public function isLate()
     {
         $now = Carbon::now();
-        if ($now->gte($this->end_at)) {
+        if($this->closed){
+            if(!$this->end_at->gte($this->closed_at)){
+                return true;
+            }
+        }else if ($now->gte($this->end_at)) {
             return true;
         }
         return false;
