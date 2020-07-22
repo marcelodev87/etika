@@ -40,4 +40,9 @@ class ClientProcess extends Model
     {
         return $this->payments()->sum('value');
     }
+
+    public function logs()
+    {
+        return $this->hasMany(ClientProcessLog::class);
+    }
 }

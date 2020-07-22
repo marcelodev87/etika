@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\ClientProcess;
+use App\ClientProcessLog;
+use App\ClientProcessTask;
+use App\ClientProcessTaskComment;
 use App\InternalProcess;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ClientProcessController extends Controller
@@ -40,18 +44,25 @@ class ClientProcessController extends Controller
                 'price' => $input['price']
             ]);
             $tasks = InternalProcess::find($input['process_id'])->tasks;
-            foreach ($tasks as $task){
+            foreach ($tasks as $task) {
                 try {
                     $process->tasks()->create([
                         'client_id' => $client->id,
                         'task_id' => $task->id,
-                        'price'=>0,
+                        'price' => 0,
                     ]);
-                }catch (\Exception $e){
+                } catch (\Exception $e) {
                     $process->delete();
                     return response()->json(['message' => $e->getMessage()], 400);
                 }
             }
+            $log = ClientProcessLog::create([
+                'user_id' => auth()->user()->id,
+                'client_process_id' => $process->id,
+                'action' => 'criou este processo',
+                'type' => 'process',
+                'refer_id' => $process->id
+            ]);
             return response()->json(['message' => 'Processo cadastrado com sucesso'], 201);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 400);
@@ -59,27 +70,30 @@ class ClientProcessController extends Controller
 
     }
 
-
-    public function show(ClientProcess $clientProcess)
+    public function history(Client $client, ClientProcess $clientProcess)
     {
-        //
-    }
+        $data = [];
+        foreach ($clientProcess->logs()->orderBy('id', 'desc')->get() as $log) {
+            $arr = [];
+            $arr['user'] = $log->user->name;
+            $arr['date'] = $log->created_at->format('d/m/Y H:i:s');
+            if($log->type == "task"){
+                $task = ClientProcessTask::find($log->refer_id);
+                $arr['comment'] = $log->action .': '. $task->task->name;
+            }
+
+            if($log->type == "comment"){
+                $comment = ClientProcessTaskComment::find($log->refer_id);
+                $arr['comment'] = $log->action .': '. $comment->comment;
+                $arr['files'] = [];
+                foreach (json_decode($comment->files, true) as $f) {
+                    array_push($arr['files'], Storage::disk('public')->url($f));
+                }
+            }
 
 
-    public function edit(ClientProcess $clientProcess)
-    {
-        //
-    }
-
-
-    public function update(Request $request, ClientProcess $clientProcess)
-    {
-        //
-    }
-
-
-    public function destroy(ClientProcess $clientProcess)
-    {
-        //
+            array_push($data, $arr);
+        }
+        return response()->json(['data' => $data], 200);
     }
 }

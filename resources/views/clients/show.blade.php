@@ -95,6 +95,9 @@
                                     <i class="fa fa-{{ ($process->closed) ? 'check text-success' : 'times text-danger' }}"></i>
                                 </td>
                                 <td class="text-right">
+                                    <button type="button" class="btn btn-xs btn-success" onclick="showHistory({{$process->id}})">
+                                        <i class="fa fa-history"></i>
+                                    </button>
                                     <a href="{{ route('app.clients.processes.index',[$client->id, $process->id]) }}" class="btn btn-xs btn-primary">
                                         <i class="fa fa-eye"></i>
                                     </a>
@@ -161,7 +164,7 @@
 
     </div>
 
-    <div id="comments" class="hide">
+    <div class="sidebar-right-blank hide">
         <div class="header">
             <h3>Comentários</h3>
             <a href="javascript:void(0)" onclick="hideComments()" class="text-danger">
@@ -172,6 +175,8 @@
 
         </div>
     </div>
+
+
 @endsection
 
 @section('modal')
@@ -303,15 +308,8 @@
             });
         });
 
-        function hideComments() {
-            var $comment = $('#comments');
-            $comment.addClass('hide');
-            $comment.find('.body').html('');
-        }
-
         function showComments(task) {
-
-
+            const $block = $('.sidebar-right-blank');
             var $endpoint = "{{ route('app.clients.tasks.comments.index', [$client->id, ':TASK']) }}";
             $endpoint = $endpoint.replace(':TASK', task);
             $.get($endpoint, function (response) {
@@ -335,27 +333,51 @@
                     $html += '</div>';
                     $html += '</div>';
                     console.log($html)
-                    $('#comments').find('.body').append($html);
+                    $block.find('.body').append($html);
                 });
             })
 
-            $('#comments').removeClass('hide');
+            $block.find('h3').html('Comentários');
+            $block.removeClass('hide');
         }
+
+        function showHistory(process) {
+            const $block = $('.sidebar-right-blank');
+            var $endpoint = "{{ route('app.clients.processes.history', [$client->id, ':PROCESS']) }}";
+            $endpoint = $endpoint.replace(':PROCESS', process);
+            $.get($endpoint, function (response) {
+                $.each(response.data, function (i, e) {
+                    console.log(e);
+                    var $html = '';
+                    $html += '<div class="panel panel-default">';
+                    $html += '<div class="panel-heading">';
+                    $html += '<h4>' + e.user + ' - ' + e.date + '</h4>';
+                    $html += '</div>';
+                    $html += '<div class="panel-body">' + e.comment;
+                    $html += '<div class="files">';
+
+                    $.each(e.files, function (x, z) {
+                        $html += '<a href="' + z + '" class="btn btn-xs btn-default" target="_blank">';
+                        $html += '<i class="fa fa-paperclip"></i> Anexo';
+                        $html += '</a>';
+                    })
+
+                    $html += '</div>';
+                    $html += '</div>';
+                    $html += '</div>';
+                    $block.find('.body').append($html);
+                });
+            });
+            $block.find('h3').html('Histórico');
+            $block.removeClass('hide');
+        }
+
 
         $('#modal-comment').on('show.bs.modal', function (e) {
             var $button = e.relatedTarget;
             var $taskId = $($button).attr('data-client-task')
             $('#form-comment').find('[name="task_id"]').val($taskId);
         })
-
-        $(document).keyup(function (e) {
-            if (e.key === "Escape") { // escape key maps to keycode `27`
-                var $comment = $('#comments');
-                if (!$comment.hasClass('hide')) {
-                    hideComments()
-                }
-            }
-        });
 
         $('.summernote').summernote({
             height: 180,

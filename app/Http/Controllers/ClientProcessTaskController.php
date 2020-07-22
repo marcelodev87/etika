@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\ClientProcess;
+use App\ClientProcessLog;
 use App\ClientProcessTask;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -39,6 +40,14 @@ class ClientProcessTaskController extends Controller
                 'price' => $input['price'],
             ]);
             $clientProcess->update(['closed' => 0]);
+
+            $log = ClientProcessLog::create([
+                'user_id' => auth()->user()->id,
+                'client_process_id' => $clientProcess->id,
+                'action' => 'adicionou uma tarefa ao processo',
+                'type' => 'task',
+                'refer_id' => $new->id
+            ]);
             session()->flash('flash-success', 'Inserido com sucesso');
             return redirect()->back();
         } catch (\Exception $e) {
@@ -57,9 +66,16 @@ class ClientProcessTaskController extends Controller
                 'closed_by' => auth()->user()->id
             ]);
             session()->flash('flash-success', 'Tarafa fechada em ' . $now->format('d/m/Y H:i:s'));
-
+            $log = ClientProcessLog::create([
+                'user_id' => auth()->user()->id,
+                'client_process_id' => $clientProcess->id,
+                'action' => 'finalizou uma tarefa do processo',
+                'type' => 'task',
+                'refer_id' => $clientProcessTask->id
+            ]);
             if ($clientProcess->tasks()->where('closed', 0)->count() == 0) {
                 $clientProcess->update(['closed' => 1]);
+
             } else {
                 $clientProcess->update(['closed' => 0]);
             }

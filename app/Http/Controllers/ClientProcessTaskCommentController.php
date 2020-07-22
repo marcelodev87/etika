@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\ClientProcess;
+use App\ClientProcessLog;
 use App\ClientProcessTask;
 use App\ClientProcessTaskComment;
 use Illuminate\Http\Request;
@@ -33,7 +34,6 @@ class ClientProcessTaskCommentController extends Controller
     }
 
 
-
     public function store(Request $request,Client $client, ClientProcess $clientProcess, ClientProcessTask $clientProcessTask)
     {
         $rules = [
@@ -60,6 +60,14 @@ class ClientProcessTaskCommentController extends Controller
                 'comment' => $request->comment,
                 'user_id' => auth()->user()->id,
                 'files' => json_encode($files),
+            ]);
+
+            $log = ClientProcessLog::create([
+                'user_id' => auth()->user()->id,
+                'client_process_id' => $clientProcess->id,
+                'action' => 'adicionou um comentário',
+                'type' => 'comment',
+                'refer_id' => $comment->id
             ]);
             return response()->json([], 201);
         } catch (\Exception $e) {

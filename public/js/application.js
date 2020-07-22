@@ -68,3 +68,19 @@ var SPMaskBehavior = function (val) {
         }
     };
 $('.phone-mask').mask(SPMaskBehavior, spOptions);
+
+
+$(document).keyup(function (e) {
+    if (e.key === "Escape") { // escape key maps to keycode `27`
+        var $comment = $('.sidebar-right-blank');
+        if (!$comment.hasClass('hide')) {
+            hideComments()
+        }
+    }
+});
+
+function hideComments() {
+    var $comment = $('.sidebar-right-blank');
+    $comment.addClass('hide');
+    $comment.find('.body').html('');
+}

@@ -237,7 +237,7 @@
 
     </div>
 
-    <div id="comments" class="hide">
+    <div id="comments" class="sidebar-right-blank hide">
         <div class="header">
             <h3>Comentários</h3>
             <a href="javascript:void(0)" onclick="hideComments()" class="text-danger">
@@ -258,7 +258,6 @@
 
 @section('script')
     <script type="text/javascript">
-
         $('select[name="task_id"]').on('change', function (e) {
             e.preventDefault();
             console.log($(this))
@@ -343,15 +342,7 @@
             })
         });
 
-        function hideComments() {
-            var $comment = $('#comments');
-            $comment.addClass('hide');
-            $comment.find('.body').html('');
-        }
-
         function showComments(task)  {
-
-
             var $endpoint = "{{ route('app.clients.processes.tasks.comments.index', [$client->id, $clientProcess->id, ':TASK']) }}";
             $endpoint = $endpoint.replace(':TASK', task);
             $.get($endpoint, function (response) {
@@ -375,11 +366,10 @@
                     $html += '</div>';
                     $html += '</div>';
                     console.log($html)
-                    $('#comments').find('.body').append($html);
+                    $('.sidebar-right-blank').find('.body').append($html);
                 });
-            })
-
-            $('#comments').removeClass('hide');
+            });
+            $('.sidebar-right-blank').removeClass('hide');
         }
 
         $('#modal-comment').on('show.bs.modal', function (e) {
@@ -387,15 +377,6 @@
             var $taskId = $($button).attr('data-client-task')
             $('#form-comment').find('[name="task_id"]').val($taskId);
         })
-
-        $(document).keyup(function (e) {
-            if (e.key === "Escape") { // escape key maps to keycode `27`
-                var $comment = $('#comments');
-                if (!$comment.hasClass('hide')) {
-                    hideComments()
-                }
-            }
-        });
 
         $('.summernote').summernote({
             height: 180,

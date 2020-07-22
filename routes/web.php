@@ -98,6 +98,9 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
             // comments
             Route::get('/{clientProcess}/tasks/{clientProcessTask}', ['uses' => 'ClientProcessTaskCommentController@index', 'as' => 'tasks.comments.index']);
             Route::post('/{clientProcess}/tasks/{clientProcessTask}', ['uses' => 'ClientProcessTaskCommentController@store', 'as' => 'tasks.comments.store']);
+
+            // histórico
+            Route::get('/{clientProcess}/history', ['uses' => 'ClientProcessController@history', 'as' => 'history']);
         });
 
         // tarefas

@@ -15,7 +15,15 @@ class CreateClientProcessLogsTable extends Migration
     {
         Schema::create('client_process_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('client_process_id');
+            $table->unsignedBigInteger('user_id');
+            $table->string('action');
+            $table->string('type');
+            $table->bigInteger('refer_id');
             $table->timestamps();
+
+            $table->foreign('client_process_id')->references('id')->on('client_processes')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
