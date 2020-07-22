@@ -14,7 +14,11 @@
     </li>
     <li>
         <a href="{!! route('app.clients.show', $client->id) !!}">
-            {{ $client->name }}
+            @if($client->internal_code)
+                {{$client->internal_code}} - {{ $client->name }}
+            @else
+                {{ $client->name }}
+            @endif
         </a>
     </li>
     <li class="active">
@@ -830,10 +834,13 @@
             $.get($linkGet, function (response) {
                 $form.find('input[name="name"]').val(response.data.name);
                 $form.find('input[name="document"]').val(response.data.document);
-                $form.find('input[name="role"]').val(response.data.role);
-                $form.find('input[name="marital_status"]').val(response.data.marital_status);
-                $form.find('input[name="profession"]').val(response.data.profession);
+                $form.find('select[name="role"]').val(response.data.role);
+                $form.find('select[name="marital_status"]').val(response.data.marital_status);
+                $form.find('select[name="profession"]').val(response.data.profession);
                 $form.find('select[name="gender"]').val(response.data.gender);
+                $form.find('input[name="dob"]').val(response.data.dob);
+                $form.find('input[name="rg"]').val(response.data.rg);
+                $form.find('input[name="rg_expedidor"]').val(response.data.rg_expedidor);
             });
             $modal.modal('show');
         });
@@ -901,6 +908,9 @@
                 $area.find('.persona-gender').html(response.data.persona.gender);
                 $area.find('.persona-marital_status').html(response.data.persona.marital_status);
                 $area.find('.persona-profession').html(response.data.persona.profession);
+                $area.find('.persona-dob').html(response.data.persona.dob);
+                $area.find('.persona-rg').html(response.data.persona.rg);
+                $area.find('.persona-rg-expedidor').html(response.data.persona.rg_expedidor);
 
                 // Emails
                 var $tbEmails = $area.find('#tb-emails');
@@ -950,13 +960,13 @@
                         var $type = (e.main) ? "check text-success" : "times text-danger";
                         var $icon = '<i class="fa fa-' + $type + '"></i>'
                         var $html = '<tr>';
-                        $html += '<td>' + e.zip + '</td>';
-                        $html += '<td>' + e.state + '</td>';
-                        $html += '<td>' + e.city + '</td>';
-                        $html += '<td>' + e.neighborhood + '</td>';
                         $html += '<td>' + e.street + '</td>';
                         $html += '<td>' + e.number ?? '' + '</td>';
                         $html += '<td>' + e.complement ?? '' + '</td>';
+                        $html += '<td>' + e.neighborhood + '</td>';
+                        $html += '<td>' + e.city + '</td>';
+                        $html += '<td>' + e.state + '</td>';
+                        $html += '<td>' + e.zip + '</td>';
                         $html += '<td text-right>' + $icon + '</td>';
 
                         $html += '</tr>';

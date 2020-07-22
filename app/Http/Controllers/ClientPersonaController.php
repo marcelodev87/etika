@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\ClientPersonaAddress;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use App\ClientPersona;
 use Illuminate\Http\Request;
@@ -24,6 +25,7 @@ class ClientPersonaController extends Controller
             'document' => 'required|string|min:14|max:14',
             'role' => 'required|string|min:3|max:191',
             'gender' => 'required|string',
+            'dob' => 'nullable|date_format:d/m/Y',
             'marital_status' => 'nullable|string|min:3',
             'profession' => 'nullable|string|min:3',
         ];
@@ -35,6 +37,7 @@ class ClientPersonaController extends Controller
             'gender' => 'sexo',
             'marital_status' => 'estado civil',
             'profession' => 'profissão',
+            'dob' => 'dt. nascimento',
         ];
         $validator = Validator::make($request->all(), $rules, $errors, $fields);
         if ($validator->fails()) {
@@ -47,7 +50,10 @@ class ClientPersonaController extends Controller
                 'role' => $request->role,
                 'gender' => $request->gender,
                 'marital_status' => $request->marital_status,
-                'profession' => $request->profession
+                'profession' => $request->profession,
+                'dob' => ($request->dob) ? Carbon::createFromFormat('d/m/Y', $request->dob)->format('Y-m-d') : null,
+                'rg' => $request->rg,
+                'rg_expedidor' => $request->rg_expedidor
             ]);
             return response()->json(['data' => $member], 201);
         } catch (\Exception $e) {
@@ -59,7 +65,17 @@ class ClientPersonaController extends Controller
     public function show(Client $client, ClientPersona $clientPersona)
     {
 
-        return response()->json(['data' => $clientPersona], 200);
+        $data = [];
+        $data['dob'] = ($clientPersona->dob) ? Carbon::parse($clientPersona->dob)->format('d/m/Y') : null;
+        $data['gender'] = $clientPersona->gender;
+        $data['profession'] = $clientPersona->profession;
+        $data['marital_status'] = $clientPersona->marital_status;
+        $data['rg'] = $clientPersona->rg;
+        $data['rg_expedidor'] = $clientPersona->rg_expedidor;
+        $data['name'] = $clientPersona->name;
+        $data['role'] = $clientPersona->role;
+        $data['document'] = $clientPersona->document;
+        return response()->json(['data' => $data], 200);
     }
 
 
@@ -72,6 +88,7 @@ class ClientPersonaController extends Controller
             'gender' => 'required|string',
             'marital_status' => 'nullable|string|min:3',
             'profession' => 'nullable|string|min:3',
+            'dob' => 'nullable|date_format:d/m/Y',
         ];
         $errors = [];
         $fields = [
@@ -81,6 +98,7 @@ class ClientPersonaController extends Controller
             'gender' => 'sexo',
             'marital_status' => 'estado civil',
             'profession' => 'profissão',
+            'dob' => 'dt. nascimento',
         ];
         $validator = Validator::make($request->all(), $rules, $errors, $fields);
         if ($validator->fails()) {
@@ -93,7 +111,10 @@ class ClientPersonaController extends Controller
                 'role' => $request->role,
                 'gender' => $request->gender,
                 'marital_status' => $request->marital_status,
-                'profession' => $request->profession
+                'profession' => $request->profession,
+                'dob' => ($request->dob) ? Carbon::createFromFormat('d/m/Y', $request->dob)->format('Y-m-d') : null,
+                'rg' => $request->rg,
+                'rg_expedidor' => $request->rg_expedidor
             ]);
             return response()->json(['data' => $clientPersona], 201);
         } catch (\Exception $e) {
@@ -105,6 +126,7 @@ class ClientPersonaController extends Controller
     public function information(Client $client, ClientPersona $clientPersona)
     {
         $persona = $clientPersona;
+        $persona['dob'] = ($persona['dob']) ? Carbon::parse($persona['dob'])->format('d/m/Y') : null;
         $emails = $clientPersona->emails;
         $phones = $clientPersona->phones;
         $addresses = $clientPersona->addresses;
@@ -113,6 +135,7 @@ class ClientPersonaController extends Controller
             'emails' => $emails,
             'phones' => $phones,
             'addresses' => $addresses,
+
         ]], 200);
     }
 

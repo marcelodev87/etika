@@ -21,8 +21,11 @@
                         <p>Estado Civil: <span class="persona-marital_status"></span></p>
 
                         <p>Profissão: <span class="persona-profession"></span></p>
-                    </div>
 
+                        <p>Dt. Nascimento: <span class="persona-dob"></span></p>
+
+                        <p>RG: <span class="persona-rg"></span> <span class="persona-rg-expedidor"></span></p>
+                    </div>
 
 
 
@@ -54,13 +57,13 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th>Cep</th>
-                                <th>Estado</th>
-                                <th>Cidade</th>
-                                <th>Bairro</th>
                                 <th>Rua</th>
                                 <th>Número</th>
                                 <th>Complemeto</th>
+                                <th>Bairro</th>
+                                <th>Cidade</th>
+                                <th>Estado</th>
+                                <th>Cep</th>
                                 <th></th>
                             </tr>
                             </thead>

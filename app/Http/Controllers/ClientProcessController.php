@@ -91,6 +91,11 @@ class ClientProcessController extends Controller
                 }
             }
 
+            if($log->type == "process"){
+                $process = ClientProcess::find($log->refer_id);
+                $arr['comment'] = $log->action .': ' .$process->process->name;
+            }
+
 
             array_push($data, $arr);
         }

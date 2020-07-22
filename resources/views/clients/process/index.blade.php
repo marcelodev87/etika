@@ -15,7 +15,11 @@
 
     <li>
         <a href="{{ route('app.clients.show', $client->id) }}">
-            {{ $client->name }}
+            @if($client->internal_code)
+                {{$client->internal_code}} - {{ $client->name }}
+            @else
+                {{ $client->name }}
+            @endif
         </a>
     </li>
 
@@ -192,7 +196,7 @@
         <div class="col-md-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3>Pagamentos Cadastrados</h3>
+                    <h3>Pagamentos Efetuados</h3>
                 </div>
                 <div class="panel-body" style="padding-bottom: 0">
                     <table class="table table-striped">

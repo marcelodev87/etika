@@ -22,6 +22,9 @@ class CreateClientPersonasTable extends Migration
             $table->string('marital_status')->nullable();
             $table->string('gender');
             $table->string('profession')->nullable();
+            $table->date('dob')->nullable();
+            $table->string('rg', 20)->nullable();
+            $table->string('rg_expedidor', 20)->nullable();
 
             $table->timestamps();
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');

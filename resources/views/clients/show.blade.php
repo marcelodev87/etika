@@ -14,7 +14,11 @@
     </li>
 
     <li class="active">
-        {{ $client->name }}
+        @if($client->internal_code)
+           {{$client->internal_code}} - {{ $client->name }}
+        @else
+            {{ $client->name }}
+        @endif
     </li>
     @endbreadcrumb
 @endsection
@@ -33,7 +37,7 @@
         <div class="col-md-6">
             <h1>
                 @if($client->internal_code)
-                    {{ $client->internal_code }}- {{ $client->name }}
+                    {{ $client->internal_code }} - {{ $client->name }}
                 @else
                     {{ $client->name }}
                 @endif
@@ -41,17 +45,17 @@
         </div>
         <div class="col-md-6 text-right mb-1">
             <a href="{{ route('app.clients.members.index', $client->id) }}" class="btn btn-danger btn-sm">
-                Diretoria
+                <i class="fa fa-plus"></i> Diretoria
             </a>
             <a href="#modal-processes" data-toggle="modal" class="btn btn-success btn-sm">
-                Processos
+                <i class="fa fa-plus"></i> Processos
             </a>
             <a href="#modal-tasks" data-toggle="modal" class="btn btn-primary btn-sm">
-                Tarefas
+                <i class="fa fa-plus"></i> Tarefas
             </a>
 
             <a href="#modal-subscriptions" data-toggle="modal" class="btn btn-default btn-sm">
-                Assinaturas
+                <i class="fa fa-plus"></i> Assinaturas
             </a>
 
         </div>

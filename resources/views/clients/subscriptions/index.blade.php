@@ -15,7 +15,11 @@
 
     <li>
         <a href="{{ route('app.clients.show', $client->id) }}">
-            {{ $client->name }}
+            @if($client->internal_code)
+                {{$client->internal_code}} - {{ $client->name }}
+            @else
+                {{ $client->name }}
+            @endif
         </a>
     </li>
 
