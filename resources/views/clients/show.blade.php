@@ -31,7 +31,13 @@
 @section('content')
     <div class="row">
         <div class="col-md-6">
-            <h1>{{ $client->name }}</h1>
+            <h1>
+                @if($client->internal_code)
+                    {{ $client->internal_code }}- {{ $client->name }}
+                @else
+                    {{ $client->name }}
+                @endif
+            </h1>
         </div>
         <div class="col-md-6 text-right mb-1">
             <a href="{{ route('app.clients.members.index', $client->id) }}" class="btn btn-danger btn-sm">
@@ -44,25 +50,63 @@
                 Tarefas
             </a>
 
+            <a href="#modal-subscriptions" data-toggle="modal" class="btn btn-default btn-sm">
+                Assinaturas
+            </a>
+
         </div>
 
         <div class="col-md-12">
-            <div class="chart-box">
-                <div class="bs-example" data-example-id="hoverable-table">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>Assinaturas</h3>
+                </div>
+                <div class="panel-body">
+                    @if($client->subscriptions()->count())
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Plano</th>
+                                <th>Valor</th>
+                                <th>Data contratação</th>
+                                <th>Data termino</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($client->subscriptions()->orderBy('id','desc')->get() as $sub)
+                                <tr>
+                                    <td>{{ $sub->subscription->name }}</td>
+                                    <td>{{ brl($sub->price) }}</td>
+                                    <td>{{ $sub->created_at->format('d/m/Y H:i:s') }}</td>
+                                    <td>
+                                        @if(!$sub->active)
+                                            {{ $sub->terminate_at->format('d/m/Y H:i:s') }}
+                                        @endif
+                                    </td>
+                                    <td class="text-right">
+                                        <a href="{{ route('app.clients.subscriptions.show', [$client->id, $sub->id]) }}" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="bottom" title="Pagamentos">
+                                            <i class="fa fa-dollar-sign"></i>
+                                        </a>
 
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3>Assinaturas</h3>
-                        </div>
-                        <div class="panel-body">
-
-                        </div>
-                    </div>
-
+                                        @if($sub->active)
+                                            <a href="{{ route('app.clients.subscriptions.close', [$client->id, $sub->id]) }}" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Fechar assinatura" onclick="return confirm('Deseja mesmo fazer isso?')">
+                                                <i class="fa fa-power-off"></i>
+                                            </a>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    @else
+                        <h4 class="text-center m-bot-0">Não há nenhuma assinatura</h4>
+                    @endif
                 </div>
             </div>
         </div>
 
+        {{-- processos --}}
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -110,6 +154,7 @@
             </div>
         </div>
 
+        {{-- tarefas --}}
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -183,6 +228,7 @@
     @include('clients.modals.processCreate')
     @include('clients.modals.tasksCreate')
     @include('clients.modals.commentCreate')
+    @include('clients.modals.subscriptionCreate')
 @endsection
 
 @section('script')
@@ -372,7 +418,6 @@
             $block.removeClass('hide');
         }
 
-
         $('#modal-comment').on('show.bs.modal', function (e) {
             var $button = e.relatedTarget;
             var $taskId = $($button).attr('data-client-task')
@@ -401,6 +446,50 @@
             var $endpoint = $form.attr('action').replace(':TASK', $form.find('[name="task_id"]').val());
             $.ajax({
                 url: $endpoint,
+                type: $form.attr('method'),
+                data: $data,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                cache: false,
+                beforeSend: () => { // aqui vai o que tem que ser feito antes de chamar o endpoint
+                    $button.attr('disabled', 'disabled').html('<i class="fas fa-spinner fa-pulse"></i> Carregando...');
+                },
+                success: (response) => { // aqui vai o que der certo
+                    window.location.reload();
+                    return;
+
+                },
+                error: (response) => { // aqui vai o que acontece quando ocorrer o erro
+                    var json = $.parseJSON(response.responseText);
+                    alert(json.message);
+                    $button.removeAttr('disabled').html($buttonText);
+                },
+            });
+        });
+
+        $('#select-subscription').on('change', function () {
+            var $choosed = $(this);
+            var $input = $choosed.closest('form').find('input[name="price"]');
+            if ($choosed.val() !== "") {
+                var $price = $choosed
+                    .find('option:selected')
+                    .attr('data-price');
+                $input.val($price);
+            } else {
+                $input.val('');
+            }
+        });
+
+        $('#form-subscription').on('submit', function (e) {
+            e.preventDefault();
+            var $form = $(this);
+            var $button = $form.find('button[type="submit"]');
+            var $buttonText = $button.html();
+            var $data = new FormData($form[0]);
+
+            $.ajax({
+                url: $form.attr('action'),
                 type: $form.attr('method'),
                 data: $data,
                 dataType: 'json',

@@ -22,4 +22,9 @@ class Client extends Model
     {
         return $this->hasMany(ClientTask::class);
     }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(ClientSubscription::class);
+    }
 }

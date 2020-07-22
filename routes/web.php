@@ -114,6 +114,17 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
                 Route::post('/', ['uses' => 'ClientTaskCommentController@store', 'as' => 'store']);
             });
         });
+
+        // assinaturas
+        Route::group(['prefix' => '{client}/assinatuas', 'as' => 'subscriptions.'], function () {
+            Route::get('/{clientSubscription}', ['uses' => 'ClientSubscriptionController@show', 'as' => 'show', 'roles' => ['adm']]);
+            Route::post('/', ['uses' => 'ClientSubscriptionController@store', 'as' => 'store', 'roles' => ['adm']]);
+            Route::get('/{clientSubscription}/close', ['uses' => 'ClientSubscriptionController@close', 'as' => 'close', 'roles' => ['adm']]);
+
+            // add payment
+            Route::post('/{clientSubscription}/payments/', ['uses' => 'ClientSubscriptionPaymentController@store', 'as' => 'payments.store', 'roles' => ['adm']]);
+            Route::delete('/{clientSubscription}/payments/{clientSubscriptionPayment}', ['uses' => 'ClientSubscriptionPaymentController@destroy', 'as' => 'payments.delete', 'roles' => ['adm']]);
+        });
     });
 
     # rota de processos internos
