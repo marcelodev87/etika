@@ -22,10 +22,9 @@
         <div class="col-md-12">
             <div class="chart-box">
                 <div class="bs-example" data-example-id="hoverable-table">
-                    <table class="table table-hover table-striped">
+                    <table class="table table-hover table-striped" id="datatable">
                         <thead>
                         <tr>
-                            <th>#</th>
                             <th>Codigo interno</th>
                             <th>Nome Completo</th>
                             <th>Documento</th>
@@ -36,7 +35,6 @@
                         <tbody>
                         @foreach ($clients as $client)
                             <tr>
-                                <td>{{ $client->id }}</td>
                                 <td>{{ $client->internal_code ?? "Não vinculado" }}</td>
                                 <td>{{ $client->name }}</td>
                                 <td>{{ $client->document }}</td>
@@ -114,6 +112,7 @@
 
 @section('script')
     <script type="text/javascript">
+
         $("#form-cadastrar").on('submit', function (e) {
             e.preventDefault();
             var $form = $(this);
@@ -145,5 +144,7 @@
                 }
             });
         });
+
+        $("#datatable").dataTable();
     </script>
 @endsection
