@@ -69,7 +69,7 @@ class GeraDocumentoController extends Controller
         // load Data
         $igreja = Client::find($request->client_id);
         $presidente = $igreja->members()->find($request->presidente);
-        $vicePresidente = $igreja->members()->find($request->vice_presidente);
+        $vicePresidente = ($request->vice_presidente) ? $igreja->members()->find($request->vice_presidente) : null;
 
         $data = [];
         $data['igreja'] = [
@@ -88,17 +88,21 @@ class GeraDocumentoController extends Controller
             'cpf' => $presidente->document,
             'endereco' => $presidente->fullAddress()
         ];
-        $data['diretoria']['vice_presidente'] = [
-            'nome' => $vicePresidente->name,
-            'naturalidade' => $vicePresidente->natural,
-            'dt_nascimento' => $vicePresidente->dob->format('d/m/Y'),
-            'profissao' => $vicePresidente->profession,
-            'rg' => $vicePresidente->rg,
-            'exp_rg' => $vicePresidente->rg_expedidor,
-            'estado_civil' => $vicePresidente->marital_status,
-            'cpf' => $vicePresidente->document,
-            'endereco' => $vicePresidente->fullAddress()
-        ];
+
+        if($vicePresidente) {
+            $data['diretoria']['vice_presidente'] = [
+                'nome' => $vicePresidente->name,
+                'naturalidade' => $vicePresidente->natural,
+                'dt_nascimento' => $vicePresidente->dob->format('d/m/Y'),
+                'profissao' => $vicePresidente->profession,
+                'rg' => $vicePresidente->rg,
+                'exp_rg' => $vicePresidente->rg_expedidor,
+                'estado_civil' => $vicePresidente->marital_status,
+                'cpf' => $vicePresidente->document,
+                'endereco' => $vicePresidente->fullAddress()
+            ];
+        }
+
         $data['diretoria']['tesoureiros'] = [];
         foreach ($request->tesouraria as $t) {
             if ($t != null) {
