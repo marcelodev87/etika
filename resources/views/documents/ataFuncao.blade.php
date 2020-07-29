@@ -113,7 +113,7 @@
 
         <div class="col-md-8">
             <div class="chart-box">
-                <textarea id="output" placeholder="" class="form-control" style="height: 500px"></textarea>
+                <textarea id="output" placeholder="" class="form-control summernote" style="height: 500px"></textarea>
             </div>
         </div>
     </div>
@@ -203,6 +203,19 @@
                 }
             });
         })
+
+        $('.summernote').summernote({
+            height: 180,
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['misc', ['codeview']]
+            ]
+        });
 
 
     </script>
