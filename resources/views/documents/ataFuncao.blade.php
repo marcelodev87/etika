@@ -58,7 +58,7 @@
                     </fieldset>
 
                     <fieldset class="form-group form-group-sm">
-                       <input type="text" name="dt_fundacao" class="form-control" data-mask="00/00/0000" required placeholder="Data da Fundação">
+                        <input type="text" name="dt_fundacao" class="form-control" data-mask="00/00/0000" required placeholder="Data da Fundação">
                     </fieldset>
                 </div>
 
@@ -172,7 +172,7 @@
             }
         });
 
-        $('form').on('submit', function(e){
+        $('form').on('submit', function (e) {
             e.preventDefault();
 
             var $form = $(this);
@@ -192,8 +192,9 @@
                     $button.attr('disabled', 'disabled').html('<i class="fas fa-spinner fa-pulse"></i> Carregando...');
                 },
                 success: (response) => { // aqui vai o que der certo
-                   $('#output').html(response.html);
-                   $('.summernote').summernote('code', '');
+                    $('#output').summernote('destroy');
+                    $('#output').html(response.html);
+                    $('#output').summernote('reset');
                 },
                 error: (response) => { // aqui vai o que acontece quando ocorrer o erro
                     var json = $.parseJSON(response.responseText);
@@ -205,7 +206,7 @@
             });
         })
 
-        $('.summernote').summernote({
+        $('#output').summernote({
             height: 180,
             toolbar: [
                 // [groupName, [list of button]]
