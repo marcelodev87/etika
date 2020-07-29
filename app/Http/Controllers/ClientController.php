@@ -42,6 +42,15 @@ class ClientController extends Controller
             'document' => 'required|string|min:14|max:18',
             'type' => 'required',
             'internal_code' => 'nullable|integer',
+            'email' => 'required|email',
+            'phone' => 'nullable|string|min:14',
+            'zip' => 'required|string|min:9',
+            'state' => 'required|string|min:2|max:2',
+            'city' => 'required|string|min:3',
+            'neighborhood' => 'required|string|min:3',
+            'street' => 'required|string|min:5',
+            'street_number' => 'nullable|integer|min:0|max:99999',
+            'complement' => 'nullable|string|min:3',
         ];
 
         $errors = [];
@@ -50,6 +59,13 @@ class ClientController extends Controller
             'document' => '\'documento\'',
             'type' => '\'tipo\'',
             'internal_code' => '\'codigo interno\'',
+            'zip' => '\'cep\'',
+            'state' => '\'uf\'',
+            'city' => '\'cidade\'',
+            'neighborhood' => '\'bairro\'',
+            'street' => '\'logradouro\'',
+            'street_number' => '\'número\'',
+            'complement' => '\'complemento\'',
         ];
 
         $validator = Validator::make($request->all(), $rules, $errors, $fields);
@@ -63,6 +79,15 @@ class ClientController extends Controller
                 'document' => $request->document,
                 'type' => $request->type,
                 'internal_code' => $request->internal_code,
+                'zip' => $request->zip,
+                'state' => $request->state,
+                'city' => $request->city,
+                'neighborhood' => $request->neighborhood,
+                'street' => $request->street,
+                'number' => $request->street_number,
+                'complement' => $request->complement ?? "",
+                'email' => $request->email,
+                'phone' => $request->phone,
             ]);
             return response()->json(['message' => 'Novo cliente criado com sucesso'], 201);
         } catch (\Exception $e) {
