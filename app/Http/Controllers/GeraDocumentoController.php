@@ -139,6 +139,7 @@ class GeraDocumentoController extends Controller
         $data['post']['fundacao'] = $request->dt_fundacao;
 
         $endpoint = getenv('APP_URL') . '/documents/gera_ata_funcao.php';
+        $data = ['data' => $data];
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $endpoint,
@@ -149,7 +150,7 @@ class GeraDocumentoController extends Controller
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => ['data' => $data],
+            CURLOPT_POSTFIELDS => $data,
         ));
 
         $response = curl_exec($curl);
