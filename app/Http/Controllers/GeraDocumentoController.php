@@ -140,17 +140,24 @@ class GeraDocumentoController extends Controller
 
         try{
             $endpoint = public_path('documents/gera_ata_funcao.php');
-            $options = array(
-                'http' => array(
-                    'header'  => "Content-type: application/json\r\n",
-                    'method'  => 'POST',
-                    'content' => json_encode( $data )
-                )
-            );
-            $context  = stream_context_create($options);
-            $result = file_get_contents($endpoint, false, $context);
+            $curl = curl_init();    
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => $endpoint,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS => ['data' => $data],
+            ));
+            
+            $response = curl_exec($curl);
+            curl_close($curl);
+            return response()->json(['html' => $response], 200);
         }catch(\Exception $e){
-            return response()->json(['message' => $e->getMessage(), $data], 400);
+            return response()->json(['message' => $e->getMessage()], 400);
         }
 
         return response()->json(['html' => $result], 200);
