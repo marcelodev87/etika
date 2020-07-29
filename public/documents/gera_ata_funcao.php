@@ -74,13 +74,14 @@ if (isset($data['diretoria']['secretarios'])) {
     }
 }
 
-
+$vice = $data['diretoria']['vice_presidente']['nome'] ?? 'VICE PRESIDENTE';
+$tes = $data['diretoria']['tesoureiros'][0]['nome'] ?? 'TESOUREIRO'
 $texto .= "<div align=justify  style='background-color:#FFFFFF;  padding: 25px 50px 25px 50px;'>";
 $texto .= "<h2>ATA DE FUNDAÇÃO DA {$data['igreja']['nome']}</h2>";
 $texto .= "<p>Ata da reunião, realizada no dia <span style='color:blue !important;'>{$data['post']['fundacao']} </span>as 19h, na {$data['igreja']['endereco']}.
 Estando presente os membros fundadores, foi presidida esta reunião pelo Pastor {$data['diretoria']['presidente']['nome']}. A seguir, o Presidente
-nomeou para secretário da reunião o(a) Sr(a). <span style='color:blue !important;'> {$data['diretoria']['vice_presidente']['nome']} ,
-{$data['diretoria']['tesoureiros'][0]['nome']} </span> e declarou instalada esta reunião e aberta a sessão, às dezenove horas do dia
+nomeou para secretário da reunião o(a) Sr(a). <span style='color:blue !important;'> {$vice} ,
+{$tes} </span> e declarou instalada esta reunião e aberta a sessão, às dezenove horas do dia
 <span style='color:blue !important;'>{$data['post']['fundacao']} </span>, informando que a presente convocação tem como finalidade a fundação da
 {$data['igreja']['nome']}, a aprovação do Estatuto, a aprovação do endereço da sede e a ordenação da Diretoria através da indicação do Presidente
 conforme estabelece o Estatuto, o qual depois de lido foi aprovado por unanimidade. Os candidatos, para o mandato de
