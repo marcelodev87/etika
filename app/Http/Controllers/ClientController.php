@@ -84,7 +84,7 @@ class ClientController extends Controller
                 'city' => $request->city,
                 'neighborhood' => $request->neighborhood,
                 'street' => $request->street,
-                'number' => $request->street_number,
+                'street_number' => $request->street_number,
                 'complement' => $request->complement ?? "",
                 'email' => $request->email,
                 'phone' => $request->phone,
