@@ -192,7 +192,7 @@
                     $button.attr('disabled', 'disabled').html('<i class="fas fa-spinner fa-pulse"></i> Carregando...');
                 },
                 success: (response) => { // aqui vai o que der certo
-                    console.log(response);
+                   $('#output').html(response.html);
                 },
                 error: (response) => { // aqui vai o que acontece quando ocorrer o erro
                     var json = $.parseJSON(response.responseText);
