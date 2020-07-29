@@ -137,7 +137,6 @@ class GeraDocumentoController extends Controller
         }
         // post
         $data['post']['fundacao'] = $request->dt_fundacao;
-        return response()->json(['message' => 'error', $data], 400);
         try {
             $endpoint = getenv('APP_URL') . '/documents/gera_ata_funcao.php';
             $curl = curl_init();
