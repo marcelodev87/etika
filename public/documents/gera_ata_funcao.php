@@ -75,7 +75,7 @@ if (isset($data['diretoria']['secretarios'])) {
 }
 
 $vice = $data['diretoria']['vice_presidente']['nome'] ?? 'VICE PRESIDENTE';
-$tes = $data['diretoria']['tesoureiros'][0]['nome'] ?? 'TESOUREIRO'
+$tes = $data['diretoria']['tesoureiros'][0]['nome'] ?? 'TESOUREIRO';
 $texto .= "<div align=justify  style='background-color:#FFFFFF;  padding: 25px 50px 25px 50px;'>";
 $texto .= "<h2>ATA DE FUNDAÇÃO DA {$data['igreja']['nome']}</h2>";
 $texto .= "<p>Ata da reunião, realizada no dia <span style='color:blue !important;'>{$data['post']['fundacao']} </span>as 19h, na {$data['igreja']['endereco']}.
