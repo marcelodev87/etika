@@ -137,10 +137,10 @@ class GeraDocumentoController extends Controller
         }
         // post
         $data['post']['fundacao'] = $request->dt_fundacao;
-
-        try{
-            $endpoint = public_path('documents/gera_ata_funcao.php');
-            $curl = curl_init();    
+        return response()->json(['message' => 'error', $data], 400);
+        try {
+            $endpoint = getenv('APP_URL') . '/documents/gera_ata_funcao.php';
+            $curl = curl_init();
             curl_setopt_array($curl, array(
                 CURLOPT_URL => $endpoint,
                 CURLOPT_RETURNTRANSFER => true,
@@ -152,11 +152,11 @@ class GeraDocumentoController extends Controller
                 CURLOPT_CUSTOMREQUEST => "POST",
                 CURLOPT_POSTFIELDS => ['data' => $data],
             ));
-            
+
             $response = curl_exec($curl);
             curl_close($curl);
             return response()->json(['html' => $response], 200);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 400);
         }
 
