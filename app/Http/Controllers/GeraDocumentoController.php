@@ -156,7 +156,7 @@ class GeraDocumentoController extends Controller
             curl_close($curl);
             return response()->json(['html' => $response], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 400);
+            return response()->json(['message' => $e->getMessage(), $e], 400);
         }
 
         return response()->json(['html' => $result], 200);
