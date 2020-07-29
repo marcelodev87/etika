@@ -193,6 +193,7 @@
                 },
                 success: (response) => { // aqui vai o que der certo
                    $('#output').html(response.html);
+                   $('#output').summernote('reset');
                 },
                 error: (response) => { // aqui vai o que acontece quando ocorrer o erro
                     var json = $.parseJSON(response.responseText);
