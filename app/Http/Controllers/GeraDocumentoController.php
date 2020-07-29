@@ -49,7 +49,7 @@ class GeraDocumentoController extends Controller
         $rules = [
             'client_id' => 'required|integer|exists:clients,id',
             'presidente' => 'required|integer|exists:client_personas,id',
-            'vice_presidente' => 'required|integer|exists:client_personas,id',
+            'vice_presidente' => 'nullable|integer|exists:client_personas,id',
             'tesouraria.*' => 'nullable|integer|exists:client_personas,id',
             'secretaria.*' => 'nullable|integer|exists:client_personas,id',
         ];
