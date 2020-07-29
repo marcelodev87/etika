@@ -50,13 +50,18 @@ $('#zip').on('change', function(){
 });
 
 // DOCUMENT MASK
-var optionsDocument = {
-    onKeyPress: function (cpf, ev, el, op) {
-        var masks = ['000.000.000-000', '00.000.000/0000-00'];
-        $('.document-mask').mask((cpf.length > 14) ? masks[1] : masks[0], op);
-    }
-}
-$('.document-mask').mask('000.000.000-000', optionsDocument);
+
+
+$(document).on('keydown', '.document-mask', function (e) {
+
+    var digit = e.key.replace(/\D/g, '');
+
+    var value = $(this).val().replace(/\D/g, '');
+
+    var size = value.concat(digit).length;
+
+    $(this).mask((size <= 11) ? '000.000.000-00' : '00.000.000/0000-00');
+});
 
 // PHONE MASK
 var SPMaskBehavior = function (val) {

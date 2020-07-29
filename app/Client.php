@@ -27,4 +27,19 @@ class Client extends Model
     {
         return $this->hasMany(ClientSubscription::class);
     }
+
+    public function fullAddress()
+    {
+        $a = $this->street;
+        if ($this->street_number) {
+            $a .= ', ' . $this->street_number;
+        }
+        if ($this->complement) {
+            $a .= ' (' . $this->complement . ')';
+        }
+
+        $a .= ', ' . $this->city . ', ' . $this->neighborhood . ' - ' . $this->state . ' - ' . $this->zip;
+
+        return $a;
+    }
 }

@@ -19,6 +19,15 @@ class CreateClientsTable extends Migration
             $table->string('document')->nullable();
             $table->string('type');
             $table->integer('internal_code')->nullable();
+            $table->string('zip')->nullable();
+            $table->string('state', 2)->nullable();
+            $table->string('city')->nullable();
+            $table->string('neighborhood')->nullable();
+            $table->string('street')->nullable();
+            $table->integer('number')->nullable();
+            $table->string('complement')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
             $table->timestamps();
         });
     }

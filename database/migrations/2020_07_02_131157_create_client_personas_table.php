@@ -21,6 +21,7 @@ class CreateClientPersonasTable extends Migration
             $table->string('role')->nullable();
             $table->string('marital_status')->nullable();
             $table->string('gender');
+            $table->string('natural')->default('Brasileiro');
             $table->string('profession')->nullable();
             $table->date('dob')->nullable();
             $table->string('rg', 20)->nullable();

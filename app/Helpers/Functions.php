@@ -30,10 +30,23 @@ if (!function_exists('brl')) {
     }
 }
 
-
 if (!function_exists('brlToNumeric')) {
     function brlToNumeric($value)
     {
         return str_replace([' ', 'R$', '.', ','], ['', '', '', '.'], $value);
+    }
+}
+
+
+if (!function_exists('menuPath')) {
+    function menuPath($path = [], $type = "active menu-open")
+    {
+        $routeNames = (array)$path;
+        foreach ($routeNames as $routeName) {
+            if (Route::is($routeName)) {
+                return ' ' . $type;
+            }
+        }
+        return '';
     }
 }

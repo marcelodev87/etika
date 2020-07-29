@@ -50,8 +50,9 @@
             </div>
         </div>
     </div>
+@endsection
 
-
+@section('modal')
     {{-- Modal de criação --}}
     <div class="modal fade" tabindex="-1" role="dialog" id="modal-form-cadastrar">
         <div class="modal-dialog" role="document">
@@ -107,7 +108,6 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     {{-- Modal de criação --}}
-
 @endsection
 
 @section('script')
