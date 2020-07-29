@@ -70,7 +70,7 @@
                     </fieldset>
 
                     <fieldset class="form-group form-group-sm">
-                        <select class="form-control" name="vice_presidente" required>
+                        <select class="form-control" name="vice_presidente">
                             <option value="">Selecione o Vice-Presidente</option>
                         </select>
                     </fieldset>
