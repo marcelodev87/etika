@@ -194,6 +194,7 @@
                 success: (response) => { // aqui vai o que der certo
                     $('#output').summernote('destroy');
                     $('#output').html(response.html);
+                    $('.note-codable').html(response.html);
                     $('#output').summernote('reset');
                 },
                 error: (response) => { // aqui vai o que acontece quando ocorrer o erro
