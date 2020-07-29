@@ -113,7 +113,7 @@
 
         <div class="col-md-8">
             <div class="chart-box">
-                <textarea id="output" placeholder="" class="form-control summernote" style="height: 500px"></textarea>
+                <div id="output"></div>
             </div>
         </div>
     </div>
@@ -192,10 +192,8 @@
                     $button.attr('disabled', 'disabled').html('<i class="fas fa-spinner fa-pulse"></i> Carregando...');
                 },
                 success: (response) => { // aqui vai o que der certo
-                    $('#output').summernote('destroy');
                     $('#output').html(response.html);
-                    $('.note-codable').html(response.html);
-                    $('#output').summernote('reset');
+
                 },
                 error: (response) => { // aqui vai o que acontece quando ocorrer o erro
                     var json = $.parseJSON(response.responseText);
@@ -206,19 +204,6 @@
                 }
             });
         })
-
-        $('#output').summernote({
-            height: 180,
-            toolbar: [
-                // [groupName, [list of button]]
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['fontsize', ['fontsize']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['height', ['height']],
-                ['misc', ['codeview']]
-            ]
-        });
 
 
     </script>
