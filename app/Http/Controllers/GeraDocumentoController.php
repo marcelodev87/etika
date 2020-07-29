@@ -137,29 +137,24 @@ class GeraDocumentoController extends Controller
         }
         // post
         $data['post']['fundacao'] = $request->dt_fundacao;
-        try {
-            $endpoint = getenv('APP_URL') . '/documents/gera_ata_funcao.php';
-            $curl = curl_init();
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => $endpoint,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => "",
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => ['data' => $data],
-            ));
 
-            $response = curl_exec($curl);
-            curl_close($curl);
-            return response()->json(['html' => $response], 200);
-        } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage(), $e], 400);
-        }
+        $endpoint = getenv('APP_URL') . '/documents/gera_ata_funcao.php';
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $endpoint,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => ['data' => $data],
+        ));
 
-        return response()->json(['html' => $result], 200);
+        $response = curl_exec($curl);
+        curl_close($curl);
+        return response()->json(['html' => $response], 200);
     }
 
     public function estatutoEpiscopalView()
