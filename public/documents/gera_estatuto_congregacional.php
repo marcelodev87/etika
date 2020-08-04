@@ -177,7 +177,10 @@ switch ($array['ordenacao'] ?? 1) {
 				<h2><strong>CAPÍTULO $capR</br> DA DENOMINAÇÃO, REGIME JURÍDICO, DURAÇÃO, SEDE E FORO</strong></h2>
 				</br>
 
-				<p align=justify style='color:red !important;'><strong>Art. $a º -</strong> Constituída por tempo indeterminado na cidade de $cidade_igreja - $uf_igreja, na data de $data_fundacao, a $igrejaM, é uma organização religiosa sem fins lucrativos e com número ilimitado de membros, com sede $sede na $endereco_igreja – $complemento_igreja – $bairro_igreja – $cidade_igreja - $uf_igreja – CEP: " . preg_replace($pattern_cep, $replacement_cep, $cep_igreja) . ", doravante neste Estatuto denominada IGREJA $fundadores ;</br></br>
+				<p align=justify style='color:red !important;'>
+				    <strong>Art. $a º -</strong> Constituída por tempo indeterminado na cidade de $cidade_igreja - $uf_igreja, na data de $data_fundacao, a $igrejaM, é uma organização religiosa
+				    sem fins lucrativos e com número ilimitado de membros, com sede $sede na $endereco_igreja – $complemento_igreja – $bairro_igreja – $cidade_igreja - $uf_igreja –
+				    CEP: " . preg_replace($pattern_cep, $replacement_cep, $cep_igreja) . ", doravante neste Estatuto denominada IGREJA $fundadores ;</br></br>
 					I - A IGREJA tem por denominação social $igrejaM;</br>
 					II - A IGREJA tem por finalidade prestar culto a Deus em Espírito e em Verdade e seguir as tradições e doutrinas do Evangelho do Senhor Jesus Cristo revelado nas Escrituras Sagradas, a Bíblia;</br>
 					III - A IGREJA tem prazo de duração indeterminado;</br>
