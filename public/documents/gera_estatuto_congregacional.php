@@ -32,15 +32,13 @@ if (!function_exists('numberIntegerToRoman')) {
 }
 
 $nome_igreja = $array['igreja']['name'] ?? "NOME DA IGREJA";
-$cep_igreja = $array['igreja']['address']['zip'] ?? "CEP";
-$uf_igreja = $array['igreja']['address']['state'] ?? "UF";
-$cidade_igreja = $array['igreja']['address']['city'] ?? "CIDADE";
-$bairro_igreja = $array['igreja']['address']['neighborhood'] ?? "BAIRRO";
-$endereco_igreja = $array['igreja']['address']['street'] ?? "ENDEREÇO DA IGREJA";
-$complemento_igreja = $array['igreja']['address']['complement'] ?? "COMEPLEMENTO";
+$cep_igreja = $array['igreja']['zip'] ?? "CEP";
+$uf_igreja = $array['igreja']['state'] ?? "UF";
+$cidade_igreja = $array['igreja']['city'] ?? "CIDADE";
+$bairro_igreja = $array['igreja']['neighborhood'] ?? "BAIRRO";
+$endereco_igreja = $array['igreja']['street'] ?? "ENDEREÇO DA IGREJA";
+$complemento_igreja = $array['igreja']['complement'] ?? "COMEPLEMENTO";
 $igrejaM = strtoupper($nome_igreja);
-
-$nome_presidente = $array['diretoria']['presidente']['name'] ?? "";
 
 // BUSCA PRESIDENTE
 
@@ -55,7 +53,7 @@ if (isset($array['presidente'])) {
 $fundadores = "";
 
 // SEDE
-$sd = $array['sede'] ?? 'SEDE';
+$sd = $array['sede'] ?? '_SEDE_';
 $sede = "<span style='color:blue !important;'>" . $sd . "</span>";
 
 // VERIFICA SE TEM VICE-PRESIDENTE
