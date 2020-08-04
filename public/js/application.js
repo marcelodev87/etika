@@ -89,3 +89,9 @@ function hideComments() {
     $comment.addClass('hide');
     $comment.find('.body').html('');
 }
+
+$(function () {
+    $('.selectpicker').selectpicker({
+        liveSearch: true
+    });
+});

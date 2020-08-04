@@ -17,7 +17,7 @@
 @endsection
 
 @section('style')
-    <link href="{{ asset('css/bootstrap-select.min.css') }}" rel="stylesheet">
+
     <style>
         .chart-box {
             margin-bottom: 14px;
@@ -42,7 +42,7 @@
 
                 <div class="chart-box">
                     <fieldset class="form-group form-group-sm">
-                        <select class="form-control" name="client_id" required>
+                        <select class="form-control selectpicker" name="client_id" required>
                             <option value="">Selecione a Igreja</option>
                             @foreach(\App\Client::where('type', 'igreja')->get() as $user)
                                 <option value="{{$user->id}}">{{ $user->name }}</option>
@@ -51,7 +51,7 @@
                     </fieldset>
 
                     <fieldset class="form-group form-group-sm">
-                        <select class="form-control" name="load_file">
+                        <select class="form-control selectpicker" name="load_file">
                             <option value="">Tipo de geração</option>
                             <option value="gera_ata_funcao">Ata de Função</option>
                         </select>
@@ -64,26 +64,26 @@
 
                 <div class="chart-box selects">
                     <fieldset class="form-group form-group-sm">
-                        <select class="form-control" name="presidente" required>
+                        <select class="form-control selectpicker" name="presidente" required>
                             <option value="">Selecione o Presidente</option>
                         </select>
                     </fieldset>
 
                     <fieldset class="form-group form-group-sm">
-                        <select class="form-control" name="vice_presidente">
+                        <select class="form-control selectpicker" name="vice_presidente">
                             <option value="">Selecione o Vice-Presidente</option>
                         </select>
                     </fieldset>
 
                     <fieldset class="form-group form-group-sm">
                         <div class="tes">
-                            <select class="form-control" name="tesouraria[]">
+                            <select class="form-control selectpicker" name="tesouraria[]">
                                 <option value="">Selecione Tesoureiro</option>
                             </select>
-                            <select class="form-control" name="tesouraria[]">
+                            <select class="form-control selectpicker" name="tesouraria[]">
                                 <option value="">Selecione Tesoureiro</option>
                             </select>
-                            <select class="form-control" name="tesouraria[]">
+                            <select class="form-control selectpicker" name="tesouraria[]">
                                 <option value="">Selecione Tesoureiro</option>
                             </select>
                         </div>
@@ -91,13 +91,13 @@
 
                     <fieldset class="form-group form-group-sm">
                         <div class="sec">
-                            <select class="form-control" name="secretaria[]">
+                            <select class="form-control selectpicker" name="secretaria[]">
                                 <option value="">Selecione o Secretário</option>
                             </select>
-                            <select class="form-control" name="secretaria[]">
+                            <select class="form-control selectpicker" name="secretaria[]">
                                 <option value="">Selecione o Secretário</option>
                             </select>
-                            <select class="form-control" name="secretaria[]">
+                            <select class="form-control selectpicker" name="secretaria[]">
                                 <option value="">Selecione o Secretário</option>
                             </select>
                         </div>
@@ -121,13 +121,9 @@
 
 
 @section('script')
-    <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
+
     <script type="text/javascript">
-        $(function () {
-            $('select').selectpicker({
-                liveSearch: true
-            });
-        });
+
         $('select[name="client_id"]').on('change', function () {
             var $igreja = $(this).val();
             console.log($igreja)

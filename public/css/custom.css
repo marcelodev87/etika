@@ -328,3 +328,11 @@ blockquote small {
     padding: 7px;
     margin-bottom: 2px;
 }
+
+.bootstrap-select + .bootstrap-select {
+    margin-top: 7px;
+}
+
+.bootstrap-select .btn.dropdown-toggle {
+    padding: 5px 20px !important;
+}

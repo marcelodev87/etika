@@ -11,6 +11,7 @@
 {{--    <link href="{{ asset('css/summernote-bs3.css') }}" rel="stylesheet">--}}
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-select.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/summernote.css') }}" rel="stylesheet">
     <link href="{{ asset('css/sweetalert.min.css') }}" rel="stylesheet"/>
 
@@ -49,6 +50,7 @@
 <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
 <script src="{{ asset('js/sweetalert.min.js') }}"></script>
 <script src="{{ asset('js/application.js') }}"></script>
+<script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
 <script src="{{ asset('js/summernote.min.js') }}"></script>
 
 <script type="text/javascript">

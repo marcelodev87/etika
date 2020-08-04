@@ -164,6 +164,43 @@ class GeraDocumentoController extends Controller
 
     public function estatutoEpiscopalView()
     {
+        return view('documents.estatutoEpsicopal');
+    }
+
+    public function estatutoEpiscopalPost(Request $request)
+    {
+        $post = $request->except('_token');
+        $data = [];
+        foreach ($post as $key => $value){
+            $data[$key] = $value;
+        }
+
+        $igreja = Client::find($request->client_id);
+        $data['igreja'] = $igreja;
+
+        $presidente = $igreja->members()->where('role', 'Presidente')->first();
+        if($presidente){
+            $data['presidente'] = $presidente;
+        }
+
+        $endpoint = getenv('APP_URL') . '/documents/gera_ata_funcao.php';
+        $data = ['data' => $data];
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $endpoint,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => http_build_query($data),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+        return response()->json(['html' => $response], 200);
     }
 
 }

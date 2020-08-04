@@ -50,3 +50,34 @@ if (!function_exists('menuPath')) {
         return '';
     }
 }
+
+if(!function_exists('numberIntegerToRoman')){
+    function numberIntegerToRoman($num, $debug = false)
+    {
+        $n = intval($num);
+        $nRoman = '';
+
+        $default = array(
+            'M'     => 1000,
+            'CM'     => 900,
+            'D'     => 500,
+            'CD'     => 400,
+            'C'     => 100,
+            'XC'     => 90,
+            'L'     => 50,
+            'XL'     => 40,
+            'X'     => 10,
+            'IX'     => 9,
+            'V'     => 5,
+            'IV'     => 4,
+            'I'     => 1,
+        );
+
+        foreach ($default as $roman => $number) {
+            $matches = intval($n / $number);
+            $nRoman .= str_repeat($roman, $matches);
+            $n = $n % $number;
+        }
+        return $nRoman;
+    }
+}
