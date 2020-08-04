@@ -188,7 +188,7 @@ class GeraDocumentoController extends Controller
         }
 
         $endpoint = getenv('APP_URL') . '/documents/gera_estatuto_congregacional.php';
-        $data = ['data' => $data];
+        $data = ['array' => $data];
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $endpoint,
