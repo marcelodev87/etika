@@ -179,7 +179,16 @@ class GeraDocumentoController extends Controller
         }
 
         $igreja = Client::find($request->client_id);
-        $data['igreja'] = $igreja;
+        $data['igreja'] = [
+            'name' => $igreja->name,
+            'zip' => $igreja->zip,
+            'state' => $igreja->state,
+            'city' => $igreja->city,
+            'neighborhood' => $igreja->neighborhood,
+            'street' => $igreja->street,
+            'street_number' => $igreja->street_number,
+            'complement' => $igreja->complement
+        ];
 
         $presidente = $igreja->members()->where('role', 'Presidente')->first();
         if($presidente){
