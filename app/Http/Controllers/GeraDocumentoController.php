@@ -183,7 +183,7 @@ class GeraDocumentoController extends Controller
             $data['presidente'] = $presidente;
         }
 
-        $endpoint = getenv('APP_URL') . '/documents/gera_ata_funcao.php';
+        $endpoint = getenv('APP_URL') . '/documents/gera_estatuto_congregacional.php';
         $data = ['data' => $data];
         $curl = curl_init();
         curl_setopt_array($curl, array(
