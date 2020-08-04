@@ -172,7 +172,6 @@ class GeraDocumentoController extends Controller
     {
 
         $post = $request->except('_token');
-
         $post['data_fundacao'] = Carbon::createFromFormat('d/m/Y', $post['data_fundacao'])->format('Y-m-d');
         $data = [];
         foreach ($post as $key => $value){
