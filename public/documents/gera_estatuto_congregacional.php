@@ -30,7 +30,7 @@ if (!function_exists('numberIntegerToRoman')) {
         return $nRoman;
     }
 }
-
+$array = $_POST['array'];
 $nome_igreja = $array['igreja']['name'] ?? "NOME DA IGREJA";
 $cep_igreja = $array['igreja']['zip'] ?? "CEP";
 $uf_igreja = $array['igreja']['state'] ?? "UF";
