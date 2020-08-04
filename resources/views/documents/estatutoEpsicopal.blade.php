@@ -52,7 +52,7 @@
 
                     <div class="form-group">
                         <label>Data de fundação da Igreja</label>
-                        <input type="text" class="form-control" name="data_fundacao" data-mask="00/00/0000" placeholder="dd/mm/aaaa">
+                        <input type="text" class="form-control" name="data_fundacao" required minlength="10" data-mask="00/00/0000" placeholder="dd/mm/aaaa">
                     </div>
                     <div class="form-group">
                         <label>Mencionar membros fundadores?</label>
