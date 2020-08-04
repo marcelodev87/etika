@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -169,7 +170,10 @@ class GeraDocumentoController extends Controller
 
     public function estatutoEpiscopalPost(Request $request)
     {
+
         $post = $request->except('_token');
+
+        $post['data_fundacao'] = Carbon::createFromFormat('d/m/Y', $post['data_fundacao'])->format('Y-m-d');
         $data = [];
         foreach ($post as $key => $value){
             $data[$key] = $value;
