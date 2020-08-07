@@ -44,7 +44,6 @@ class GeraDocumentoController extends Controller
         return response()->json(['personas' => $array], 200);
     }
 
-
     public function ataFuncaoPost(Request $request)
     {
         $rules = [
@@ -90,7 +89,7 @@ class GeraDocumentoController extends Controller
             'endereco' => $presidente->fullAddress()
         ];
 
-        if($vicePresidente) {
+        if ($vicePresidente) {
             $data['diretoria']['vice_presidente'] = [
                 'nome' => $vicePresidente->name,
                 'naturalidade' => $vicePresidente->natural,
@@ -174,7 +173,7 @@ class GeraDocumentoController extends Controller
         $post = $request->except('_token');
         $post['data_fundacao'] = Carbon::createFromFormat('d/m/Y', $post['data_fundacao'])->format('Y-m-d');
         $data = [];
-        foreach ($post as $key => $value){
+        foreach ($post as $key => $value) {
             $data[$key] = $value;
         }
 
@@ -191,7 +190,7 @@ class GeraDocumentoController extends Controller
         ];
 
         $presidente = $igreja->members()->where('role', 'Presidente')->first();
-        if($presidente){
+        if ($presidente) {
             $data['presidente'] = $presidente;
         }
 
@@ -215,4 +214,31 @@ class GeraDocumentoController extends Controller
         return response()->json(['html' => $response], 200);
     }
 
+    public function contratoContabil(Request $request)
+    {
+        $post = [];
+        if ($request->isMethod('post')) {
+            $igreja = Client::find($request->client_id);
+            $post[0] = $igreja;
+            $p = $igreja->members()->where('role', 'Presidente')->first();
+            if($p){
+                $post[1] = $p;
+            }
+        }
+        return view('documents.contratoContabil', compact('post', 'request'));
+    }
+
+    public function contratoAbertura(Request $request)
+    {
+        $post = [];
+        if ($request->isMethod('post')) {
+            $igreja = Client::find($request->client_id);
+            $post[0] = $igreja;
+            $p = $igreja->members()->where('role', 'Presidente')->first();
+            if($p){
+                $post[1] = $p;
+            }
+        }
+        return view('documents.contratoAbertura', compact('post', 'request'));
+    }
 }

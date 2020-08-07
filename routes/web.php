@@ -179,7 +179,8 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
         Route::post('/ata-funcao', ['uses' => 'GeraDocumentoController@ataFuncaoPost', 'roles' => ['adm']]);
 
         Route::get('/estatuto-episcopal', ['uses' => 'GeraDocumentoController@estatutoEpiscopalView', 'as' => 'estatutoEpiscopal', 'roles' => ['adm']]);
-
+        Route::match(['get','post'], '/contrato-contabil', ['uses' => 'GeraDocumentoController@contratoContabil', 'as' => 'contratoContabil', 'roles' => ['adm']]);
+        Route::match(['get','post'], '/contrato-abertura', ['uses' => 'GeraDocumentoController@contratoAbertura', 'as' => 'contratoAbertura', 'roles' => ['adm']]);
 
         Route::group(['prefix' => 'processamento', 'as' => 'generations.'], function () {
             Route::post('/ata-funcao', ['uses' => 'GeraDocumentoController@ataFuncaoDocument', 'as' => 'ataFuncao']);

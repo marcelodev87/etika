@@ -79,6 +79,12 @@
                         <li>
                             <a href="{{ route('app.documents.estatutoEpiscopal') }}">Estatuto Episcopal</a>
                         </li>
+                        <li>
+                            <a href="{{ route('app.documents.contratoAbertura') }}">Contrato Abertura</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('app.documents.contratoContabil') }}">Contrato Contábil</a>
+                        </li>
                     </ul>
                 </li>
             @endif
