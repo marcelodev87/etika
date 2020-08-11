@@ -28,8 +28,13 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{!! route('app.services.index') !!}">
+                        <i class="fa fa-tags"></i> <span>Serviços</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{!! route('app.notaryAddresses.index') !!}">
-                        <i class="fa fa-warehouse"></i> <span>Catórios</span>
+                        <i class="fa fa-warehouse"></i> <span>Cartórios</span>
                     </a>
                 </li>
 
@@ -92,6 +97,27 @@
                 </li>
             @endif
 
+            @php
+                $arrayMenuRelatorio = [
+                    'app.relatorios.processoAberto',
+                    'app.relatorios.processoAberto',
+                    'app.relatorios.pagamentoAberto',
+                ];
+            @endphp
+            @if(auth()->user()->hasRole('adm'))
+                <li class="treeview {{ menuPath($arrayMenuRelatorio, 'menu-open') }}">
+                    <a href="javascript:void(0)">
+                        <i class="fa fa-copy"></i><span>Relatórios</span>
+                        <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span>
+                    </a>
+                    <ul class="treeview-menu" {{ (menuPath($arrayMenuRelatorio)) ? 'style=display:block' : null }} >
+                        <li class="{{ menuPath(['app.relatorios.processoAberto'], 'active') }}"><a href="{{ route('app.relatorios.processoAberto') }}">Processos Abertos</a></li>
+                        <li class="{{ menuPath(['app.relatorios.processoFechado'], 'active') }}"><a href="{{ route('app.relatorios.processoFechado') }}">Processos Fechados</a></li>
+                        <li class="{{ menuPath(['app.relatorios.pagamentoAberto'], 'active') }}"><a href="{{ route('app.relatorios.pagamentoAberto') }}">Pagamentos Abertos</a></li>
+
+                    </ul>
+                </li>
+            @endif
         </ul>
 
     </section>

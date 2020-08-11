@@ -23,7 +23,7 @@
         <div class="col-md-12">
             <div class="chart-box">
                 <div class="bs-example" data-example-id="hoverable-table">
-                    <table class="table table-hover table-striped">
+                    <table class="table table-hover table-striped" id="datatable">
                         <thead>
                         <tr>
                             <th>#</th>
@@ -83,5 +83,7 @@
                 }
             })
         });
+
+        $("#datatable").dataTable();
     </script>
 @endsection

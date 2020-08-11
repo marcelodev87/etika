@@ -188,6 +188,22 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
         });
     });
 
+    # rota de serviços
+    Route::group(['prefix' => 'servicos', 'as' => 'services.'], function () {
+        Route::get('', ['uses' => 'ServiceController@index', 'as' => 'index', 'roles' => ['adm']]);
+        Route::post('/', ['uses' => 'ServiceController@store', 'as' => 'store', 'roles' => ['adm']]);
+        Route::get('/adicionar', ['uses' => 'ServiceController@create', 'as' => 'create', 'roles' => ['adm']]);
+        Route::get('/{service}', ['uses' => 'ServiceController@edit', 'as' => 'edit', 'roles' => ['adm']]);
+        Route::put('/{service}', ['uses' => 'ServiceController@update', 'as' => 'update', 'roles' => ['adm']]);
+        Route::delete('/{service}', ['uses' => 'ServiceController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
+    });
+
+    # rota de relatorios
+    Route::group(['prefix' => 'relatorios', 'as' => 'relatorios.'], function(){
+        Route::get('/processos-abertos', ['uses' => 'RelatorioController@processoAberto', 'as' => 'processoAberto', 'roles' => ['adm']]);
+        Route::get('/processos-fechados', ['uses' => 'RelatorioController@processoFechado', 'as' => 'processoFechado', 'roles' => ['adm']]);
+        Route::get('/pagamentos-abertos', ['uses' => 'RelatorioController@pagamentoAberto', 'as' => 'pagamentoAberto', 'roles' => ['adm']]);
+    });
 
 });
 
