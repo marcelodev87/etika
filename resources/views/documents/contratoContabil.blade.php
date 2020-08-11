@@ -52,7 +52,7 @@
             </div>
         </div>
 
-        @if(is_array($post))
+        @if($request->isMethod('post'))
             @php
                 $igreja = $post[0]['name'];
                 $cnpj_igreja = $post[0]['document'];

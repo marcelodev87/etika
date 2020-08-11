@@ -27,10 +27,8 @@ class GeraDocumentoController extends Controller
         if ($validator->fails()) {
             return response()->json(['message' => $validator->errors()->first()], 400);
         }
-
         $client = Client::find($request->igreja);
         $personas = $client->members;
-
         // criando o array
         $array = [];
         foreach ($personas as $p) {
@@ -162,56 +160,22 @@ class GeraDocumentoController extends Controller
         return response()->json(['html' => $response], 200);
     }
 
-    public function estatutoEpiscopalView()
+    public function estatutoEpiscopal(Request $request)
     {
-        return view('documents.estatutoEpsicopal');
+        $igreja = null;
+        if ($request->isMethod('post')) {
+            $igreja = Client::find($request->client_id);
+        }
+        return view('documents.estatutoEpsicopal', ['request' => $request, 'igreja' => $igreja]);
     }
 
-    public function estatutoEpiscopalPost(Request $request)
+    public function estatudoCongregacional(Request $request)
     {
-
-        $post = $request->except('_token');
-        $post['data_fundacao'] = Carbon::createFromFormat('d/m/Y', $post['data_fundacao'])->format('Y-m-d');
-        $data = [];
-        foreach ($post as $key => $value) {
-            $data[$key] = $value;
+        $igreja = null;
+        if ($request->isMethod('post')) {
+            $igreja = Client::find($request->client_id);
         }
-
-        $igreja = Client::find($request->client_id);
-        $data['igreja'] = [
-            'name' => $igreja->name,
-            'zip' => $igreja->zip,
-            'state' => $igreja->state,
-            'city' => $igreja->city,
-            'neighborhood' => $igreja->neighborhood,
-            'street' => $igreja->street,
-            'street_number' => $igreja->street_number,
-            'complement' => $igreja->complement
-        ];
-
-        $presidente = $igreja->members()->where('role', 'Presidente')->first();
-        if ($presidente) {
-            $data['presidente'] = $presidente;
-        }
-
-        $endpoint = getenv('APP_URL') . '/documents/gera_estatuto_congregacional.php';
-        $data = ['array' => $data];
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => $endpoint,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => http_build_query($data),
-        ));
-
-        $response = curl_exec($curl);
-        curl_close($curl);
-        return response()->json(['html' => $response], 200);
+        return view('documents.estatutoCongregacional', ['request' => $request, 'igreja' => $igreja]);
     }
 
     public function contratoContabil(Request $request)
@@ -221,7 +185,7 @@ class GeraDocumentoController extends Controller
             $igreja = Client::find($request->client_id);
             $post[0] = $igreja;
             $p = $igreja->members()->where('role', 'Presidente')->first();
-            if($p){
+            if ($p) {
                 $post[1] = $p;
             }
         }
@@ -235,7 +199,7 @@ class GeraDocumentoController extends Controller
             $igreja = Client::find($request->client_id);
             $post[0] = $igreja;
             $p = $igreja->members()->where('role', 'Presidente')->first();
-            if($p){
+            if ($p) {
                 $post[1] = $p;
             }
         }

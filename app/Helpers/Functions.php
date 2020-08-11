@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 if (!function_exists('getAvatar')) {
     function getAvatar($user_id)
     {
@@ -36,7 +38,6 @@ if (!function_exists('brlToNumeric')) {
         return str_replace([' ', 'R$', '.', ','], ['', '', '', '.'], $value);
     }
 }
-
 
 if (!function_exists('menuPath')) {
     function menuPath($path = [], $type = "active menu-open")
@@ -79,5 +80,18 @@ if(!function_exists('numberIntegerToRoman')){
             $n = $n % $number;
         }
         return $nRoman;
+    }
+}
+
+if (!function_exists('menuPath')) {
+    function menuPath($path = [], $type = "active menu-open")
+    {
+        $routeNames = (array)$path;
+        foreach ($routeNames as $routeName) {
+            if (Route::is($routeName) || Route::currentRouteName() == $routeName) {
+                return ' ' . $type;
+            }
+        }
+        return '';
     }
 }

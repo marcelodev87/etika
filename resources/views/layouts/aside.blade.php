@@ -67,17 +67,20 @@
 
 
             @if(auth()->user()->hasAnyRole(['adm']))
-                <li class="treeview {{ menuPath(['app.documents.ataFuncao', 'app.documents.estatutoEspecial'], 'menu-open') }}">
+                <li class="treeview {{ menuPath(['app.documents.ataFuncao', 'app.documents.estatutoEspecial', 'app.documents.contratoAbertura', 'app.documents.contratoContabil'], 'menu-open') }}">
                     <a href="javascript:void(0)">
                         <i class="fa fa-copy"></i><span>Geração de Documentos</span>
                         <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span>
                     </a>
-                    <ul class="treeview-menu" {{ (menuPath(['app.documents.ataFuncao', 'app.documents.estatutoEspecial'])) ? 'style=display:block' : null }} >
+                    <ul class="treeview-menu" {{ (menuPath(['app.documents.ataFuncao', 'app.documents.estatutoEspecial', 'app.documents.contratoAbertura', 'app.documents.contratoContabil'])) ? 'style=display:block' : null }} >
                         <li>
                             <a href="{{ route('app.documents.ataFuncao') }}">Ata de Função</a>
                         </li>
                         <li>
-                            <a href="{{ route('app.documents.estatutoEpiscopal') }}">Estatuto Episcopal</a>
+                            <a href="{{ route('app.documents.estatutoCongregacional') }}">Congregacional</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('app.documents.estatutoEpiscopal') }}">Episcopal</a>
                         </li>
                         <li>
                             <a href="{{ route('app.documents.contratoAbertura') }}">Contrato Abertura</a>
