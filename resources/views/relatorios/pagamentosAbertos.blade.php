@@ -24,15 +24,22 @@
             </thead>
             <tbody>
             @foreach ($processos as $processo)
-                <tr>
+                @php
+                    $total = $processo->totalPrice() - $processo->totalPayed();
+                @endphp
+                @if($total > 0)
+                    <tr>
 
-                    <td>
-                        <a href="{{ route('app.clients.show', $processo->client->id) }}">{{ $processo->client->name }}</a>
-                    </td>
-                    <td><a href="{{ route('app.clients.processes.index', [$processo->client->id, $processo]) }}">{{ $processo->process->name }}</td>
-                    <td>{{ brl($processo->totalPrice() - $processo->totalPayed()) }}</td>
+                        <td>
+                            <a href="{{ route('app.clients.show', $processo->client->id) }}">{{ $processo->client->name }}</a>
+                        </td>
+                        <td>
+                            <a href="{{ route('app.clients.processes.index', [$processo->client->id, $processo]) }}">{{ $processo->process->name }}
+                        </td>
+                        <td>{{ brl($total) }}</td>
 
-                </tr>
+                    </tr>
+                @endif
             @endforeach
             </tbody>
         </table>
