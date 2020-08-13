@@ -75,6 +75,7 @@ class ClientPersonaController extends Controller
         $data['name'] = $clientPersona->name;
         $data['role'] = $clientPersona->role;
         $data['document'] = $clientPersona->document;
+        $data['natural'] = $clientPersona->natural;
         return response()->json(['data' => $data], 200);
     }
 
@@ -89,6 +90,7 @@ class ClientPersonaController extends Controller
             'marital_status' => 'nullable|string|min:3',
             'profession' => 'nullable|string|min:3',
             'dob' => 'nullable|date_format:d/m/Y',
+            'natural' => 'required|string',
         ];
         $errors = [];
         $fields = [
@@ -114,7 +116,8 @@ class ClientPersonaController extends Controller
                 'profession' => $request->profession,
                 'dob' => ($request->dob) ? Carbon::createFromFormat('d/m/Y', $request->dob)->format('Y-m-d') : null,
                 'rg' => $request->rg,
-                'rg_expedidor' => $request->rg_expedidor
+                'rg_expedidor' => $request->rg_expedidor,
+                'natural' => $request->natural
             ]);
             return response()->json(['data' => $clientPersona], 201);
         } catch (\Exception $e) {
@@ -126,16 +129,23 @@ class ClientPersonaController extends Controller
     public function information(Client $client, ClientPersona $clientPersona)
     {
         $persona = $clientPersona;
-        $persona['dob'] = ($persona['dob']) ? Carbon::parse($persona['dob'])->format('d/m/Y') : null;
         $emails = $clientPersona->emails;
         $phones = $clientPersona->phones;
         $addresses = $clientPersona->addresses;
         return response()->json(['data' => [
-            'persona' => $persona,
+            'persona' => [
+                'name' => $persona->name,
+                'document'=> $persona->document,
+                'role' => $persona->role,
+                'marital_status' => $persona->marital_status,
+                'profession' => $persona->profession,
+                'dob' => $persona->dob->format('d/m/Y'),
+                'rg' => $persona->rg,
+                'natural' => $persona->natural,
+            ],
             'emails' => $emails,
             'phones' => $phones,
             'addresses' => $addresses,
-
         ]], 200);
     }
 

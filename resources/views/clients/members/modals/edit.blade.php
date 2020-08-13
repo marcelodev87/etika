@@ -10,19 +10,27 @@
                 @method('put')
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-xs-12 col-md-sm-6 col-md-8 col-lg-8">
+                        <div class="col-md-xs-12 col-md-sm-6 col-md-6 col-lg-7">
                             <fieldset class="form-group">
                                 <label>Nome Completo</label>
                                 <input class="form-control" name="name" type="text">
                             </fieldset>
                         </div>
 
-                        <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-4">
+                        <div class="col-md-xs-12 col-md-sm-6 col-md-3 col-lg-2">
                             <fieldset class="form-group">
                                 <label>Dt. Nascimento</label>
                                 <input class="form-control" name="dob" type="text" data-mask="00/00/0000">
                             </fieldset>
                         </div>
+
+                        <div class="col-md-xs-12 col-md-sm-6 col-md-3 col-lg-3">
+                            <fieldset class="form-group">
+                                <label>Natural</label>
+                                <input class="form-control" name="natural" type="text">
+                            </fieldset>
+                        </div>
+
 
                         <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-4">
                             <fieldset class="form-group">

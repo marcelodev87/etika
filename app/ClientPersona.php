@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ClientPersona extends Model
 {
     protected $guarded = [];
-    protected $dates =['dob'];
+    protected $dates = ['dob', 'created_at', 'updated_at'];
 
 
     public function client()
@@ -29,6 +29,7 @@ class ClientPersona extends Model
     {
         return $this->hasMany(ClientPersonaPhone::class);
     }
+
     public function fullAddress()
     {
         $address = $this->addresses()->where('main', 1)->first();

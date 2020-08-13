@@ -101,6 +101,7 @@
 @section('script')
     <script type="text/javascript">
         var $member = null;
+
         $("#form-cadastrar").on('submit', function (e) {
             e.preventDefault();
             var $form = $(this);
@@ -832,6 +833,7 @@
             var $form = $('#modal-form-edit');
             $form.attr('action', $linkStore);
             $.get($linkGet, function (response) {
+                $form.find('input[name="natural"]').val(response.data.natural);
                 $form.find('input[name="name"]').val(response.data.name);
                 $form.find('input[name="document"]').val(response.data.document);
                 $form.find('select[name="role"]').val(response.data.role);
@@ -905,6 +907,7 @@
                 $area.find('.persona-name').html(response.data.persona.name);
                 $area.find('.persona-document').html(response.data.persona.document);
                 $area.find('.persona-role').html(response.data.persona.role);
+                $area.find('.persona-natural').html(response.data.persona.natural);
                 $area.find('.persona-gender').html(response.data.persona.gender);
                 $area.find('.persona-marital_status').html(response.data.persona.marital_status);
                 $area.find('.persona-profession').html(response.data.persona.profession);

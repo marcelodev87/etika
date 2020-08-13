@@ -100,7 +100,7 @@
                     $nome_presidente = "Nome Presidente";
                 }else{
                     $nome_presidente = $post[1]['name'];
-                    $naturalidade_presidente = $post[1]['naturalidade'] ?? "PRESIDENTE_NATURALIDADE";
+                    $naturalidade_presidente = $post[1]['natural'] ?? "PRESIDENTE_NATURALIDADE";
                     $data_nas_presidente = $post[1]['dob']->format('d/m/Y');
                     $estado_civil_presidente = $post[1]['marital_status'];
                     $profissao_presidente = $post[1]['prefession'];

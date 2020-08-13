@@ -11,23 +11,15 @@
                 <div id="modal-show-area" class="row">
                     <div class="div-col-xs-12 col-sm-6 col-md-4">
                         <p>Nome Completo: <span class="persona-name"></span></p>
-
-                        <p>Documento: <span class="persona-document"></span></p>
-
-                        <p>Cargo: <span class="persona-role"></span></p>
-
-                        <p>Sexo: <span class="persona-gender"></span></p>
-
-                        <p>Estado Civil: <span class="persona-marital_status"></span></p>
-
-                        <p>Profissão: <span class="persona-profession"></span></p>
-
                         <p>Dt. Nascimento: <span class="persona-dob"></span></p>
-
+                        <p>Documento: <span class="persona-document"></span></p>
                         <p>RG: <span class="persona-rg"></span> <span class="persona-rg-expedidor"></span></p>
+                        <p>Sexo: <span class="persona-gender"></span></p>
+                        <p>Estado Civil: <span class="persona-marital_status"></span></p>
+                        <p>Cargo: <span class="persona-role"></span></p>
+                        <p>Profissão: <span class="persona-profession"></span></p>
+                        <p>Natural: <span class="persona-natural"></span></p>
                     </div>
-
-
 
                     <div class="div-col-xs-12 col-sm-6 col-md-4 ">
                         <table class="table table-striped">

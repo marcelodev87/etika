@@ -133,7 +133,9 @@
                         @foreach($client->processes as $process)
                             <tr>
                                 <td>{{ $process->created_at->format('d/m/Y H:i:s') }}</td>
-                                <td>{{ $process->process->name }}</td>
+                                <td>
+                                    <a href="{{ route('app.clients.processes.index',[$client->id, $process->id]) }}">{{ $process->process->name }}</a>
+                                </td>
                                 <td class="text-center">
                                     {{ $process->tasks()->where('closed', 1)->count() }} / {{ $process->tasks()->count() }}
                                 </td>
@@ -368,9 +370,9 @@
                     var $html = '';
                     $html += '<div class="panel panel-default">';
                     $html += '<div class="panel-heading">';
-                    $html += '<h4>' + e.user + ' - ' + e.date + '</h4>';
+                    $html += '<h4><b>' + e.user + '</b> - ' + e.date + '</h4>';
                     $html += '</div>';
-                    $html += '<div class="panel-body">' + e.comment;
+                    $html += '<div class="panel-body"><b>' + e.comment + '</b>';
                     $html += '<div class="files">';
 
                     $.each(e.files, function (x, z) {
