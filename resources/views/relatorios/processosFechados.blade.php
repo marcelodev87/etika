@@ -28,7 +28,11 @@
                     <td>
                         <a href="{{ route('app.clients.show', $processo->client->id) }}">{{ $processo->client->name }}</a>
                     </td>
-                    <td>{{ $processo->process->name }}</td>
+                    <td>
+                        <a href="{{ route('app.clients.processes.index',[$process->client_id, $process->id]) }}">
+                        {{ $processo->process->name }}
+                        </a>
+                    </td>
 
                 </tr>
             @endforeach
