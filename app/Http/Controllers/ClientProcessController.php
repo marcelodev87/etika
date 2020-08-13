@@ -59,7 +59,7 @@ class ClientProcessController extends Controller
             $log = ClientProcessLog::create([
                 'user_id' => auth()->user()->id,
                 'client_process_id' => $process->id,
-                'action' => 'criou este processo',
+                'action' => '<b>criou este processo</b>',
                 'type' => 'process',
                 'refer_id' => $process->id
             ]);

@@ -44,7 +44,7 @@ class ClientProcessTaskController extends Controller
             $log = ClientProcessLog::create([
                 'user_id' => auth()->user()->id,
                 'client_process_id' => $clientProcess->id,
-                'action' => 'adicionou uma tarefa ao processo',
+                'action' => '<b>adicionou uma tarefa ao processo</b>',
                 'type' => 'task',
                 'refer_id' => $new->id
             ]);
@@ -69,7 +69,7 @@ class ClientProcessTaskController extends Controller
             $log = ClientProcessLog::create([
                 'user_id' => auth()->user()->id,
                 'client_process_id' => $clientProcess->id,
-                'action' => 'finalizou uma tarefa do processo',
+                'action' => '<b>finalizou uma tarefa do processo</b>',
                 'type' => 'task',
                 'refer_id' => $clientProcessTask->id
             ]);

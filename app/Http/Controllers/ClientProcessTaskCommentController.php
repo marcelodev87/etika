@@ -65,7 +65,7 @@ class ClientProcessTaskCommentController extends Controller
             $log = ClientProcessLog::create([
                 'user_id' => auth()->user()->id,
                 'client_process_id' => $clientProcess->id,
-                'action' => 'adicionou um comentário',
+                'action' => '<b>adicionou um comentário</b>',
                 'type' => 'comment',
                 'refer_id' => $comment->id
             ]);
