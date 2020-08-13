@@ -29,7 +29,7 @@
                         <a href="{{ route('app.clients.show', $processo->client->id) }}">{{ $processo->client->name }}</a>
                     </td>
                     <td>
-                        <a href="{{ route('app.clients.processes.index',[$process->client_id, $process->id]) }}">
+                        <a href="{{ route('app.clients.processes.index',[$processo->client_id, $processo->id]) }}">
                             {{ $processo->process->name }}
                         </a>
                     </td>
