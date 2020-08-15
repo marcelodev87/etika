@@ -21,45 +21,43 @@
         </div>
         <div class="col-md-12">
             <div class="chart-box">
-                <div class="bs-example" data-example-id="hoverable-table">
-                    <table class="table table-hover table-striped">
-                        <thead>
+                <table class="table table-hover table-striped" id="datatable">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Telefone</th>
+                        <th>Endereço</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($notaryAddresses as $notaryAddress)
                         <tr>
-                            <th>#</th>
-                            <th>Nome</th>
-                            <th>E-mail</th>
-                            <th>Telefone</th>
-                            <th>Endereço</th>
-                            <th></th>
+                            <td>{{ $notaryAddress->id }}</td>
+                            <td>{{ $notaryAddress->name }}</td>
+                            <td>{{ $notaryAddress->email_1 ?? '' }} {{ $notaryAddress->email_2 ?? '' }}</td>
+                            <td>{{ $notaryAddress->phone_1 ?? '' }} {{ $notaryAddress->phone_2 ?? '' }} {{ $notaryAddress->phone_3 ?? '' }}</td>
+                            <td>{{ $notaryAddress->getAddress() ?? '' }}</td>
+                            <td class="text-right">
+
+                                <a href="{{ route('app.notaryAddresses.edit', $notaryAddress->id) }}" class="btn btn-xs btn-info">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+
+                                <form class="form-inline" action="{!! route('app.notaryAddresses.delete', $notaryAddress->id) !!}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="button" class="btn btn-xs btn-danger formConfirmDelete" data-nome="{{ $notaryAddress->name }}" data-toggle="tooltip" data-placement="left" title="Deletar">
+                                        <i class="fa fa-trash"></i></button>
+                                </form>
+
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($notaryAddresses as $notaryAddress)
-                            <tr>
-                                <td>{{ $notaryAddress->id }}</td>
-                                <td>{{ $notaryAddress->name }}</td>
-                                <td>{{ $notaryAddress->email_1 ?? '' }} {{ $notaryAddress->email_2 ?? '' }}</td>
-                                <td>{{ $notaryAddress->phone_1 ?? '' }} {{ $notaryAddress->phone_2 ?? '' }} {{ $notaryAddress->phone_3 ?? '' }}</td>
-                                <td>{{ $notaryAddress->getAddress() ?? '' }}</td>
-                                <td class="text-right">
-
-                                    <a href="{{ route('app.notaryAddresses.edit', $notaryAddress->id) }}" class="btn btn-xs btn-info">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-
-                                    <form class="form-inline" action="{!! route('app.notaryAddresses.delete', $notaryAddress->id) !!}" method="post">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="button" class="btn btn-xs btn-danger formConfirmDelete" data-nome="{{ $notaryAddress->name }}" data-toggle="tooltip" data-placement="left" title="Deletar">
-                                            <i class="fa fa-trash"></i></button>
-                                    </form>
-
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -67,6 +65,7 @@
 
 @section('script')
     <script type="text/javascript">
+        $("#datatable").dataTable();
         $('body').on('click', '.formConfirmDelete', function (event) {
             event.preventDefault();
             var form = $(this).closest('form');
@@ -85,5 +84,7 @@
                 }
             })
         });
+
+
     </script>
 @endsection

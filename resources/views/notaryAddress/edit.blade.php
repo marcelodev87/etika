@@ -118,14 +118,14 @@
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label for="textarea-obs1">Observação 1</label>
-                                <textarea class="form-control" id="textarea-obs1" name="observation_1">{{ old('observation_1', $notaryAddress->observation_1) }}</textarea>
+                                <textarea class="form-control summernote" id="textarea-obs1" name="observation_1">{{ old('observation_1', $notaryAddress->observation_1) }}</textarea>
                             </div>
                         </div>
 
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label for="textarea-obs2">Observação 2</label>
-                                <textarea class="form-control" id="textarea-obs2" name="observation_2">{{ old('observation_2', $notaryAddress->observation_2) }}</textarea>
+                                <textarea class="form-control summernote" id="textarea-obs2" name="observation_2">{{ old('observation_2', $notaryAddress->observation_2) }}</textarea>
                             </div>
                         </div>
 
@@ -142,7 +142,17 @@
 @endsection
 
 @section('script')
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.6.12/dist/summernote.min.js"></script>
     <script type="text/javascript">
-
+        $('.summernote').summernote({
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']]
+            ]
+        });
     </script>
 @endsection

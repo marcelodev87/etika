@@ -125,6 +125,15 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
             Route::post('/{clientSubscription}/payments/', ['uses' => 'ClientSubscriptionPaymentController@store', 'as' => 'payments.store', 'roles' => ['adm']]);
             Route::delete('/{clientSubscription}/payments/{clientSubscriptionPayment}', ['uses' => 'ClientSubscriptionPaymentController@destroy', 'as' => 'payments.delete', 'roles' => ['adm']]);
         });
+
+        // mandatos
+        Route::group(['prefix' => '{client}/mandatos', 'as' => 'mandatos.'], function () {
+            Route::get('', ['uses' => 'ClientMandatoController@index', 'as' => 'index', 'roles' => ['adm']]);
+            Route::get('adicionar', ['uses' => 'ClientMandatoController@create', 'as' => 'create', 'roles' => ['adm']]);
+            Route::post('', ['uses' => 'ClientMandatoController@store', 'as' => 'store', 'roles' => ['adm']]);
+            Route::delete('{clientMandato}', ['uses' => 'ClientMandatoController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
+        });
+
     });
 
     # rota de processos internos

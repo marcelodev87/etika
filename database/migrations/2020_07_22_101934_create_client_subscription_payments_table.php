@@ -21,6 +21,8 @@ class CreateClientSubscriptionPaymentsTable extends Migration
             $table->string('file')->nullable();
             $table->date('pay_at');
             $table->timestamps();
+
+            $table->foreign('client_subscription_id')->references('id')->on('client_subscription')->onDelete('cascade');
         });
     }
 

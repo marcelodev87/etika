@@ -180,7 +180,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input type="file" name="file" required>
+                                <input type="file" name="file">
                             </div>
                             <div class="form-group" style="margin-bottom: 0">
                                 <button class="btn btn-success btn-block btn-sm">

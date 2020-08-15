@@ -58,8 +58,13 @@
                 <i class="fa fa-plus"></i> Assinaturas
             </a>
 
+            <a href="{{ route('app.clients.mandatos.index', $client->id) }}"  class="btn btn-info btn-sm">
+                <i class="fa fa-ribbon"></i> Mandatos
+            </a>
+
         </div>
 
+        {{-- assinaturas --}}
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">

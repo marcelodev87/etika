@@ -28,6 +28,11 @@ class Client extends Model
         return $this->hasMany(ClientSubscription::class);
     }
 
+    public function mandatos()
+    {
+        return $this->hasMany(ClientMandato::class);
+    }
+
     public function fullAddress()
     {
         $a = $this->street;
