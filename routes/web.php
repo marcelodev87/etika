@@ -207,6 +207,9 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
         Route::delete('/{service}', ['uses' => 'ServiceController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
     });
 
+    # rota mandatos
+    Route::get('mandatos', ['uses' => 'ClientMandatoController@all', 'as' => 'mandatos', 'role' => ['adm']]);
+
     # rota de relatorios
     Route::group(['prefix' => 'relatorios', 'as' => 'relatorios.'], function(){
         Route::get('/processos-abertos', ['uses' => 'RelatorioController@processoAberto', 'as' => 'processoAberto', 'roles' => ['adm']]);

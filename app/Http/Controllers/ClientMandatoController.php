@@ -11,17 +11,19 @@ use Illuminate\Support\Facades\Validator;
 class ClientMandatoController extends Controller
 {
 
+    public function all(){
+        $mandatos = ClientMandato::all();
+        return view('mandatos.all', compact('mandatos'));
+    }
     public function index(Client $client)
     {
         return view('mandatos.index', compact('client'));
     }
 
-
     public function create(Client $client)
     {
         return view('mandatos.create', compact('client'));
     }
-
 
     public function store(Request $request, Client $client)
     {
@@ -48,7 +50,6 @@ class ClientMandatoController extends Controller
             return redirect()->back()->withInput($request->all());
         }
     }
-
 
     public function destroy(Client $client, ClientMandato $clientMandato)
     {
