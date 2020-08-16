@@ -7,48 +7,62 @@
 @endsection
 
 @section('content')
-    <div class="row justify-content-center">
 
-
-        <div class="col-lg-3 col-xs-6">
-            <div class="media-box">
-                <div class="media-icon pull-left"><i class="fa fa-users"></i> </div>
-                <div class="media-info">
-                    <h5>Clientes Cadastrados</h5>
-                    <h3>{{ \App\Client::count() }}</h3>
-                </div>
-            </div>
+    @if(auth()->user()->hasRole('adm'))
+        <div class="row">
+            @include('widgets.boxes.clientsWithProcesses')
         </div>
 
-        <div class="col-lg-3 col-xs-6">
-            <div class="media-box bg-sea">
-                <div class="media-icon pull-left"><i class="fa fa-users"></i> </div>
-                <div class="media-info">
-                    <h5>Clientes Inativos</h5>
-                    <h3>1530</h3>
-                </div>
-            </div>
+        <div class="row">
+            @include('widgets.charts.received')
         </div>
+    @endif
 
-        <div class="col-lg-3 col-xs-6">
-            <div class="media-box bg-blue">
-                <div class="media-icon pull-left"><i class="icon-bargraph"></i> </div>
-                <div class="media-info">
-                    <h5>s</h5>
-                    <h3>1530</h3>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-lg-3 col-xs-6">
-            <div class="media-box bg-green">
-                <div class="media-icon pull-left"><i class="icon-bargraph"></i> </div>
-                <div class="media-info">
-                    <h5>Total Leads</h5>
-                    <h3>1530</h3>
-                </div>
-            </div>
-        </div>
-
-    </div>
 @endsection
+
+
+@section('script')
+    <script type="text/javascript">
+        @if(auth()->user()->hasRole('adm'))
+        $.get('{{ route('app.api.charts.received') }}', function (response) {
+            var ctx = document.getElementById('chartReceived');
+            var chartReceived = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: response.periods,
+                    datasets: [{
+                        label: 'Recebido',
+                        data: response.values,
+                        backgroundColor: 'rgba(102, 204, 153, 0.4)',
+                        borderColor: 'rgba(102, 204, 153, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                // Include a dollar sign in the ticks
+                                callback: function (value, index, values) {
+                                    return value.toLocaleString('pt-BR', {
+                                        style: 'currency',
+                                        currency: 'BRL',
+                                        maximumSignificantDigits: 2
+                                    });
+                                }
+                            }
+                        }],
+                    }
+                }
+            });
+        });
+
+        $.get('{{ route('app.api.widgets.haveSomethingOpen') }}', function (response) {
+            $('.haveSomethingOpen').find('.count').html(response.total);
+        })
+        @endif
+
+
+    </script>
+@endsection()

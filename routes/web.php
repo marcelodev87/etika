@@ -211,12 +211,21 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
     Route::get('mandatos', ['uses' => 'ClientMandatoController@all', 'as' => 'mandatos', 'role' => ['adm']]);
 
     # rota de relatorios
-    Route::group(['prefix' => 'relatorios', 'as' => 'relatorios.'], function(){
+    Route::group(['prefix' => 'relatorios', 'as' => 'relatorios.'], function () {
         Route::get('/processos-abertos', ['uses' => 'RelatorioController@processoAberto', 'as' => 'processoAberto', 'roles' => ['adm']]);
         Route::get('/processos-fechados', ['uses' => 'RelatorioController@processoFechado', 'as' => 'processoFechado', 'roles' => ['adm']]);
         Route::get('/pagamentos-abertos', ['uses' => 'RelatorioController@pagamentoAberto', 'as' => 'pagamentoAberto', 'roles' => ['adm']]);
     });
 
+
+    Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
+        Route::group(['prefix' => 'charts', 'as' => 'charts.'], function () {
+            Route::get('received', ['uses' => 'ChartController@received', 'as' => 'received']);
+        });
+        Route::group(['prefix' => 'widgets', 'as' => 'widgets.'], function () {
+            Route::get('have-something-open', ['uses' => 'WidgetController@haveSomethingOpen', 'as' => 'haveSomethingOpen']);
+        });
+    });
 });
 
 Route::get("/sair", function () {
