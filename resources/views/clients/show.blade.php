@@ -408,7 +408,7 @@
                     var $html = '';
                     $html += '<div class="panel panel-default">';
                     $html += '<div class="panel-heading">';
-                    $html += '<h4>' + e.user + ' - ' + e.date + '</h4>';
+                    $html += '<h4><b>' + e.user + ' - ' + e.date + '</b></h4>';
                     $html += '</div>';
                     $html += '<div class="panel-body">' + e.comment;
                     $html += '<div class="files">';
