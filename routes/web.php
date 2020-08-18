@@ -183,9 +183,9 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
 
     # rota de geracao de documentos
     Route::group(['prefix' => 'geracao-de-documentos', 'as' => 'documents.'], function () {
-        Route::get('/ata-funcao', ['uses' => 'GeraDocumentoController@ataFuncaoView', 'as' => 'ataFuncao', 'roles' => ['adm']]);
-        Route::post('/ata-funcao/personas', ['uses' => 'GeraDocumentoController@ataFuncaoGetPersonas', 'as' => 'ataFuncao.personas', 'roles' => ['adm']]);
-        Route::post('/ata-funcao', ['uses' => 'GeraDocumentoController@ataFuncaoPost', 'roles' => ['adm']]);
+        Route::get('/ata-fundacao', ['uses' => 'GeraDocumentoController@ataFundacaoView', 'as' => 'ataFundacao', 'roles' => ['adm']]);
+        Route::post('/ata-fundacao/personas', ['uses' => 'GeraDocumentoController@ataFundacaoGetPersonas', 'as' => 'ataFundacao.personas', 'roles' => ['adm']]);
+        Route::post('/ata-fundacao', ['uses' => 'GeraDocumentoController@ataFundacaoPost', 'roles' => ['adm']]);
 
         Route::match(['get', 'post'], '/estatuto-episcopal', ['uses' => 'GeraDocumentoController@estatutoEpiscopal', 'as' => 'estatutoEpiscopal', 'roles' => ['adm']]);
         Route::match(['get', 'post'], '/contrato-contabil', ['uses' => 'GeraDocumentoController@contratoContabil', 'as' => 'contratoContabil', 'roles' => ['adm']]);
