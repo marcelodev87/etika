@@ -37,7 +37,7 @@
 
     <div class="row">
         <div class="col-md-4">
-            <form action="{{ route('app.documents.ataFuncao') }}" method="post">
+            <form action="{{ route('app.documents.ataFundacao') }}" method="post">
                 @csrf
 
                 <div class="chart-box">
@@ -141,7 +141,7 @@
                 var $data = new FormData();
                 $data.append('igreja', $igreja);
                 $.ajax({
-                    url: "{{ route('app.documents.ataFuncao.personas') }}",
+                    url: "{{ route('app.documents.ataFundacao.personas') }}",
                     type: "POST",
                     dataType: 'json',
                     data: $data,
