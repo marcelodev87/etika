@@ -193,7 +193,7 @@
                                 <td class="{{ $task->isLate() ? 'text-danger text-bold' : '' }}">{{ $task->end_at->format('d/m/y H:i:') }}00</td>
                                 <td>
                                     @if($task->closed)
-                                        {{ $task->closed_at->format('d/m/Y H:i:s') }} ({{ $task->closedBy()->name }})
+                                        {{ $task->closed_at->format('d/m/Y H:i:s') }} ({{ $task->closedBy->name }})
                                     @endif
                                 </td>
                                 <td>{{ $task->comments()->count()}}</td>
