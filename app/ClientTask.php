@@ -37,4 +37,9 @@ class ClientTask extends Model
         }
         return false;
     }
+
+    public function closedBy()
+    {
+        return $this->belongsTo(User::class, 'closed_by');
+    }
 }
