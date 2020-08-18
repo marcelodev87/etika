@@ -80,25 +80,28 @@
 
 
             @if(auth()->user()->hasAnyRole(['adm']))
-                <li class="treeview {{ menuPath(['app.documents.ataFuncao', 'app.documents.estatutoEspecial', 'app.documents.contratoAbertura', 'app.documents.contratoContabil'], 'menu-open') }}">
+                @php
+                    $arrayMenuGeraDocumentos = ['app.documents.ataFundacao', 'app.documents.estatutoEspecial', 'app.documents.contratoAbertura', 'app.documents.contratoContabil'];
+                @endphp
+                <li class="treeview {{ menuPath($arrayMenuGeraDocumentos, 'menu-open') }}">
                     <a href="javascript:void(0)">
                         <i class="fa fa-copy"></i><span>Geração de Documentos</span>
                         <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span>
                     </a>
-                    <ul class="treeview-menu" {{ (menuPath(['app.documents.ataFuncao', 'app.documents.estatutoEspecial', 'app.documents.contratoAbertura', 'app.documents.contratoContabil'])) ? 'style=display:block' : null }} >
-                        <li>
-                            <a href="{{ route('app.documents.ataFuncao') }}">Ata de Função</a>
+                    <ul class="treeview-menu" {{ (menuPath($arrayMenuGeraDocumentos)) ? 'style=display:block' : null }} >
+                        <li class="{{ menuPath(['app.documents.ataFundacao'], 'active') }}">
+                            <a href="{{ route('app.documents.ataFundacao') }}">Ata de Fundação</a>
                         </li>
-                        <li>
+                        <li class="{{ menuPath(['app.documents.estatutoCongregacional'], 'active') }}">
                             <a href="{{ route('app.documents.estatutoCongregacional') }}">Congregacional</a>
                         </li>
-                        <li>
+                        <li class="{{ menuPath(['app.documents.estatutoEpiscopal'], 'active') }}">
                             <a href="{{ route('app.documents.estatutoEpiscopal') }}">Episcopal</a>
                         </li>
-                        <li>
+                        <li class="{{ menuPath(['app.documents.contratoAbertura'], 'active') }}">
                             <a href="{{ route('app.documents.contratoAbertura') }}">Contrato Abertura</a>
                         </li>
-                        <li>
+                        <li class="{{ menuPath(['app.documents.contratoContabil'], 'active') }}">
                             <a href="{{ route('app.documents.contratoContabil') }}">Contrato Contábil</a>
                         </li>
                     </ul>
