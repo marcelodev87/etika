@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Validator;
 
 class GeraDocumentoController extends Controller
 {
-    public function ataFuncaoView()
+    public function ataFundacaoView()
     {
         return view('documents.ataFuncao');
     }
 
-    public function ataFuncaoGetPersonas(Request $request)
+    public function ataFundacaoGetPersonas(Request $request)
     {
         $rules = [
             'igreja' => 'required'
@@ -42,7 +42,7 @@ class GeraDocumentoController extends Controller
         return response()->json(['personas' => $array], 200);
     }
 
-    public function ataFuncaoPost(Request $request)
+    public function ataFundacaoPost(Request $request)
     {
         $rules = [
             'client_id' => 'required|integer|exists:clients,id',
