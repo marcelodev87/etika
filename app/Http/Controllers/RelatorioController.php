@@ -34,12 +34,13 @@ class RelatorioController extends Controller
         $tarefas = [];
         foreach (ClientProcessTask::where('closed', 0)->get() as $t) {
             $color = $t->isLate() ? 'danger' : 'success';
+            $endAt = ($t->end_at) ? '<span class="text-' . $color . ' text-bold">' . $t->end_at->format('d/m/Y H:i:s') . '</span>' : 'Não informado';
             $arr = [
                 'id' => $t->id,
                 'type' => 'process_task',
                 'process_id' => $t->process->id,
                 'name' => $t->task->name,
-                'entrega' => '<span class="text-' . $color . ' text-bold">' . $t->end_at->format('d/m/Y H:i:s') . '</span>',
+                'entrega' => $endAt,
                 'client' => $t->client->document . ' - ' . $t->client->name,
                 'client_id' => $t->client->id,
                 'criacao' => $t->created_at->format('d/m/Y H:i:s'),
@@ -51,11 +52,12 @@ class RelatorioController extends Controller
 
         foreach (ClientTask::where('closed', 0)->get() as $t) {
             $color = $t->isLate() ? 'danger' : 'success';
+            $endAt = ($t->end_at) ? '<span class="text-' . $color . ' text-bold">' . $t->end_at->format('d/m/Y H:i:s') . '</span>' : 'Não informado';
             $arr = [
                 'id' => $t->id,
                 'type' => 'single_task',
                 'name' => $t->task->name,
-                'entrega' => '<span class="text-' . $color . ' text-bold">' . $t->end_at->format('d/m/Y H:i:s') . '</span>',
+                'entrega' => $endAt,
                 'client' => $t->client->document . ' - ' . $t->client->name,
                 'client_id' => $t->client->id,
                 'criacao' => $t->created_at->format('d/m/Y H:i:s'),
@@ -67,12 +69,13 @@ class RelatorioController extends Controller
 
         foreach (ClientSubscriptionTask::where('closed', 0)->get() as $t) {
             $color = $t->isLate() ? 'danger' : 'success';
+            $endAt = ($t->end_at) ? '<span class="text-' . $color . ' text-bold">' . $t->end_at->format('d/m/Y H:i:s') . '</span>' : 'Não informado';
             $arr = [
                 'id' => $t->id,
                 'type' => 'subscription_task',
                 'subscription_id' => $t->client_subscription_id,
                 'name' => $t->task->name,
-                'entrega' => '<span class="text-' . $color . ' text-bold">' . $t->end_at->format('d/m/Y H:i:s') . '</span>',
+                'entrega' => $endAt,
                 'client' => $t->client->document . ' - ' . $t->client->name,
                 'client_id' => $t->client->id,
                 'criacao' => $t->created_at->format('d/m/Y H:i:s'),
@@ -92,12 +95,13 @@ class RelatorioController extends Controller
         $tarefas = [];
         foreach (ClientProcessTask::where('closed', 1)->get() as $t) {
             $color = $t->isLate() ? 'danger' : 'success';
+            $endAt = ($t->end_at) ? '<span class="text-' . $color . ' text-bold">' . $t->end_at->format('d/m/Y H:i:s') . '</span>' : 'Não informado';
             $arr = [
                 'id' => $t->id,
                 'type' => 'process_task',
                 'process_id' => $t->process->id,
                 'name' => $t->task->name,
-                'entrega' => '<span class="text-' . $color . ' text-bold">' . $t->end_at->format('d/m/Y H:i:s') . '</span>',
+                'entrega' => $endAt,
                 'client' => $t->client->document . ' - ' . $t->client->name,
                 'client_id' => $t->client->id,
                 'criacao' => $t->created_at->format('d/m/Y H:i:s'),
@@ -109,11 +113,12 @@ class RelatorioController extends Controller
 
         foreach (ClientTask::where('closed', 1)->get() as $t) {
             $color = $t->isLate() ? 'danger' : 'success';
+            $endAt = ($t->end_at) ? '<span class="text-' . $color . ' text-bold">' . $t->end_at->format('d/m/Y H:i:s') . '</span>' : 'Não informado';
             $arr = [
                 'id' => $t->id,
                 'type' => 'single_task',
                 'name' => $t->task->name,
-                'entrega' => '<span class="text-' . $color . ' text-bold">' . $t->end_at->format('d/m/Y H:i:s') . '</span>',
+                'entrega' => $endAt,
                 'client' => $t->client->document . ' - ' . $t->client->name,
                 'client_id' => $t->client->id,
                 'criacao' => $t->created_at->format('d/m/Y H:i:s'),
@@ -125,12 +130,13 @@ class RelatorioController extends Controller
 
         foreach (ClientSubscriptionTask::where('closed', 1)->get() as $t) {
             $color = $t->isLate() ? 'danger' : 'success';
+            $endAt = ($t->end_at) ? '<span class="text-' . $color . ' text-bold">' . $t->end_at->format('d/m/Y H:i:s') . '</span>' : 'Não informado';
             $arr = [
                 'id' => $t->id,
                 'type' => 'subscription_task',
                 'subscription_id' => $t->client_subscription_id,
                 'name' => $t->task->name,
-                'entrega' => '<span class="text-' . $color . ' text-bold">' . $t->end_at->format('d/m/Y H:i:s') . '</span>',
+                'entrega' => $endAt,
                 'client' => $t->client->document . ' - ' . $t->client->name,
                 'client_id' => $t->client->id,
                 'criacao' => $t->created_at->format('d/m/Y H:i:s'),
