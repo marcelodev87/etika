@@ -30,7 +30,7 @@ class ClientProcessTaskCommentController extends Controller
                     array_push($arr['files'], Storage::disk('public')->url($f));
                 }
             }
-            
+
             array_push($data, $arr);
         }
         return response()->json(['data' => $data], 200);
