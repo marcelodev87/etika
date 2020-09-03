@@ -91,7 +91,7 @@ class ClientTaskController extends Controller
         $task = ClientTask::find($request->task_id);
 
         // atualiza
-        $oldHour = $task->end_at;
+        $oldHour = $task->end_at ?? Carbon::now()->format('Y-m-d H:i');
         $newHour = Carbon::parse($oldHour)->addHours($hours);
         $task->update([
             'end_at' => $newHour->format('Y-m-d H:i:s')
