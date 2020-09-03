@@ -241,17 +241,7 @@
 
     </div>
 
-    <div id="comments" class="sidebar-right-blank hide">
-        <div class="header">
-            <h3>Comentários</h3>
-            <a href="javascript:void(0)" onclick="hideComments()" class="text-danger">
-                <i class="fa fa-times"></i>
-            </a>
-        </div>
-        <div class="body">
-
-        </div>
-    </div>
+    @include('widgets.comments')
 @endsection
 
 
@@ -347,7 +337,7 @@
         });
 
         function showComments(task)  {
-            var $endpoint = "{{ route('app.clients.processes.tasks.comments.index', [$client->id, $clientProcess->id, ':TASK']) }}";
+            var $endpoint = "{{ route('app.task.comments.process', ':TASK') }}";
             $endpoint = $endpoint.replace(':TASK', task);
             $.get($endpoint, function (response) {
                 $.each(response.data, function (i, e) {

@@ -17,6 +17,7 @@ class CreateSubscriptionsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->decimal('price', 10,2)->default(0);
+            $table->jsonb('tasks')->nullable();
             $table->timestamps();
         });
     }

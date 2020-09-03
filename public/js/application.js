@@ -50,8 +50,6 @@ $('#zip').on('change', function(){
 });
 
 // DOCUMENT MASK
-
-
 $(document).on('keydown', '.document-mask', function (e) {
 
     var digit = e.key.replace(/\D/g, '');

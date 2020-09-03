@@ -1,23 +1,23 @@
 @extends('layouts.app')
 
 @section('header')
-    @breadcrumb(['title' => 'Clientes'])
+    @breadcrumb(['title' => 'Assinaturas'])
     <li>
         <a href="{!! route('app.index') !!}">
             <i class="fa fa-th"></i> Dashboard
         </a>
     </li>
     <li class="active">
-        <i class="fa fa-users"></i> Clientes
+        <i class="fa fa-file-signature"></i> Assinaturas
     </li>
     @endbreadcrumb
 @endsection
 @section('content')
     <div class="row">
         <div class="col-md-12 text-right mb-1">
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#create-subscription">
-                <i class="fa fa-plus"></i> Criar
-            </button>
+            <a href="{{ route('app.subscriptions.create') }}" class="btn btn-success btn-sm">
+                <i class="fa fa-plus"></i> Adicionar
+            </a>
         </div>
 
         <div class="col-md-6 collapse" id="create-subscription">

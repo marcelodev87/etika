@@ -113,6 +113,8 @@
                     'app.relatorios.processoAberto',
                     'app.relatorios.processoAberto',
                     'app.relatorios.pagamentoAberto',
+                    'app.relatorios.tarefaAberta',
+                    'app.relatorios.tarefaFechada',
                 ];
             @endphp
             @if(auth()->user()->hasRole('adm'))
@@ -123,11 +125,20 @@
                     </a>
                     <ul class="treeview-menu" {{ (menuPath($arrayMenuRelatorio)) ? 'style=display:block' : null }} >
                         <li class="{{ menuPath(['app.relatorios.processoAberto'], 'active') }}">
-                            <a href="{{ route('app.relatorios.processoAberto') }}">Processos Abertos</a></li>
+                            <a href="{{ route('app.relatorios.processoAberto') }}">Processos Abertos</a>
+                        </li>
                         <li class="{{ menuPath(['app.relatorios.processoFechado'], 'active') }}">
-                            <a href="{{ route('app.relatorios.processoFechado') }}">Processos Fechados</a></li>
+                            <a href="{{ route('app.relatorios.processoFechado') }}">Processos Fechados</a>
+                        </li>
+                        <li class="{{ menuPath(['app.relatorios.tarefaAberta'], 'active') }}">
+                            <a href="{{ route('app.relatorios.tarefaAberta') }}">Tarefas Abertas</a>
+                        </li>
+                        <li class="{{ menuPath(['app.relatorios.tarefaFechada'], 'active') }}">
+                            <a href="{{ route('app.relatorios.tarefaFechada') }}">Tarefas Fechadas</a>
+                        </li>
                         <li class="{{ menuPath(['app.relatorios.pagamentoAberto'], 'active') }}">
-                            <a href="{{ route('app.relatorios.pagamentoAberto') }}">Pagamentos Abertos</a></li>
+                            <a href="{{ route('app.relatorios.pagamentoAberto') }}">Pagamentos Abertos</a>
+                        </li>
 
                     </ul>
                 </li>

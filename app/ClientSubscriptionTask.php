@@ -5,20 +5,24 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-class ClientProcessTask extends Model
+class ClientSubscriptionTask extends Model
 {
     protected $guarded = [];
+    protected $dates = ['end_at', 'closed_at'];
 
-    protected $dates = ['end_at', 'created_at'];
+    public function comments()
+    {
+        return $this->hasMany(ClientSubscriptionTaskComment::class, 'cst_id');
+    }
 
     public function task()
     {
         return $this->belongsTo(InternalTask::class, 'task_id');
     }
 
-    public function responsible()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'responsible_person');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function client()
@@ -31,15 +35,6 @@ class ClientProcessTask extends Model
         return $this->belongsTo(User::class, 'closed_by');
     }
 
-    public function comments()
-    {
-        return $this->hasMany(ClientProcessTaskComment::class);
-    }
-
-    public function process()
-    {
-        return $this->belongsTo(ClientProcess::class, 'client_process_id');
-    }
 
     public function isLate()
     {

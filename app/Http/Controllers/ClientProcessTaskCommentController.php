@@ -14,25 +14,27 @@ use Illuminate\Support\Facades\Validator;
 class ClientProcessTaskCommentController extends Controller
 {
 
-    public function index(Client $client, ClientProcess $clientProcess, ClientProcessTask $clientProcessTask)
+    public function index($task)
     {
-        $rows = $clientProcessTask->comments()->orderBy('id', 'desc')->get();
+        $clientProcessTask = ClientProcessTask::find($task);
         $data = [];
-        foreach ($rows as $r) {
+        foreach ($clientProcessTask->comments()->orderBy('id', 'desc')->get() as $r) {
             $arr = [
                 'user' => $r->user->name,
                 'date' => $r->created_at->format('d/m/Y H:i:s'),
                 'comment' => $r->comment,
                 'files' => []
             ];
-            foreach (json_decode($r->files, true) as $f) {
-                array_push($arr['files'], Storage::disk('public')->url($f));
+            if($r->files){
+                foreach (json_decode($r->files, true) as $f) {
+                    array_push($arr['files'], Storage::disk('public')->url($f));
+                }
             }
+            
             array_push($data, $arr);
         }
         return response()->json(['data' => $data], 200);
     }
-
 
     public function store(Request $request,Client $client, ClientProcess $clientProcess, ClientProcessTask $clientProcessTask)
     {

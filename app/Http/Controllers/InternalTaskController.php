@@ -101,8 +101,4 @@ class InternalTaskController extends Controller
     }
 
 
-    public function destroy(InternalTask $internalTask)
-    {
-        //
-    }
 }

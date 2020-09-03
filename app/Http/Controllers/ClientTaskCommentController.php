@@ -11,19 +11,21 @@ use Illuminate\Support\Facades\Validator;
 
 class ClientTaskCommentController extends Controller
 {
-    public function index(Client $client, ClientTask $clientTask)
+    public function index($task)
     {
-        $rows = $clientTask->comments()->orderBy('id', 'desc')->get();
+        $clientTask = ClientTask::find($task);
         $data = [];
-        foreach ($rows as $r) {
+        foreach ($clientTask->comments()->orderBy('id', 'desc')->get() as $r) {
             $arr = [
                 'user' => $r->clientTask->responsible->name,
                 'date' => $r->created_at->format('d/m/Y H:i:s'),
                 'comment' => $r->comment,
                 'files' => []
             ];
-            foreach (json_decode($r->files, true) as $f) {
-                array_push($arr['files'], Storage::disk('public')->url($f));
+            if ($r->files != null) {
+                foreach (json_decode($r->files, true) as $f) {
+                    array_push($arr['files'], Storage::disk('public')->url($f));
+                }
             }
             array_push($data, $arr);
         }
@@ -44,7 +46,7 @@ class ClientTaskCommentController extends Controller
 
         try {
             $files = [];
-            if($request->has('files')){
+            if ($request->has('files')) {
                 foreach ($request->file('files') as $file) {
                     $name = 'comments/' . md5(uniqid(rand(), true)) . '.' . $file->extension();
                     $file->move(storage_path() . '/app/public/comments', $name);

@@ -15,7 +15,7 @@
 
     <li class="active">
         @if($client->internal_code)
-           {{$client->internal_code}} - {{ $client->name }}
+            {{$client->internal_code}} - {{ $client->name }}
         @else
             {{ $client->name }}
         @endif
@@ -35,15 +35,18 @@
 @section('content')
     <div class="row">
         <div class="col-md-6">
-            <h1>
+            <h1 style="margin-top: 0 !important;">
                 @if($client->internal_code)
                     {{ $client->internal_code }} - {{ $client->name }}
                 @else
                     {{ $client->name }}
                 @endif
             </h1>
+            <p style="padding-bottom: 0; margin-bottom: 0">
+                DOCUMENTO ({{ $client->document }})
+            </p>
         </div>
-        <div class="col-md-6 text-right mb-1">
+        <div class="col-md-6 text-right">
             <a href="{{ route('app.clients.members.index', $client->id) }}" class="btn btn-danger btn-sm">
                 <i class="fa fa-plus"></i> Diretoria
             </a>
@@ -58,12 +61,20 @@
                 <i class="fa fa-plus"></i> Assinaturas
             </a>
 
-            <a href="{{ route('app.clients.mandatos.index', $client->id) }}"  class="btn btn-info btn-sm">
+            <a href="{{ route('app.clients.mandatos.index', $client->id) }}" class="btn btn-info btn-sm">
                 <i class="fa fa-ribbon"></i> Mandatos
             </a>
+            @if($client->mandatos)
+                @php $mandato= $client->mandatos->last() @endphp
+                <p class="text-danger text-bold" style="margin-bottom: 0; padding-bottom: 0">
+                    <small>Mandato da diretoria: {{$mandato->start_at->format('d/m/Y')}} - {{ $mandato->end_at->format('d/m/Y') }}</small>
+                </p>
+                @endif
 
         </div>
+    </div>
 
+    <div class="row" style="margin-top: 21px;">
         {{-- assinaturas --}}
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -220,17 +231,7 @@
 
     </div>
 
-    <div class="sidebar-right-blank hide">
-        <div class="header">
-            <h3>Comentários</h3>
-            <a href="javascript:void(0)" onclick="hideComments()" class="text-danger">
-                <i class="fa fa-times"></i>
-            </a>
-        </div>
-        <div class="body">
-
-        </div>
-    </div>
+    @include('widgets.comments')
 
 
 @endsection
@@ -367,7 +368,7 @@
 
         function showComments(task) {
             const $block = $('.sidebar-right-blank');
-            var $endpoint = "{{ route('app.clients.tasks.comments.index', [$client->id, ':TASK']) }}";
+            var $endpoint = "{{ route('app.task.comments.single', ':TASK') }}";
             $endpoint = $endpoint.replace(':TASK', task);
             $.get($endpoint, function (response) {
                 $.each(response.data, function (i, e) {
@@ -377,7 +378,7 @@
                     $html += '<div class="panel-heading">';
                     $html += '<h4><b>' + e.user + ' - ' + e.date + '</b></h4>';
                     $html += '</div>';
-                    $html += '<div class="panel-body">' + e.comment ;
+                    $html += '<div class="panel-body">' + e.comment;
                     $html += '<div class="files">';
 
                     $.each(e.files, function (x, z) {

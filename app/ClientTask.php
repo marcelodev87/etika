@@ -10,6 +10,10 @@ class ClientTask extends Model
     protected $guarded = [];
     protected $dates = ['end_at', 'closed_at'];
 
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
     public function task()
     {
         return $this->belongsTo(InternalTask::class);

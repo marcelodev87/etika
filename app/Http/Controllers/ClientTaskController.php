@@ -33,11 +33,15 @@ class ClientTaskController extends Controller
         }
 
         try {
-            $client->tasks()->create([
+            $task = $client->tasks()->create([
                 'task_id' => $input['task_id'],
                 'user_id' => $input['user_id'],
                 'price' => $input['price'],
                 'end_at' => Carbon::createFromFormat('d/m/Y H:i', $input['end_at'])->format('Y-m-d H:i:s'),
+            ]);
+            $task->comments()->create([
+                'user_id' => auth()->user()->id,
+                'comment' => '<b>criou essa tarefa</b>'
             ]);
             return response()->json([], 201);
         } catch (\Exception $e) {
@@ -60,5 +64,43 @@ class ClientTaskController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function delay(Request $request)
+    {
+        $rules = [
+            'task_id' => 'required|integer|exists:client_tasks,id',
+            'tipo' => 'required|string|in:h,d',
+            'qt' => 'required|integer|min:1|max:24',
+        ];
+        $errors = [];
+        $fields = [
+            'task_id' => 'tarefa',
+            'tipo' => 'tipo',
+            'qt' => 'quantidade'
+        ];
+        $validator = Validator::make($request->all(), $rules, $errors, $fields);
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()->first()], 400);
+        }
+        $hours = $request->qt;
+        if($request->tipo == 'd'){
+            $hours = $request->qt * 24;
+        }
+
+        $task = ClientTask::find($request->task_id);
+
+        // atualiza
+        $oldHour = $task->end_at;
+        $newHour = Carbon::parse($oldHour)->addHours($hours);
+        $task->update([
+            'end_at' => $newHour->format('Y-m-d H:i:s')
+        ]);
+        $task->comments()->create([
+            'user_id' => auth()->user()->id,
+            'comment' => '<b>fez o adiamento</b> antigo: '.$oldHour->format('d/m/Y H:i:s') . ' ~ novo ' . $newHour->format('d/m/Y H:i:s') . '; total de '. $hours . ' hora(s) adicionada.'
+        ]);
+
+        return response()->json(['message' => 'atualizado com sucesso'], 200);
     }
 }

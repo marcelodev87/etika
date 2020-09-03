@@ -101,6 +101,7 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
 
             // histórico
             Route::get('/{clientProcess}/history', ['uses' => 'ClientProcessController@history', 'as' => 'history']);
+
         });
 
         // tarefas
@@ -117,13 +118,23 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
 
         // assinaturas
         Route::group(['prefix' => '{client}/assinatuas', 'as' => 'subscriptions.'], function () {
-            Route::get('/{clientSubscription}', ['uses' => 'ClientSubscriptionController@show', 'as' => 'show', 'roles' => ['adm']]);
+            Route::get('/{clientSubscription}/pagamentos', ['uses' => 'ClientSubscriptionController@show', 'as' => 'show', 'roles' => ['adm']]);
             Route::post('/', ['uses' => 'ClientSubscriptionController@store', 'as' => 'store', 'roles' => ['adm']]);
             Route::get('/{clientSubscription}/close', ['uses' => 'ClientSubscriptionController@close', 'as' => 'close', 'roles' => ['adm']]);
 
             // add payment
             Route::post('/{clientSubscription}/payments/', ['uses' => 'ClientSubscriptionPaymentController@store', 'as' => 'payments.store', 'roles' => ['adm']]);
             Route::delete('/{clientSubscription}/payments/{clientSubscriptionPayment}', ['uses' => 'ClientSubscriptionPaymentController@destroy', 'as' => 'payments.delete', 'roles' => ['adm']]);
+
+            // subscriptions
+            Route::group(['prefix' => '{clientSubscription}/tarefas', 'as' => 'tasks.'], function () {
+                Route::get('', ['uses' => 'ClientSubscriptionController@show', 'as' => 'show', 'roles' => ['adm']]);
+                Route::get('{clientSubscriptionTask}', ['uses' => 'ClientSubscriptionTaskController@done', 'as' => 'done', 'roles' => ['adm']]);
+                Route::group(['prefix' => '{clientSubscriptionTask}/comments', 'as' => 'comments.'], function () {
+                    Route::get('/', ['uses' => 'ClientSubscriptionTaskCommentController@index', 'as' => 'index']);
+                    Route::post('/', ['uses' => 'ClientSubscriptionTaskCommentController@store', 'as' => 'store']);
+                });
+            });
         });
 
         // mandatos
@@ -161,6 +172,7 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
         Route::get('/{internalTask}/editar', ['uses' => 'InternalTaskController@edit', 'as' => 'edit', 'roles' => ['adm']]);
         Route::put('/{internalTask}', ['uses' => 'InternalTaskController@update', 'as' => 'update', 'roles' => ['adm']]);
         Route::delete('/{internalTask}', ['uses' => 'InternalTaskController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
+
     });
 
     # rota de cartórios
@@ -176,9 +188,12 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
     # rota de assinaturas
     Route::group(['prefix' => 'assinaturas', 'as' => 'subscriptions.'], function () {
         Route::get('', ['uses' => 'SubscriptionController@index', 'as' => 'index', 'roles' => ['adm']]);
+        Route::get('adicionar', ['uses' => 'SubscriptionController@create', 'as' => 'create', 'roles' => ['adm']]);
         Route::post('/', ['uses' => 'SubscriptionController@store', 'as' => 'store', 'roles' => ['adm']]);
+
         Route::put('/{subscription}', ['uses' => 'SubscriptionController@update', 'as' => 'update', 'roles' => ['adm']]);
         Route::delete('/{subscription}', ['uses' => 'SubscriptionController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
+
     });
 
     # rota de geracao de documentos
@@ -215,6 +230,8 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
         Route::get('/processos-abertos', ['uses' => 'RelatorioController@processoAberto', 'as' => 'processoAberto', 'roles' => ['adm']]);
         Route::get('/processos-fechados', ['uses' => 'RelatorioController@processoFechado', 'as' => 'processoFechado', 'roles' => ['adm']]);
         Route::get('/pagamentos-abertos', ['uses' => 'RelatorioController@pagamentoAberto', 'as' => 'pagamentoAberto', 'roles' => ['adm']]);
+        Route::get('/tarefas-abertas', ['uses' => 'RelatorioController@tarefaAberta', 'as' => 'tarefaAberta', 'roles' => ['adm']]);
+        Route::get('/tarefas-fechadas', ['uses' => 'RelatorioController@tarefaFechada', 'as' => 'tarefaFechada', 'roles' => ['adm']]);
     });
 
 
@@ -225,6 +242,18 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
         Route::group(['prefix' => 'widgets', 'as' => 'widgets.'], function () {
             Route::get('have-something-open', ['uses' => 'WidgetController@haveSomethingOpen', 'as' => 'haveSomethingOpen']);
         });
+    });
+
+
+    Route::post('single-task-delay', ['uses' => 'ClientTaskController@delay', 'as' => 'singleTaskDelay', 'roles' => ['adm']]);
+    Route::post('process-task-delay', ['uses' => 'ClientProcessTaskController@delay', 'as' => 'processTaskDelay', 'roles' => ['adm']]);
+    Route::post('subscription-task-delay', ['uses' => 'ClientSubscriptionTaskController@delay', 'as' => 'subscriptionTaskDelay', 'roles' => ['adm']]);
+
+    // LOAD COMMENTS
+    Route::group(['prefix' => 'task-comments', 'as' => 'task.comments.'], function () {
+        Route::get('single/{task}', ['uses' => 'ClientTaskCommentController@index', 'as' => 'single']);
+        Route::get('process/{task}', ['uses' => 'ClientProcessTaskCommentController@index', 'as' => 'process']);
+        Route::get('subscription/{task}', ['uses' => 'ClientSubscriptionTaskCommentController@index', 'as' => 'subscription']);
     });
 });
 
