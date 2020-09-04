@@ -91,7 +91,6 @@
                             <a href="javascript:void(0)" class="btn btn-xs btn-info showComments" data-task-type="{{ $tarefa['type'] }}" data-task="{{ $tarefa['id'] }}">
                                 <i class="fa fa-comments"></i>
                             </a>
-
                         </td>
                     </tr>
                 @endif
