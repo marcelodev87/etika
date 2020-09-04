@@ -228,7 +228,7 @@
                                     <form class="form-inline" action="{!! route('app.clients.processes.payments.delete', [$client->id, $clientProcess->id, $payment->id]) !!}" method="post">
                                         @csrf
                                         @method('delete')
-                                        <button type="button" class="btn btn-xs btn-danger formConfirmDeletePayment" data-nome="{{ $task->task->name }}" data-toggle="tooltip" data-placement="left" title="Deletar">
+                                        <button type="button" class="btn btn-xs btn-danger formConfirmDeletePayment"  data-toggle="tooltip" data-placement="left" title="Deletar">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
