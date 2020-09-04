@@ -22,7 +22,7 @@ class ClientPersona extends Model
 
     public function emails()
     {
-        return $this->hasMany(ClientPersonaEmail::class);
+        return $this->hasMany(ClientPersonaEmail::class, 'client_persona_id');
     }
 
     public function phones()

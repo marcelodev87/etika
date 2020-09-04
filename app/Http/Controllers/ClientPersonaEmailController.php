@@ -45,7 +45,9 @@ class ClientPersonaEmailController extends Controller
     {
         $clientPersona->emails()->update(['main' => 0]);
         $clientPersonaEmail->update(['main' => 1]);
-        return response()->json(['data' => $clientPersona->emails()->orderBy('main', 'desc')->get()], 200);
+        return response()->json([
+            'data' => $clientPersona->emails()->orderBy('main', 'desc')->get()
+        ], 200);
     }
 
     public function destroy(Client $client,  ClientPersona $clientPersona, ClientPersonaEmail $clientPersonaEmail)

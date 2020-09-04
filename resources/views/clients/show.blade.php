@@ -64,7 +64,7 @@
             <a href="{{ route('app.clients.mandatos.index', $client->id) }}" class="btn btn-info btn-sm">
                 <i class="fa fa-ribbon"></i> Mandatos
             </a>
-            @if($client->mandatos)
+            @if($client->mandatos()->count())
                 @php $mandato= $client->mandatos->last() @endphp
                 <p class="text-danger text-bold" style="margin-bottom: 0; padding-bottom: 0">
                     <small>Mandato da diretoria: {{$mandato->start_at->format('d/m/Y')}} - {{ $mandato->end_at->format('d/m/Y') }}</small>

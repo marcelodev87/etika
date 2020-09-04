@@ -129,13 +129,14 @@
                                         <i class="fa fa-check"></i>
                                     </button>
                                 </form>
+
+                                <form class="form-inline" action="{!! route('app.clients.processes.tasks.delete', [$client->id, $clientProcess->id, $task->id]) !!}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="button" class="btn btn-xs btn-danger formConfirmDelete" data-toggle="tooltip" data-placement="left" title="Deletar">
+                                        <i class="fa fa-trash"></i></button>
+                                </form>
                             @endif
-                            <form class="form-inline" action="{!! route('app.clients.processes.tasks.delete', [$client->id, $clientProcess->id, $task->id]) !!}" method="post">
-                                @csrf
-                                @method('delete')
-                                <button type="button" class="btn btn-xs btn-danger formConfirmDelete" data-toggle="tooltip" data-placement="left" title="Deletar">
-                                    <i class="fa fa-trash"></i></button>
-                            </form>
                         </td>
                     </tr>
                 @endforeach
@@ -224,11 +225,12 @@
                                     @endif
                                 </td>
                                 <td class="text-right">
-                                    <form class="form-inline" action="{!! route('app.clients.processes.payments.delete', [$client->id, $clientProcess->id, $task->id]) !!}" method="post">
+                                    <form class="form-inline" action="{!! route('app.clients.processes.payments.delete', [$client->id, $clientProcess->id, $payment->id]) !!}" method="post">
                                         @csrf
                                         @method('delete')
                                         <button type="button" class="btn btn-xs btn-danger formConfirmDeletePayment" data-nome="{{ $task->task->name }}" data-toggle="tooltip" data-placement="left" title="Deletar">
-                                            <i class="fa fa-trash"></i></button>
+                                            <i class="fa fa-trash"></i>
+                                        </button>
                                     </form>
                                 </td>
                             </tr>
@@ -336,7 +338,7 @@
             })
         });
 
-        function showComments(task)  {
+        function showComments(task) {
             var $endpoint = "{{ route('app.task.comments.process', ':TASK') }}";
             $endpoint = $endpoint.replace(':TASK', task);
             $.get($endpoint, function (response) {

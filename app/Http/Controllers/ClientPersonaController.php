@@ -142,6 +142,7 @@ class ClientPersonaController extends Controller
                 'dob' => $persona->dob->format('d/m/Y'),
                 'rg' => $persona->rg,
                 'natural' => $persona->natural,
+                'gender' => $persona->gender
             ],
             'emails' => $emails,
             'phones' => $phones,

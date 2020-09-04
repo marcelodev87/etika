@@ -76,14 +76,14 @@
                                     <a href="#modal-adiar" data-toggle="modal" data-task-type="{{ $tarefa['type'] }}" data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-danger processTaskAdiar">
                                         <i class="fa fa-times"></i> Adiar
                                     </a>
-                                    <a href="{{ route('app.clients.processes.tasks.done', [$tarefa['client_id'],$tarefa['process_id'], $tarefa['id']]) }}" data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-success processTaskFinalizar">
+                                    <a href="{{ route('app.clients.processes.tasks.done', [$tarefa['client_id'],$tarefa['process_id'], $tarefa['id']]) }}" data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-success processTaskFinalizar" onclick="return confirm('Deseja mesmo finalizar?')">
                                         <i class="fa fa-check"></i> Finalizar
                                     </a>
                                 @else
                                     <a href="#modal-adiar" data-toggle="modal" data-task-type="{{ $tarefa['type'] }}" data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-danger processTaskAdiar">
                                         <i class="fa fa-times"></i> Adiar
                                     </a>
-                                    <a href="{{ route('app.clients.subscriptions.tasks.done', [$tarefa['client_id'],$tarefa['subscription_id'], $tarefa['id']]) }}" data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-success processTaskFinalizar">
+                                    <a href="{{ route('app.clients.subscriptions.tasks.done', [$tarefa['client_id'],$tarefa['subscription_id'], $tarefa['id']]) }}" data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-success processTaskFinalizar" onclick="return confirm('Deseja mesmo finalizar?')">
                                         <i class="fa fa-check"></i> Finalizar
                                     </a>
                                 @endif
@@ -165,43 +165,47 @@
 
         $('#form-adiamento').on('submit', function (e) {
             e.preventDefault()
-            var $form = $(this);
-            var $button = $form.find('button[type="submit"]');
-            var $buttonText = $button.html();
-            var $data = new FormData($form[0]);
+            var $confirm = confirm('Desja mesmo fazer esta ação?');
+            if($confirm){
 
-            var $type = $form.find('input[name="task_type"]').val();
-            var $url = '';
-            if ($type == 'single_task') {
-                $url = "{{ route('app.singleTaskDelay') }}";
-            } else if ($type == 'process_task') {
-                $url = "{{ route('app.processTaskDelay') }}";
-            } else {
-                $url = "{!! route('app.subscriptionTaskDelay') !!}";
-            }
+                var $form = $(this);
+                var $button = $form.find('button[type="submit"]');
+                var $buttonText = $button.html();
+                var $data = new FormData($form[0]);
 
-            $.ajax({
-                url: $url,
-                type: $form.attr('method'),
-                data: $data,
-                dataType: 'json',
-                contentType: false,
-                processData: false,
-                cache: false,
-                beforeSend: () => { // aqui vai o que tem que ser feito antes de chamar o endpoint
-                    $button.attr('disabled', 'disabled').html('<i class="fas fa-spinner fa-pulse"></i> Carregando...');
-                },
-                success: (response) => { // aqui vai o que der certo
-                    window.location.reload();
-                },
-                error: (response) => { // aqui vai o que acontece quando ocorrer o erro
-                    var json = $.parseJSON(response.responseText);
-                    alert(json.message);
-                },
-                complete: () => { // aqui vai o que acontece quando tudo acabar
-                    $button.removeAttr('disabled').html($buttonText);
+                var $type = $form.find('input[name="task_type"]').val();
+                var $url = '';
+                if ($type == 'single_task') {
+                    $url = "{{ route('app.singleTaskDelay') }}";
+                } else if ($type == 'process_task') {
+                    $url = "{{ route('app.processTaskDelay') }}";
+                } else {
+                    $url = "{!! route('app.subscriptionTaskDelay') !!}";
                 }
-            });
+
+                $.ajax({
+                    url: $url,
+                    type: $form.attr('method'),
+                    data: $data,
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    beforeSend: () => { // aqui vai o que tem que ser feito antes de chamar o endpoint
+                        $button.attr('disabled', 'disabled').html('<i class="fas fa-spinner fa-pulse"></i> Carregando...');
+                    },
+                    success: (response) => { // aqui vai o que der certo
+                        window.location.reload();
+                    },
+                    error: (response) => { // aqui vai o que acontece quando ocorrer o erro
+                        var json = $.parseJSON(response.responseText);
+                        alert(json.message);
+                    },
+                    complete: () => { // aqui vai o que acontece quando tudo acabar
+                        $button.removeAttr('disabled').html($buttonText);
+                    }
+                });
+            }
         });
 
         {{-- Mostrar Comentários --}}
@@ -221,7 +225,6 @@
                     break;
             }
             $endpoint = $endpoint.replace(':TASK', $task);
-            console.log($endpoint)
             if ($endpoint != "") {
                 $.get($endpoint, function (response) {
                     var $html = '';
@@ -253,10 +256,8 @@
         });
 
         function showComments(type, task) {
-
             $.get($endpoint, function (response) {
                 $.each(response.data, function (i, e) {
-                    console.log(e);
                     var $html = '';
                     $html += '<div class="panel panel-default">';
                     $html += '<div class="panel-heading">';
@@ -274,7 +275,6 @@
                     $html += '</div>';
                     $html += '</div>';
                     $html += '</div>';
-                    console.log($html)
                     $('.sidebar-right-blank').find('.body').append($html);
                 });
             });

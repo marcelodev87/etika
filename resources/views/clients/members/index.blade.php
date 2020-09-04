@@ -234,12 +234,22 @@
                         $html += '<td class="text-center"><i class="fa fa-times text-danger"></i></td>';
                     }
                     $linkDelete = "{{ route('app.clients.members.addresses.delete', [$client->id, ":MEMBER", ":ID"]) }}".replace(':MEMBER', $member).replace(':ID', response.data.id);
+                    $linkPadrao = "{{ route('app.clients.members.addresses.main', [$client->id, ":MEMBER", ":ID"])  }}".replace(':MEMBER', $member).replace(':ID', e.id);
+
                     $html += '<td class="text-right">';
+
+                    $html += '<form method="post" action="' + $linkPadrao + '" style="display:inline-block;">';
+                    $html += '<button class="btn btn-xs btn-success address-form-main" type="button">';
+                    $html += '<i class="fa fa-check-circle"></i>';
+                    $html += '</button>';
+                    $html += '</form>';
+
                     $html += '<form method="post" action="' + $linkDelete + '">';
                     $html += '<button class="btn btn-xs btn-danger address-form-delete" type="button">';
                     $html += '<i class="fa fa-trash"></i>';
                     $html += '</button>';
                     $html += '</form>';
+
                     $html += '</td>';
                     $html += '</tr>';
                     $table.append($html);
@@ -452,12 +462,23 @@
                         $html += '<td class="text-center"><i class="fa fa-times text-danger"></i></td>';
                     }
                     $linkDelete = "{{ route('app.clients.members.emails.delete', [$client->id, ':MEMBER', ":ID"]) }}".replace(':MEMBER', $member).replace(':ID', response.data.id);
+                    $linkPadrao = "{{ route('app.clients.members.emails.main', [$client->id,":MEMBER", ":ID"]) }}".replace(':MEMBER', $member).replace(':ID', response.data.id);
+
                     $html += '<td class="text-right">';
+
+                    $html += '<form method="post" action="' + $linkPadrao + '" style="display:inline">';
+                    $html += '<button class="btn btn-xs btn-success emails-form-main" type="button">';
+                    $html += '<i class="fa fa-check-circle"></i>';
+                    $html += '</button>';
+                    $html += '</form>';
+
                     $html += '<form method="post" action="' + $linkDelete + '">';
                     $html += '<button class="btn btn-xs btn-danger emails-form-delete" type="button">';
                     $html += '<i class="fa fa-trash"></i>';
                     $html += '</button>';
                     $html += '</form>';
+
+
                     $html += '</td>';
                     $html += '</tr>';
                     $table.append($html);
