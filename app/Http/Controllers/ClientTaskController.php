@@ -84,7 +84,7 @@ class ClientTaskController extends Controller
             return response()->json(['message' => $validator->errors()->first()], 400);
         }
         $hours = $request->qt;
-        if($request->tipo == 'd'){
+        if ($request->tipo == 'd') {
             $hours = $request->qt * 24;
         }
 
@@ -98,7 +98,7 @@ class ClientTaskController extends Controller
         ]);
         $task->comments()->create([
             'user_id' => auth()->user()->id,
-            'comment' => '<b>fez o adiamento</b> antigo: '.$oldHour->format('d/m/Y H:i:s') . ' ~ novo ' . $newHour->format('d/m/Y H:i:s') . '; total de '. $hours . ' hora(s) adicionada.'
+            'comment' => '<b>fez o adiamento</b> antigo: ' . $oldHour->format('d/m/Y H:i:s') . ' ~ novo ' . $newHour->format('d/m/Y H:i:s') . '; total de ' . $hours . ' hora(s) adicionada.'
         ]);
 
         return response()->json(['message' => 'atualizado com sucesso'], 200);

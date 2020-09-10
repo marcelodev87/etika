@@ -2,16 +2,11 @@
 
 @section('header')
     @breadcrumb(['title' => 'Tarefas'])
-    <li>
-        <a href="{!! route('app.index') !!}">
-            <i class="fa fa-th"></i> Dashboard
-        </a>
-    </li>
-    <li class="active">
-        <i class="fa fa-check-circle"></i> Tarefas
-    </li>
+    <li><a href="{!! route('app.index') !!}"><i class="fa fa-th"></i> Dashboard</a></li>
+    <li class="active"><i class="fa fa-check-circle"></i> Tarefas</li>
     @endbreadcrumb
 @endsection
+
 @section('content')
 
     <div class="row">
@@ -39,9 +34,6 @@
                                 <td>{{ $task->name }}</td>
                                 <td>{{ $task->price }}</td>
                                 <td class="text-right">
-
-
-
                                     <a href="{!! route('app.tasks.edit', $task->id) !!}" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="left" title="Editar">
                                         <i class="fa fa-edit"></i>
                                     </a>
@@ -64,6 +56,7 @@
 @endsection
 
 @section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript">
         $('body').on('click', '.formConfirmDelete', function (event) {
             event.preventDefault();
@@ -82,6 +75,10 @@
                     form.submit()
                 }
             })
+        });
+
+        $(function () {
+            $('#datetimepicker1').datetimepicker();
         });
 
         $("#datatable").dataTable();

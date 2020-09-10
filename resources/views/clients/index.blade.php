@@ -2,16 +2,11 @@
 
 @section('header')
     @breadcrumb(['title' => 'Clientes'])
-    <li>
-        <a href="{!! route('app.index') !!}">
-            <i class="fa fa-th"></i> Dashboard
-        </a>
-    </li>
-    <li class="active">
-        <i class="fa fa-users"></i> Clientes
-    </li>
+    <li><a href="{!! route('app.index') !!}"><i class="fa fa-th"></i> Dashboard</a></li>
+    <li class="active"><i class="fa fa-users"></i> Clientes</li>
     @endbreadcrumb
 @endsection
+
 @section('content')
     <div class="row">
         <div class="col-md-12 text-right mb-1">
@@ -169,6 +164,8 @@
 @endsection
 
 @section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
     <script type="text/javascript">
 
         $("#form-cadastrar").on('submit', function (e) {
@@ -204,5 +201,7 @@
         });
 
         $("#datatable").dataTable();
+
+
     </script>
 @endsection

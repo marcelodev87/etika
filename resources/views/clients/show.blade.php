@@ -2,24 +2,9 @@
 
 @section('header')
     @breadcrumb(['title' => 'Clientes'])
-    <li>
-        <a href="{!! route('app.index') !!}">
-            <i class="fa fa-th"></i> Dashboard
-        </a>
-    </li>
-    <li>
-        <a href="{!! route('app.clients.index') !!}">
-            <i class="fa fa-user"></i> Clientes
-        </a>
-    </li>
-
-    <li class="active">
-        @if($client->internal_code)
-            {{$client->internal_code}} - {{ $client->name }}
-        @else
-            {{ $client->name }}
-        @endif
-    </li>
+    <li><a href="{!! route('app.index') !!}"><i class="fa fa-th"></i> Dashboard</a></li>
+    <li><a href="{!! route('app.clients.index') !!}"><i class="fa fa-user"></i> Clientes</a></li>
+    <li class="active">@if($client->internal_code){{$client->internal_code}} - {{ $client->name }}@else{{ $client->name }}@endif</li>
     @endbreadcrumb
 @endsection
 
@@ -69,7 +54,7 @@
                 <p class="text-danger text-bold" style="margin-bottom: 0; padding-bottom: 0">
                     <small>Mandato da diretoria: {{$mandato->start_at->format('d/m/Y')}} - {{ $mandato->end_at->format('d/m/Y') }}</small>
                 </p>
-                @endif
+            @endif
 
         </div>
     </div>
@@ -228,12 +213,9 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     @include('widgets.comments')
-
-
 @endsection
 
 @section('modal')
@@ -522,6 +504,10 @@
                     $button.removeAttr('disabled').html($buttonText);
                 },
             });
+        });
+
+        $(function () {
+            $('#input-end').datetimepicker();
         });
     </script>
 @endsection
