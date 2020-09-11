@@ -262,3 +262,7 @@ Route::get("/sair", function () {
     return redirect()->route('login');
 });
 
+Route::get('teste', function(){
+    return view('mails.ResetPassword');
+});
+

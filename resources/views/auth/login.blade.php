@@ -6,7 +6,7 @@
             @csrf
             <div class="col-logo">
                 <a href="#">
-                    <img alt="imagem de logo" src="{!! asset('img/logo-lg.png') !!}" class="img-responsive center-block"/>
+                    <img alt="imagem de logo" src="{!! asset('img/logo-lg.jpeg') !!}" class="img-responsive center-block"/>
                 </a>
             </div>
             <fieldset>

@@ -29,7 +29,7 @@ class ResetPassword extends Mailable
     public function build()
     {
         return $this->view('mails.ResetPassword')
-            ->subject('Recuperaão de senha')
+            ->subject('Recuperação de senha')
             ->with($this->data);
     }
 }

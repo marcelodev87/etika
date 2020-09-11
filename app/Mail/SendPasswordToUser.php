@@ -29,7 +29,7 @@ class SendPasswordToUser extends Mailable
     public function build()
     {
         return $this->view('mails.SendPasswordToUser')
-            ->subject('Sua senha de acesso ao painel')
+            ->subject('Acesso ao painel')
             ->with($this->data);
     }
 }

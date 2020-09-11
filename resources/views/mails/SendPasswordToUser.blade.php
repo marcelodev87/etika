@@ -9,8 +9,8 @@
 </div>
 
 <div>
-    <p>Olá {{ $name }},<br>segue senha para entrar no painel.</p>
-    <p>Senha: <b>{{ $password }}</b></p>
+    <p>Olá {{ $name ?? "NAME" }},<br>segue senha para entrar no painel.</p>
+    <p>Senha: <b>{{ $password ?? "SENHA" }}</b></p>
 </div>
 </body>
 </html>

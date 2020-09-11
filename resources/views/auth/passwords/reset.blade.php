@@ -3,13 +3,13 @@
 @section('content')
     <div class="form-body" id="middleAuthBox">
 
-        <form method="POST" action="{{ route('password.update') }}" class="col-form">
+        <form method="POST" action="{{ route('password.update') }}" class="col-form" >
             @csrf
             <input type="hidden" name="token" value="{{ $token }}">
             <input type="hidden" name="email" value="{{ $email }}">
             <div class="col-logo">
                 <a href="#">
-                    <img alt="imagem de logo" src="{!! asset('img/logo-lg.png') !!}" class="img-responsive center-block"/>
+                    <img alt="imagem de logo" src="{!! asset('img/logo-lg.jpeg') !!}" class="img-responsive center-block"/>
                 </a>
             </div>
             <fieldset>
@@ -42,5 +42,10 @@
 
         </form>
     </div>
+
+@endsection
+
+
+@section('script')
 
 @endsection

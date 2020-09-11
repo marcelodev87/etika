@@ -1,16 +1,14 @@
-<html lang="pt-br">
-<head>
-    <meta charset="utf8">
-</head>
-<body style="background-color: black; color:#fff">
+@extends('mails.layout')
 
-    <div>
-        <img src="{{ $message->embed(public_path() . '/img/logo-lg.png') }}" alt="">
-    </div>
-
-    <div>
-        <p>Olá {{ $name }},<br>segue o link para troca de senha solicitada.</p>
-        <a href="{{ $link }}">{{ $link }}</a>
-    </div>
-</body>
-</html>
+@section('content')
+    <p style="line-height: 1.5rem">
+        Olá <b>{{ $name ?? "NAME" }}</b>, <br/>
+        click no link abaixo para trocar sua senha.
+    </p>
+    <a href="{{ $link ?? "LINK" }}" style="line-height:1.5rem;background-color: #03a678; text-decoration: none; color:#fff; padding: 10px 15px; border-radius: 4px">
+        Trocar senha
+    </a>
+    <p style="font-size: 13px; line-height: 1.5rem">
+        <i>caso não tenho solicitado desconsidere este e-mail</i>
+    </p>
+@endsection

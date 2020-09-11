@@ -130,9 +130,13 @@ select.form-control {
     Autentication
 */
 .col-logo {
-    background-color: #446cb3;
+    background-color: #F7F7F7;
 }
 
+.col-logo img{
+    width: 250px;
+    padding: 20px;
+}
 .col-form footer {
     padding: 15px 30px 15px !important;
 }
