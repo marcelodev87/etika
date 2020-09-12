@@ -55,7 +55,7 @@ class ClientPersonaController extends Controller
                 'rg' => $request->rg,
                 'rg_expedidor' => $request->rg_expedidor
             ]);
-            return response()->json(['data' => $member], 201);
+            return response()->json(['data' => $member], 400);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 400);
         }

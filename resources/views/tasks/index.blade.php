@@ -37,7 +37,7 @@
                                     <a href="{!! route('app.tasks.edit', $task->id) !!}" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="left" title="Editar">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <form class="form-inline" action="{!! route('app.users.delete', $task->id) !!}" method="post">
+                                    <form class="form-inline" action="{!! route('app.tasks.delete', $task->id) !!}" method="post">
                                         @csrf
                                         @method('delete')
                                         <button type="button" class="btn btn-xs btn-danger formConfirmDelete" data-nome="{{ $task->name }}" data-toggle="tooltip" data-placement="left" title="Deletar">

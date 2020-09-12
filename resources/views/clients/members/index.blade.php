@@ -234,7 +234,7 @@
                         $html += '<td class="text-center"><i class="fa fa-times text-danger"></i></td>';
                     }
                     $linkDelete = "{{ route('app.clients.members.addresses.delete', [$client->id, ":MEMBER", ":ID"]) }}".replace(':MEMBER', $member).replace(':ID', response.data.id);
-                    $linkPadrao = "{{ route('app.clients.members.addresses.main', [$client->id, ":MEMBER", ":ID"])  }}".replace(':MEMBER', $member).replace(':ID', e.id);
+                    $linkPadrao = "{{ route('app.clients.members.addresses.main', [$client->id, ":MEMBER", ":ID"])  }}".replace(':MEMBER', $member).replace(':ID', response.data.id);
 
                     $html += '<td class="text-right">';
 
@@ -859,7 +859,7 @@
                 $form.find('input[name="document"]').val(response.data.document);
                 $form.find('select[name="role"]').val(response.data.role);
                 $form.find('select[name="marital_status"]').val(response.data.marital_status);
-                $form.find('select[name="profession"]').val(response.data.profession);
+                $form.find('[name="profession"]').val(response.data.profession);
                 $form.find('select[name="gender"]').val(response.data.gender);
                 $form.find('input[name="dob"]').val(response.data.dob);
                 $form.find('input[name="rg"]').val(response.data.rg);

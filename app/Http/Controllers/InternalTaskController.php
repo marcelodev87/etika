@@ -27,7 +27,7 @@ class InternalTaskController extends Controller
     {
         $input = $request->all();
         $input['slug'] = Str::slug($input['name']);
-        $input['price'] = str_replace(['.',','],['', '.'], $input['price']);
+        $input['price'] = str_replace(['.', ','], ['', '.'], $input['price']);
         $rules = [
             'name' => 'required|string|min:3',
             'slug' => 'required|string|unique:internal_tasks',
@@ -39,7 +39,7 @@ class InternalTaskController extends Controller
             'price' => 'price',
         ];
         $validator = Validator::make($input, $rules, $errors, $fields);
-        if($validator->fails()){
+        if ($validator->fails()) {
             session()->flash('flash-warning', $validator->errors()->first());
             return redirect()->back()->withInput($request->all());
         }
@@ -52,7 +52,7 @@ class InternalTaskController extends Controller
             ]);
             session()->flash('flash-success', 'Tarefa cadastrado com sucesso');
             return redirect()->route('app.tasks.index');
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             session()->flash('flash-warning', $e->getMessage());
             return redirect()->back();
         }
@@ -69,10 +69,10 @@ class InternalTaskController extends Controller
     {
         $input = $request->all();
         $input['slug'] = Str::slug($input['name']);
-        $input['price'] = str_replace(['.',','],['', '.'], $input['price']);
+        $input['price'] = str_replace(['.', ','], ['', '.'], $input['price']);
         $rules = [
             'name' => 'required|string|min:3',
-            'slug' => 'required|string|unique:internal_tasks,slug,'.$internalTask->id,
+            'slug' => 'required|string|unique:internal_tasks,slug,' . $internalTask->id,
             'price' => 'required|numeric|min:0',
         ];
         $errors = [];
@@ -81,7 +81,7 @@ class InternalTaskController extends Controller
             'price' => 'price',
         ];
         $validator = Validator::make($input, $rules, $errors, $fields);
-        if($validator->fails()){
+        if ($validator->fails()) {
             session()->flash('flash-warning', $validator->errors()->first());
             return redirect()->back()->withInput($request->all());
         }
@@ -94,11 +94,16 @@ class InternalTaskController extends Controller
             ]);
             session()->flash('flash-success', 'Tarefa editada com sucesso');
             return redirect()->route('app.tasks.index');
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             session()->flash('flash-warning', $e->getMessage());
             return redirect()->back();
         }
     }
 
-
+    public function destroy(InternalTask $internalTask)
+    {
+        $internalTask->delete();
+        session()->flash('flash-success', 'Deletado com sucesso');
+        return redirect()->back();
+    }
 }

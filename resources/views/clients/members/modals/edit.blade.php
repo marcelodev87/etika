@@ -91,11 +91,7 @@
                         <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-6">
                             <fieldset class="form-group">
                                 <label>Profissão</label>
-                                <select class="form-control" name="profession">
-                                    @foreach(json_decode(file_get_contents(public_path('profissoes.json')), true) as $role)
-                                        <option value="{{ $role }}">{{ $role }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control" name="profession" >
                             </fieldset>
                         </div>
                     </div>
