@@ -41,41 +41,41 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
     # rota de cliente
     Route::group(['prefix' => 'clientes', 'as' => 'clients.'], function () {
         Route::get('/', ['uses' => 'ClientController@index', 'as' => 'index']);
-        Route::get('/{client}', ['uses' => 'ClientController@show', 'as' => 'show', 'roles' => ['adm']]);
-        Route::post('/', ['uses' => 'ClientController@store', 'as' => 'store', 'roles' => ['adm']]);
-        Route::put('/{client}', ['uses' => 'ClientController@update', 'as' => 'update', 'roles' => ['adm']]);
+        Route::get('/{client}', ['uses' => 'ClientController@show', 'as' => 'show', 'roles' => ['adm', 'usr']]);
+        Route::post('/', ['uses' => 'ClientController@store', 'as' => 'store', 'roles' => ['adm', 'usr']]);
+        Route::put('/{client}', ['uses' => 'ClientController@update', 'as' => 'update', 'roles' => ['adm', 'usr']]);
 
         // membros
         Route::group(['prefix' => '{client}/membros', 'as' => 'members.'], function () {
             Route::get('/', ['uses' => 'ClientPersonaController@index', 'as' => 'index']);
-            Route::post('/', ['uses' => 'ClientPersonaController@store', 'as' => 'store', 'roles' => ['adm']]);
-            Route::get('/{clientPersona}', ['uses' => 'ClientPersonaController@show', 'as' => 'show', 'roles' => ['adm']]);
-            Route::get('/{clientPersona}/information', ['uses' => 'ClientPersonaController@information', 'as' => 'information', 'roles' => ['adm']]);
-            Route::put('/{clientPersona}', ['uses' => 'ClientPersonaController@update', 'as' => 'update', 'roles' => ['adm']]);
-            Route::delete('/{clientPersona}', ['uses' => 'ClientPersonaController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
+            Route::post('/', ['uses' => 'ClientPersonaController@store', 'as' => 'store', 'roles' => ['adm', 'usr']]);
+            Route::get('/{clientPersona}', ['uses' => 'ClientPersonaController@show', 'as' => 'show', 'roles' => ['adm', 'usr']]);
+            Route::get('/{clientPersona}/information', ['uses' => 'ClientPersonaController@information', 'as' => 'information', 'roles' => ['adm', 'usr']]);
+            Route::put('/{clientPersona}', ['uses' => 'ClientPersonaController@update', 'as' => 'update', 'roles' => ['adm', 'usr']]);
+            Route::delete('/{clientPersona}', ['uses' => 'ClientPersonaController@destroy', 'as' => 'delete', 'roles' => ['adm', 'usr']]);
 
             // Address
             Route::group(['prefix' => '{clientPersona}/address', 'as' => 'addresses.'], function () {
                 Route::get('/', ['uses' => 'ClientPersonaAddressController@index', 'as' => 'index']);
-                Route::post('/', ['uses' => 'ClientPersonaAddressController@store', 'as' => 'store', 'roles' => ['adm']]);
-                Route::delete('/{clientPersonaAddress}', ['uses' => 'ClientPersonaAddressController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
-                Route::post('/{clientPersonaAddress}/main', ['uses' => 'ClientPersonaAddressController@main', 'as' => 'main', 'roles' => ['adm']]);
+                Route::post('/', ['uses' => 'ClientPersonaAddressController@store', 'as' => 'store', 'roles' => ['adm', 'usr']]);
+                Route::delete('/{clientPersonaAddress}', ['uses' => 'ClientPersonaAddressController@destroy', 'as' => 'delete', 'roles' => ['adm', 'usr']]);
+                Route::post('/{clientPersonaAddress}/main', ['uses' => 'ClientPersonaAddressController@main', 'as' => 'main', 'roles' => ['adm', 'usr']]);
             });
 
             // E-mails
             Route::group(['prefix' => '{clientPersona}/emails', 'as' => 'emails.'], function () {
                 Route::get('/', ['uses' => 'ClientPersonaEmailController@index', 'as' => 'index']);
-                Route::post('/', ['uses' => 'ClientPersonaEmailController@store', 'as' => 'store', 'roles' => ['adm']]);
-                Route::delete('/{clientPersonaEmail}', ['uses' => 'ClientPersonaEmailController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
-                Route::post('/{clientPersonaEmail}/main', ['uses' => 'ClientPersonaEmailController@main', 'as' => 'main', 'roles' => ['adm']]);
+                Route::post('/', ['uses' => 'ClientPersonaEmailController@store', 'as' => 'store', 'roles' => ['adm', 'usr']]);
+                Route::delete('/{clientPersonaEmail}', ['uses' => 'ClientPersonaEmailController@destroy', 'as' => 'delete', 'roles' => ['adm', 'usr']]);
+                Route::post('/{clientPersonaEmail}/main', ['uses' => 'ClientPersonaEmailController@main', 'as' => 'main', 'roles' => ['adm', 'usr']]);
             });
 
             // Phones
             Route::group(['prefix' => '{clientPersona}/phones', 'as' => 'phones.'], function () {
                 Route::get('/', ['uses' => 'ClientPersonaPhoneController@index', 'as' => 'index']);
-                Route::post('/', ['uses' => 'ClientPersonaPhoneController@store', 'as' => 'store', 'roles' => ['adm']]);
-                Route::delete('/{clientPersonaPhone}', ['uses' => 'ClientPersonaPhoneController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
-                Route::post('/{clientPersonaPhone}/main', ['uses' => 'ClientPersonaPhoneController@main', 'as' => 'main', 'roles' => ['adm']]);
+                Route::post('/', ['uses' => 'ClientPersonaPhoneController@store', 'as' => 'store', 'roles' => ['adm', 'usr']]);
+                Route::delete('/{clientPersonaPhone}', ['uses' => 'ClientPersonaPhoneController@destroy', 'as' => 'delete', 'roles' => ['adm', 'usr']]);
+                Route::post('/{clientPersonaPhone}/main', ['uses' => 'ClientPersonaPhoneController@main', 'as' => 'main', 'roles' => ['adm', 'usr']]);
             });
 
 
@@ -118,18 +118,18 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
 
         // assinaturas
         Route::group(['prefix' => '{client}/assinatuas', 'as' => 'subscriptions.'], function () {
-            Route::get('/{clientSubscription}/pagamentos', ['uses' => 'ClientSubscriptionController@show', 'as' => 'show', 'roles' => ['adm']]);
-            Route::post('/', ['uses' => 'ClientSubscriptionController@store', 'as' => 'store', 'roles' => ['adm']]);
-            Route::get('/{clientSubscription}/close', ['uses' => 'ClientSubscriptionController@close', 'as' => 'close', 'roles' => ['adm']]);
+            Route::get('/{clientSubscription}/pagamentos', ['uses' => 'ClientSubscriptionController@show', 'as' => 'show', 'roles' => ['adm', 'usr']]);
+            Route::post('/', ['uses' => 'ClientSubscriptionController@store', 'as' => 'store', 'roles' => ['adm', 'usr']]);
+            Route::get('/{clientSubscription}/close', ['uses' => 'ClientSubscriptionController@close', 'as' => 'close', 'roles' => ['adm', 'usr']]);
 
             // add payment
-            Route::post('/{clientSubscription}/payments/', ['uses' => 'ClientSubscriptionPaymentController@store', 'as' => 'payments.store', 'roles' => ['adm']]);
-            Route::delete('/{clientSubscription}/payments/{clientSubscriptionPayment}', ['uses' => 'ClientSubscriptionPaymentController@destroy', 'as' => 'payments.delete', 'roles' => ['adm']]);
+            Route::post('/{clientSubscription}/payments/', ['uses' => 'ClientSubscriptionPaymentController@store', 'as' => 'payments.store', 'roles' => ['adm', 'usr']]);
+            Route::delete('/{clientSubscription}/payments/{clientSubscriptionPayment}', ['uses' => 'ClientSubscriptionPaymentController@destroy', 'as' => 'payments.delete', 'roles' => ['adm', 'usr']]);
 
             // subscriptions
             Route::group(['prefix' => '{clientSubscription}/tarefas', 'as' => 'tasks.'], function () {
-                Route::get('', ['uses' => 'ClientSubscriptionController@show', 'as' => 'show', 'roles' => ['adm']]);
-                Route::get('{clientSubscriptionTask}', ['uses' => 'ClientSubscriptionTaskController@done', 'as' => 'done', 'roles' => ['adm']]);
+                Route::get('', ['uses' => 'ClientSubscriptionController@show', 'as' => 'show', 'roles' => ['adm', 'usr']]);
+                Route::get('{clientSubscriptionTask}', ['uses' => 'ClientSubscriptionTaskController@done', 'as' => 'done', 'roles' => ['adm', 'usr']]);
                 Route::group(['prefix' => '{clientSubscriptionTask}/comments', 'as' => 'comments.'], function () {
                     Route::get('/', ['uses' => 'ClientSubscriptionTaskCommentController@index', 'as' => 'index']);
                     Route::post('/', ['uses' => 'ClientSubscriptionTaskCommentController@store', 'as' => 'store']);
@@ -139,73 +139,73 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
 
         // mandatos
         Route::group(['prefix' => '{client}/mandatos', 'as' => 'mandatos.'], function () {
-            Route::get('', ['uses' => 'ClientMandatoController@index', 'as' => 'index', 'roles' => ['adm']]);
-            Route::get('adicionar', ['uses' => 'ClientMandatoController@create', 'as' => 'create', 'roles' => ['adm']]);
-            Route::post('', ['uses' => 'ClientMandatoController@store', 'as' => 'store', 'roles' => ['adm']]);
-            Route::delete('{clientMandato}', ['uses' => 'ClientMandatoController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
+            Route::get('', ['uses' => 'ClientMandatoController@index', 'as' => 'index', 'roles' => ['adm', 'usr']]);
+            Route::get('adicionar', ['uses' => 'ClientMandatoController@create', 'as' => 'create', 'roles' => ['adm', 'usr']]);
+            Route::post('', ['uses' => 'ClientMandatoController@store', 'as' => 'store', 'roles' => ['adm', 'usr']]);
+            Route::delete('{clientMandato}', ['uses' => 'ClientMandatoController@destroy', 'as' => 'delete', 'roles' => ['adm', 'usr']]);
         });
 
     });
 
     # rota de processos internos
     Route::group(['prefix' => 'processos', 'as' => 'processes.'], function () {
-        Route::get('', ['uses' => 'InternalProcessController@index', 'as' => 'index', 'roles' => ['adm']]);
-        Route::get('/adicionar', ['uses' => 'InternalProcessController@create', 'as' => 'create', 'roles' => ['adm']]);
-        Route::post('/', ['uses' => 'InternalProcessController@store', 'as' => 'store', 'roles' => ['adm']]);
-        Route::get('/{internalProcess}/editar', ['uses' => 'InternalProcessController@edit', 'as' => 'edit', 'roles' => ['adm']]);
-        Route::put('/{internalProcess}', ['uses' => 'InternalProcessController@update', 'as' => 'update', 'roles' => ['adm']]);
-        Route::delete('/{internalProcess}', ['uses' => 'InternalProcessController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
+        Route::get('', ['uses' => 'InternalProcessController@index', 'as' => 'index', 'roles' => ['adm', 'usr']]);
+        Route::get('/adicionar', ['uses' => 'InternalProcessController@create', 'as' => 'create', 'roles' => ['adm', 'usr']]);
+        Route::post('/', ['uses' => 'InternalProcessController@store', 'as' => 'store', 'roles' => ['adm', 'usr']]);
+        Route::get('/{internalProcess}/editar', ['uses' => 'InternalProcessController@edit', 'as' => 'edit', 'roles' => ['adm', 'usr']]);
+        Route::put('/{internalProcess}', ['uses' => 'InternalProcessController@update', 'as' => 'update', 'roles' => ['adm', 'usr']]);
+        Route::delete('/{internalProcess}', ['uses' => 'InternalProcessController@destroy', 'as' => 'delete', 'roles' => ['adm', 'usr']]);
 
-        Route::post('/{internalProcess}/attach-task', ['uses' => 'InternalProcessController@attachTask', 'as' => 'attach.task', 'roles' => ['adm']]);
-        Route::delete('/{internalProcess}/detach-task', ['uses' => 'InternalProcessController@detachTask', 'as' => 'detach.task', 'roles' => ['adm']]);
+        Route::post('/{internalProcess}/attach-task', ['uses' => 'InternalProcessController@attachTask', 'as' => 'attach.task', 'roles' => ['adm', 'usr']]);
+        Route::delete('/{internalProcess}/detach-task', ['uses' => 'InternalProcessController@detachTask', 'as' => 'detach.task', 'roles' => ['adm', 'usr']]);
 
-        Route::put('/{internalProcess}/up', ['uses' => 'InternalProcessController@putUp', 'as' => 'task.up', 'roles' => ['adm']]);
-        Route::put('/{internalProcess}/down', ['uses' => 'InternalProcessController@putDown', 'as' => 'task.down', 'roles' => ['adm']]);
+        Route::put('/{internalProcess}/up', ['uses' => 'InternalProcessController@putUp', 'as' => 'task.up', 'roles' => ['adm', 'usr']]);
+        Route::put('/{internalProcess}/down', ['uses' => 'InternalProcessController@putDown', 'as' => 'task.down', 'roles' => ['adm', 'usr']]);
 
     });
 
     # rota de tarefas internos
     Route::group(['prefix' => 'tarefas', 'as' => 'tasks.'], function () {
-        Route::get('', ['uses' => 'InternalTaskController@index', 'as' => 'index', 'roles' => ['adm']]);
-        Route::get('/adicionar', ['uses' => 'InternalTaskController@create', 'as' => 'create', 'roles' => ['adm']]);
-        Route::post('/', ['uses' => 'InternalTaskController@store', 'as' => 'store', 'roles' => ['adm']]);
-        Route::get('/{internalTask}/editar', ['uses' => 'InternalTaskController@edit', 'as' => 'edit', 'roles' => ['adm']]);
-        Route::put('/{internalTask}', ['uses' => 'InternalTaskController@update', 'as' => 'update', 'roles' => ['adm']]);
-        Route::delete('/{internalTask}', ['uses' => 'InternalTaskController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
+        Route::get('', ['uses' => 'InternalTaskController@index', 'as' => 'index', 'roles' => ['adm', 'usr']]);
+        Route::get('/adicionar', ['uses' => 'InternalTaskController@create', 'as' => 'create', 'roles' => ['adm', 'usr']]);
+        Route::post('/', ['uses' => 'InternalTaskController@store', 'as' => 'store', 'roles' => ['adm', 'usr']]);
+        Route::get('/{internalTask}/editar', ['uses' => 'InternalTaskController@edit', 'as' => 'edit', 'roles' => ['adm', 'usr']]);
+        Route::put('/{internalTask}', ['uses' => 'InternalTaskController@update', 'as' => 'update', 'roles' => ['adm', 'usr']]);
+        Route::delete('/{internalTask}', ['uses' => 'InternalTaskController@destroy', 'as' => 'delete', 'roles' => ['adm', 'usr']]);
 
     });
 
     # rota de cartórios
     Route::group(['prefix' => 'cartorios', 'as' => 'notaryAddresses.'], function () {
-        Route::get('', ['uses' => 'NotaryAddressController@index', 'as' => 'index', 'roles' => ['adm']]);
-        Route::get('/adicionar', ['uses' => 'NotaryAddressController@create', 'as' => 'create', 'roles' => ['adm']]);
-        Route::post('/', ['uses' => 'NotaryAddressController@store', 'as' => 'store', 'roles' => ['adm']]);
-        Route::get('/{notaryAddress}/editar', ['uses' => 'NotaryAddressController@edit', 'as' => 'edit', 'roles' => ['adm']]);
-        Route::put('/{notaryAddress}', ['uses' => 'NotaryAddressController@update', 'as' => 'update', 'roles' => ['adm']]);
-        Route::delete('/{notaryAddress}', ['uses' => 'NotaryAddressController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
+        Route::get('', ['uses' => 'NotaryAddressController@index', 'as' => 'index', 'roles' => ['adm', 'usr']]);
+        Route::get('/adicionar', ['uses' => 'NotaryAddressController@create', 'as' => 'create', 'roles' => ['adm', 'usr']]);
+        Route::post('/', ['uses' => 'NotaryAddressController@store', 'as' => 'store', 'roles' => ['adm', 'usr']]);
+        Route::get('/{notaryAddress}/editar', ['uses' => 'NotaryAddressController@edit', 'as' => 'edit', 'roles' => ['adm', 'usr']]);
+        Route::put('/{notaryAddress}', ['uses' => 'NotaryAddressController@update', 'as' => 'update', 'roles' => ['adm', 'usr']]);
+        Route::delete('/{notaryAddress}', ['uses' => 'NotaryAddressController@destroy', 'as' => 'delete', 'roles' => ['adm', 'usr']]);
     });
 
     # rota de assinaturas
     Route::group(['prefix' => 'assinaturas', 'as' => 'subscriptions.'], function () {
-        Route::get('', ['uses' => 'SubscriptionController@index', 'as' => 'index', 'roles' => ['adm']]);
-        Route::get('adicionar', ['uses' => 'SubscriptionController@create', 'as' => 'create', 'roles' => ['adm']]);
-        Route::post('/', ['uses' => 'SubscriptionController@store', 'as' => 'store', 'roles' => ['adm']]);
+        Route::get('', ['uses' => 'SubscriptionController@index', 'as' => 'index', 'roles' => ['adm', 'usr']]);
+        Route::get('adicionar', ['uses' => 'SubscriptionController@create', 'as' => 'create', 'roles' => ['adm', 'usr']]);
+        Route::post('/', ['uses' => 'SubscriptionController@store', 'as' => 'store', 'roles' => ['adm', 'usr']]);
 
-        Route::put('/{subscription}', ['uses' => 'SubscriptionController@update', 'as' => 'update', 'roles' => ['adm']]);
-        Route::delete('/{subscription}', ['uses' => 'SubscriptionController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
+        Route::put('/{subscription}', ['uses' => 'SubscriptionController@update', 'as' => 'update', 'roles' => ['adm', 'usr']]);
+        Route::delete('/{subscription}', ['uses' => 'SubscriptionController@destroy', 'as' => 'delete', 'roles' => ['adm', 'usr']]);
 
     });
 
     # rota de geracao de documentos
     Route::group(['prefix' => 'geracao-de-documentos', 'as' => 'documents.'], function () {
-        Route::get('/ata-fundacao', ['uses' => 'GeraDocumentoController@ataFundacaoView', 'as' => 'ataFundacao', 'roles' => ['adm']]);
-        Route::post('/ata-fundacao/personas', ['uses' => 'GeraDocumentoController@ataFundacaoGetPersonas', 'as' => 'ataFundacao.personas', 'roles' => ['adm']]);
-        Route::post('/ata-fundacao', ['uses' => 'GeraDocumentoController@ataFundacaoPost', 'roles' => ['adm']]);
+        Route::get('/ata-fundacao', ['uses' => 'GeraDocumentoController@ataFundacaoView', 'as' => 'ataFundacao', 'roles' => ['adm', 'usr']]);
+        Route::post('/ata-fundacao/personas', ['uses' => 'GeraDocumentoController@ataFundacaoGetPersonas', 'as' => 'ataFundacao.personas', 'roles' => ['adm', 'usr']]);
+        Route::post('/ata-fundacao', ['uses' => 'GeraDocumentoController@ataFundacaoPost', 'roles' => ['adm', 'usr']]);
 
-        Route::match(['get', 'post'], '/estatuto-episcopal', ['uses' => 'GeraDocumentoController@estatutoEpiscopal', 'as' => 'estatutoEpiscopal', 'roles' => ['adm']]);
-        Route::match(['get', 'post'], '/contrato-contabil', ['uses' => 'GeraDocumentoController@contratoContabil', 'as' => 'contratoContabil', 'roles' => ['adm']]);
-        Route::match(['get', 'post'], '/contrato-abertura', ['uses' => 'GeraDocumentoController@contratoAbertura', 'as' => 'contratoAbertura', 'roles' => ['adm']]);
-        Route::match(['get', 'post'], '/estatuto-congregacional', ['uses' => 'GeraDocumentoController@estatudoCongregacional', 'as' => 'estatutoCongregacional', 'roles' => ['adm']]);
+        Route::match(['get', 'post'], '/estatuto-episcopal', ['uses' => 'GeraDocumentoController@estatutoEpiscopal', 'as' => 'estatutoEpiscopal', 'roles' => ['adm', 'usr']]);
+        Route::match(['get', 'post'], '/contrato-contabil', ['uses' => 'GeraDocumentoController@contratoContabil', 'as' => 'contratoContabil', 'roles' => ['adm', 'usr']]);
+        Route::match(['get', 'post'], '/contrato-abertura', ['uses' => 'GeraDocumentoController@contratoAbertura', 'as' => 'contratoAbertura', 'roles' => ['adm', 'usr']]);
+        Route::match(['get', 'post'], '/estatuto-congregacional', ['uses' => 'GeraDocumentoController@estatudoCongregacional', 'as' => 'estatutoCongregacional', 'roles' => ['adm', 'usr']]);
 
         Route::group(['prefix' => 'processamento', 'as' => 'generations.'], function () {
             Route::post('/ata-funcao', ['uses' => 'GeraDocumentoController@ataFuncaoDocument', 'as' => 'ataFuncao']);
@@ -214,12 +214,12 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
 
     # rota de serviços
     Route::group(['prefix' => 'servicos', 'as' => 'services.'], function () {
-        Route::get('', ['uses' => 'ServiceController@index', 'as' => 'index', 'roles' => ['adm']]);
-        Route::post('/', ['uses' => 'ServiceController@store', 'as' => 'store', 'roles' => ['adm']]);
-        Route::get('/adicionar', ['uses' => 'ServiceController@create', 'as' => 'create', 'roles' => ['adm']]);
-        Route::get('/{service}', ['uses' => 'ServiceController@edit', 'as' => 'edit', 'roles' => ['adm']]);
-        Route::put('/{service}', ['uses' => 'ServiceController@update', 'as' => 'update', 'roles' => ['adm']]);
-        Route::delete('/{service}', ['uses' => 'ServiceController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
+        Route::get('', ['uses' => 'ServiceController@index', 'as' => 'index', 'roles' => ['adm', 'usr']]);
+        Route::post('/', ['uses' => 'ServiceController@store', 'as' => 'store', 'roles' => ['adm', 'usr']]);
+        Route::get('/adicionar', ['uses' => 'ServiceController@create', 'as' => 'create', 'roles' => ['adm', 'usr']]);
+        Route::get('/{service}', ['uses' => 'ServiceController@edit', 'as' => 'edit', 'roles' => ['adm', 'usr']]);
+        Route::put('/{service}', ['uses' => 'ServiceController@update', 'as' => 'update', 'roles' => ['adm', 'usr']]);
+        Route::delete('/{service}', ['uses' => 'ServiceController@destroy', 'as' => 'delete', 'roles' => ['adm', 'usr']]);
     });
 
     # rota mandatos
