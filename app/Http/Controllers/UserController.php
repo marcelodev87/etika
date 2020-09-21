@@ -60,9 +60,10 @@ class UserController extends Controller
                 'dob' => $request->dob,
                 'gender' => $request->gender,
                 'email' => $request->email,
-                'password' => bcrypt(Str::random(40))
+                'password' => bcrypt(Str::random(40)),
+                'status' => 1,
             ]);
-            $user->roles()->attach($request->role_id);
+            $user->roles()->sync($request->role_id);
 
             # enviar e-mail com a senha
             if ($request->has('emailPassword')) {
@@ -73,8 +74,9 @@ class UserController extends Controller
                 $password = bcrypt($request->password);
             }
             $user->update([
-                'password' => $password,
+                'password' => bcrypt($password),
             ]);
+            session()->flash('flash-success', 'Usuário criado com sucesso');
             return response()->json(["message" => "Usuário inserido com sucesso"]);
         } catch (\Exception $e) {
             return response()->json(["error" => $e->getMessage()], 400);
@@ -118,10 +120,12 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'status' => $request->status,
+                'gender' => $request->gender,
+                'dob' => $request->dob,
+                'status' => $request->status,
             ]);
 
-            $user->roles()->detach();
-            $user->roles()->attach($request->role_id);
+            $user->roles()->sync($request->role_id);
 
         } catch (\Exception $e) {
             session()->flash('flash-warning', $e->getMessage());

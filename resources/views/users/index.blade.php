@@ -39,7 +39,7 @@
                             <tr>
                                 <td>{{ $user->id }}</td>
                                 <td>{{ $user->name }}</td>
-                                <td>{{ $user->dob }}</td>
+                                <td>{{ ($user->dob) ? $user->dob->format('d/m/Y') : '' }}</td>
                                 <td>{{ $user->gender }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ ($user->status) ? 'Liberado' : 'Bloqueado' }}</td>

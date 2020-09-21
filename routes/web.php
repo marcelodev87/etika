@@ -262,6 +262,6 @@ Route::get("/sair", function () {
 });
 
 Route::get('teste', function(){
-    return view('mails.ResetPassword');
+    return view('mails.SendPasswordToUser');
 });
 

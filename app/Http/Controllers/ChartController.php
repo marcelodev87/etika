@@ -13,10 +13,8 @@ class ChartController extends Controller
         setlocale(LC_ALL, 'pt_BR.utf-8', 'ptb', 'pt_BR', 'portuguese-brazil', 'portuguese-brazilian', 'bra', 'brazil', 'br');
         $period = [];
         $values = [];
-        $log = [];
         $months = 11;
         for ($i = 0; $i < $months + 1; $i++) {
-
             $s = Carbon::now()->startOfMonth()->subMonths($months)->addMonths($i);
             $e = Carbon::now()->endOfMonth()->subMonths($months)->addMonths($i)->subDay();
             $total = 0;

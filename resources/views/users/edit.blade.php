@@ -31,7 +31,10 @@
 
                     <fieldset class="form-group">
                         <label>Gênero</label>
-                        <input class="form-control" name="gender" type="text" value="{{ old('gender', $user->gender) }}">
+                        <select class="form-control" name="gender">
+                            <option value="Feminino" {{ (old('gender', $user->gender) == "Feminino") ? 'selected' : null }}>Feminino</option>
+                            <option value="Masculino" {{ (old('gender', $user->gender) == "Masculino") ? 'selected' : null }}>Masculino</option>
+                        </select>
                     </fieldset>
 
                     <fieldset class="form-group">
@@ -47,11 +50,27 @@
                         </select>
                     </fieldset>
 
-                    <div class="text-right">
-                        <a href="{!! route('app.users.index') !!}" class="btn btn-xs btn-default"><i class="fa fa-reply"></i>
-                            Voltar</a>
-                        <button type="submit" class="btn btn-xs btn-success"><i class="fa fa-save"></i> Salvar
-                        </button>
+                    <fieldset class="form-group">
+                        <label>Papel</label>
+                        <select name="role_id" class="form-control">
+                            @if(auth()->user()->hasRole('adm'))
+                                <option value="1" {{ (old('role_id', $user->hasRole('adm'))) ? 'selected' : '' }}>Administrador</option>
+                            @endif
+                            <option value="2" {{ (old('role_id', $user->hasRole('usr'))) ? 'selected' : '' }}>Usuário</option>
+                        </select>
+                    </fieldset>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="{!! route('app.users.index') !!}" class="btn btn-sm btn-block btn-default">
+                                <i class="fa fa-reply"></i> Voltar
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-sm btn-block btn-success">
+                                <i class="fa fa-save"></i> Salvar
+                            </button>
+                        </div>
                     </div>
 
                 </div>

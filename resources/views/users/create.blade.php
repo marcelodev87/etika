@@ -41,7 +41,10 @@
 
                     <fieldset class="form-group">
                         <label>Gênero</label>
-                        <input class="form-control" name="gender" type="text">
+                        <select class="form-control" name="gender">
+                            <option value="Feminino">Feminino</option>
+                            <option value="Masculino">Masculino</option>
+                        </select>
                     </fieldset>
 
                     <fieldset class="form-group">
@@ -61,19 +64,36 @@
                     </div>
 
                     <fieldset class="form-group">
+                        <label>Papel</label>
+                        <select name="role_id" class="form-control">
+                            @if(auth()->user()->hasRole('adm'))
+                                <option value="1">Administrador</option>
+                            @endif
+                            <option value="2">Usuário</option>
+                        </select>
+                    </fieldset>
+
+                    <fieldset class="form-group">
                         <label class="checkbox" style="margin-left: 20px">
                             <input name="emailPassword" type="checkbox"/>
                             <i></i> Enviar por e-mail
                         </label>
                     </fieldset>
-                    <div class="text-center">
-                        <a href="{!! route('app.users.index') !!}" class="btn btn-xs btn-default">
-                            <i class="fa fa-reply"></i> Voltar
-                        </a>
 
-                        <button type="submit" class="btn btn-xs btn-success">
-                            <i class="fa fa-save"></i> Salvar
-                        </button>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="{!! route('app.users.index') !!}" class="btn btn-xs btn-default">
+                                <i class="fa fa-reply"></i> Voltar
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-xs btn-success">
+                                <i class="fa fa-save"></i> Salvar
+                            </button>
+                        </div>
+                    </div>
+
+
                     </div>
 
                     <div class="alert-blockquote" style="display: none">
@@ -122,13 +142,7 @@
                     button.attr('disabled', 'disabled');
                 },
                 success: function (response) {
-                    button.html(buttonText);
-                    button.removeAttr('disabled');
-                    form.trigger('reset');
-                    passwords.slideToggle();
-                    blockquote.slideToggle();
-                    Swal('Tudo certo', response.message, 'success');
-
+                    window.location.href = "{{ route('app.users.index') }}";
                 },
                 error: function (response) {
                     var err = JSON.parse(response.responseText);
