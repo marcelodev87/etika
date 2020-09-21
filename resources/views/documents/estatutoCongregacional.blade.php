@@ -1017,7 +1017,7 @@
 
 
 
-		<p>$cidade_igreja, $data_fundacao. $data $date</p>
+		<p>$cidade_igreja, $data_fundacao </p>
 
 
 

@@ -16,6 +16,7 @@ class GeraDocumentoController extends Controller
 
     public function ataFundacaoGetPersonas(Request $request)
     {
+        setlocale(LC_ALL, 'pt_BR.utf-8', 'ptb', 'pt_BR', 'portuguese-brazil', 'portuguese-brazilian', 'bra', 'brazil', 'br');
         $rules = [
             'igreja' => 'required'
         ];
@@ -44,6 +45,7 @@ class GeraDocumentoController extends Controller
 
     public function ataFundacaoPost(Request $request)
     {
+        setlocale(LC_ALL, 'pt_BR.utf-8', 'ptb', 'pt_BR', 'portuguese-brazil', 'portuguese-brazilian', 'bra', 'brazil', 'br');
         $rules = [
             'client_id' => 'required|integer|exists:clients,id',
             'presidente' => 'required|integer|exists:client_personas,id',
@@ -162,6 +164,7 @@ class GeraDocumentoController extends Controller
 
     public function estatutoEpiscopal(Request $request)
     {
+        setlocale(LC_ALL, 'pt_BR.utf-8', 'ptb', 'pt_BR', 'portuguese-brazil', 'portuguese-brazilian', 'bra', 'brazil', 'br');
         $igreja = null;
         if ($request->isMethod('post')) {
             $igreja = Client::find($request->client_id);
@@ -171,6 +174,7 @@ class GeraDocumentoController extends Controller
 
     public function estatudoCongregacional(Request $request)
     {
+        setlocale(LC_ALL, 'pt_BR.utf-8', 'ptb', 'pt_BR', 'portuguese-brazil', 'portuguese-brazilian', 'bra', 'brazil', 'br');
         $igreja = null;
         if ($request->isMethod('post')) {
             $igreja = Client::find($request->client_id);
@@ -180,6 +184,7 @@ class GeraDocumentoController extends Controller
 
     public function contratoContabil(Request $request)
     {
+        setlocale(LC_ALL, 'pt_BR.utf-8', 'ptb', 'pt_BR', 'portuguese-brazil', 'portuguese-brazilian', 'bra', 'brazil', 'br');
         $post = [];
         if ($request->isMethod('post')) {
             $igreja = Client::find($request->client_id);
@@ -194,6 +199,7 @@ class GeraDocumentoController extends Controller
 
     public function contratoAbertura(Request $request)
     {
+        setlocale(LC_ALL, 'pt_BR.utf-8', 'ptb', 'pt_BR', 'portuguese-brazil', 'portuguese-brazilian', 'bra', 'brazil', 'br');
         $post = [];
         if ($request->isMethod('post')) {
             $igreja = Client::find($request->client_id);

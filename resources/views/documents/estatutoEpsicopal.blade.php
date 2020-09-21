@@ -913,7 +913,7 @@
 
 
 
-		<p>$cidade_igreja, $data_fundacao.</p>
+		<p>$cidade_igreja, $data_fundacao</p>
 
 
 
