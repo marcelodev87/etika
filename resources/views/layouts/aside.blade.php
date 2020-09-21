@@ -2,9 +2,7 @@
     <section class="sidebar">
         <div class="user-panel black-bg">
             <div class="pull-left image">
-                <img
-                    src="{!! getAvatar(auth()->user()->id)!!}"
-                    class="img-circle appUserAvatar" alt="User Image">
+                <img src="{!! getAvatar(auth()->user()->id)!!}" class="img-circle appUserAvatar" alt="User Image">
             </div>
             <div class="pull-left info">
                 <p class="appUserName">{{auth()->user()->name}}</p>
@@ -62,51 +60,50 @@
                 </li>
             @endif
 
-            @if(auth()->user()->hasAnyRole(['adm']))
-                <li>
-                    <a href="{!! route('app.clients.index') !!}">
-                        <i class="fa fa-users"></i> <span>Clientes</span>
-                    </a>
-                </li>
-            @endif
+            <li>
+                <a href="{!! route('app.clients.index') !!}">
+                    <i class="fa fa-users"></i> <span>Clientes</span>
+                </a>
+            </li>
 
-            @if(auth()->user()->hasAnyRole(['adm']))
-                <li>
-                    <a href="{!! route('app.mandatos') !!}">
-                        <i class="fa fa-ribbon"></i> <span>Mandatos</span>
-                    </a>
-                </li>
-            @endif
+            <li>
+                <a href="{!! route('app.mandatos') !!}">
+                    <i class="fa fa-ribbon"></i> <span>Mandatos</span>
+                </a>
+            </li>
 
 
-            @if(auth()->user()->hasAnyRole(['adm']))
-                @php
-                    $arrayMenuGeraDocumentos = ['app.documents.ataFundacao', 'app.documents.estatutoEspecial', 'app.documents.contratoAbertura', 'app.documents.contratoContabil'];
-                @endphp
-                <li class="treeview {{ menuPath($arrayMenuGeraDocumentos, 'menu-open') }}">
-                    <a href="javascript:void(0)">
-                        <i class="fa fa-copy"></i><span>Geração de Documentos</span>
-                        <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span>
-                    </a>
-                    <ul class="treeview-menu" {{ (menuPath($arrayMenuGeraDocumentos)) ? 'style=display:block' : null }} >
-                        <li class="{{ menuPath(['app.documents.ataFundacao'], 'active') }}">
-                            <a href="{{ route('app.documents.ataFundacao') }}">Ata de Fundação</a>
-                        </li>
-                        <li class="{{ menuPath(['app.documents.estatutoCongregacional'], 'active') }}">
-                            <a href="{{ route('app.documents.estatutoCongregacional') }}">Congregacional</a>
-                        </li>
-                        <li class="{{ menuPath(['app.documents.estatutoEpiscopal'], 'active') }}">
-                            <a href="{{ route('app.documents.estatutoEpiscopal') }}">Episcopal</a>
-                        </li>
-                        <li class="{{ menuPath(['app.documents.contratoAbertura'], 'active') }}">
-                            <a href="{{ route('app.documents.contratoAbertura') }}">Contrato Abertura</a>
-                        </li>
-                        <li class="{{ menuPath(['app.documents.contratoContabil'], 'active') }}">
-                            <a href="{{ route('app.documents.contratoContabil') }}">Contrato Contábil</a>
-                        </li>
-                    </ul>
-                </li>
-            @endif
+            @php
+                $arrayMenuGeraDocumentos = [
+                    'app.documents.ataFundacao',
+                    'app.documents.estatutoEspecial',
+                    'app.documents.contratoAbertura',
+                    'app.documents.contratoContabil'
+                    ];
+            @endphp
+            <li class="treeview {{ menuPath($arrayMenuGeraDocumentos, 'menu-open') }}">
+                <a href="javascript:void(0)">
+                    <i class="fa fa-copy"></i><span>Geração de Documentos</span>
+                    <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span>
+                </a>
+                <ul class="treeview-menu" {{ (menuPath($arrayMenuGeraDocumentos)) ? 'style=display:block' : null }} >
+                    <li class="{{ menuPath(['app.documents.ataFundacao'], 'active') }}">
+                        <a href="{{ route('app.documents.ataFundacao') }}">Ata de Fundação</a>
+                    </li>
+                    <li class="{{ menuPath(['app.documents.estatutoCongregacional'], 'active') }}">
+                        <a href="{{ route('app.documents.estatutoCongregacional') }}">Congregacional</a>
+                    </li>
+                    <li class="{{ menuPath(['app.documents.estatutoEpiscopal'], 'active') }}">
+                        <a href="{{ route('app.documents.estatutoEpiscopal') }}">Episcopal</a>
+                    </li>
+                    <li class="{{ menuPath(['app.documents.contratoAbertura'], 'active') }}">
+                        <a href="{{ route('app.documents.contratoAbertura') }}">Contrato Abertura</a>
+                    </li>
+                    <li class="{{ menuPath(['app.documents.contratoContabil'], 'active') }}">
+                        <a href="{{ route('app.documents.contratoContabil') }}">Contrato Contábil</a>
+                    </li>
+                </ul>
+            </li>
 
             @php
                 $arrayMenuRelatorio = [
@@ -117,32 +114,30 @@
                     'app.relatorios.tarefaFechada',
                 ];
             @endphp
-            @if(auth()->user()->hasRole('adm'))
-                <li class="treeview {{ menuPath($arrayMenuRelatorio, 'menu-open') }}">
-                    <a href="javascript:void(0)">
-                        <i class="fa fa-copy"></i><span>Relatórios</span>
-                        <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span>
-                    </a>
-                    <ul class="treeview-menu" {{ (menuPath($arrayMenuRelatorio)) ? 'style=display:block' : null }} >
-                        <li class="{{ menuPath(['app.relatorios.processoAberto'], 'active') }}">
-                            <a href="{{ route('app.relatorios.processoAberto') }}">Processos Abertos</a>
-                        </li>
-                        <li class="{{ menuPath(['app.relatorios.processoFechado'], 'active') }}">
-                            <a href="{{ route('app.relatorios.processoFechado') }}">Processos Fechados</a>
-                        </li>
-                        <li class="{{ menuPath(['app.relatorios.tarefaAberta'], 'active') }}">
-                            <a href="{{ route('app.relatorios.tarefaAberta') }}">Tarefas Abertas</a>
-                        </li>
-                        <li class="{{ menuPath(['app.relatorios.tarefaFechada'], 'active') }}">
-                            <a href="{{ route('app.relatorios.tarefaFechada') }}">Tarefas Fechadas</a>
-                        </li>
-                        <li class="{{ menuPath(['app.relatorios.pagamentoAberto'], 'active') }}">
-                            <a href="{{ route('app.relatorios.pagamentoAberto') }}">Pagamentos Abertos</a>
-                        </li>
+            <li class="treeview {{ menuPath($arrayMenuRelatorio, 'menu-open') }}">
+                <a href="javascript:void(0)">
+                    <i class="fa fa-copy"></i><span>Relatórios</span>
+                    <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span>
+                </a>
+                <ul class="treeview-menu" {{ (menuPath($arrayMenuRelatorio)) ? 'style=display:block' : null }} >
+                    <li class="{{ menuPath(['app.relatorios.processoAberto'], 'active') }}">
+                        <a href="{{ route('app.relatorios.processoAberto') }}">Processos Abertos</a>
+                    </li>
+                    <li class="{{ menuPath(['app.relatorios.processoFechado'], 'active') }}">
+                        <a href="{{ route('app.relatorios.processoFechado') }}">Processos Fechados</a>
+                    </li>
+                    <li class="{{ menuPath(['app.relatorios.tarefaAberta'], 'active') }}">
+                        <a href="{{ route('app.relatorios.tarefaAberta') }}">Tarefas Abertas</a>
+                    </li>
+                    <li class="{{ menuPath(['app.relatorios.tarefaFechada'], 'active') }}">
+                        <a href="{{ route('app.relatorios.tarefaFechada') }}">Tarefas Fechadas</a>
+                    </li>
+                    <li class="{{ menuPath(['app.relatorios.pagamentoAberto'], 'active') }}">
+                        <a href="{{ route('app.relatorios.pagamentoAberto') }}">Pagamentos Abertos</a>
+                    </li>
 
-                    </ul>
-                </li>
-            @endif
+                </ul>
+            </li>
         </ul>
 
     </section>
