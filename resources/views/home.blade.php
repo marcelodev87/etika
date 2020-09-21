@@ -10,7 +10,7 @@
 
     @if(auth()->user()->hasRole('adm'))
         <div class="row">
-            @include('widgets.boxes.clientsWithProcesses')
+            @include('widgets.boxes.clientsRegistred')
         </div>
 
         <div class="row">
@@ -58,8 +58,8 @@
             });
         });
 
-        $.get('{{ route('app.api.widgets.haveSomethingOpen') }}', function (response) {
-            $('.haveSomethingOpen').find('.count').html(response.total);
+        $.get('{{ route('app.api.widgets.clientsRegistred') }}', function (response) {
+            $('.clientsRegistred').find('.count').html(response.total);
         })
         @endif
 

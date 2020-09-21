@@ -32,6 +32,9 @@
             </p>
         </div>
         <div class="col-md-6 text-right">
+            <a href="#infoSec" data-toggle="collapse" class="btn btn-sm btn-warning">
+                <i class="fa fa-info"></i> Info
+            </a>
             <a href="{{ route('app.clients.members.index', $client->id) }}" class="btn btn-danger btn-sm">
                 <i class="fa fa-plus"></i> Diretoria
             </a>
@@ -58,6 +61,110 @@
 
         </div>
     </div>
+
+    <form method="post" class="chart-box mt-2 collapse" action="{{ route('app.clients.update', $client->id) }}" id="infoSec">
+        @csrf
+        @method('put')
+        <div class="row">
+            <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-3">
+                <fieldset class="form-group">
+                    <label>Codigo Interno</label>
+                    <input class="form-control" name="internal_code" type="text" value="{{ $client->internal_code }}">
+                </fieldset>
+            </div>
+
+            <div class="col-md-xs-12 col-md-sm-6 col-md-6 col-lg-6">
+                <fieldset class="form-group">
+                    <label>Nome Completo</label>
+                    <input class="form-control" name="name" type="text" value="{{ $client->name }}">
+                </fieldset>
+            </div>
+
+            <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-3">
+                <fieldset class="form-group">
+                    <label>Documento</label>
+                    <input class="form-control document-mask" name="document" type="text" value="{{ $client->document }}">
+                </fieldset>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" class="form-control" id="email" value="{{ $client->email}}">
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="form-group">
+                    <label for="phone">Telefone</label>
+                    <input type="text" name="phone" class="form-control phone-mask" id="phone" value="{{ $client->phone}}">
+                </div>
+            </div>
+
+            <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-3">
+                <fieldset class="form-group">
+                    <label>Tipo</label>
+                    <select class="form-control" name="type">
+                        <option value="">Selecione</option>
+                        <option value="Igreja" {{ (old('type', $client->type) == "Igreja") ? 'selected' : null }}>Igreja</option>
+                        <option value="Empresa" {{ (old('type', $client->type) == "Empresa") ? 'selected' : null }}>Empresa</option>
+                        <option value="Pessoa Física" {{ (old('type', $client->type) == "Pessoa Física") ? 'selected' : null }}>Pessoa Física</option>
+                    </select>
+                </fieldset>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <div class="form-group">
+                    <label for="zip">CEP</label>
+                    <input type="text" name="zip" class="form-control" data-mask="00000-000" id="zip" value="{{ $client->zip}}">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-1">
+                <div class="form-group">
+                    <label for="state">UF</label>
+                    <input type="text" name="state" class="form-control" data-mask="AA" id="state" value="{{ $client->state }}">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-4">
+                <div class="form-group">
+                    <label for="city">Cidade</label>
+                    <input type="text" name="city" class="form-control" id="city" value="{{ $client->city }}">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-4">
+                <div class="form-group">
+                    <label for="neighborhood">Bairro</label>
+                    <input type="text" name="neighborhood" class="form-control" id="neighborhood" value="{{ $client->neighborhood }}">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-7">
+                <div class="form-group">
+                    <label for="street">Logradouro</label>
+                    <input type="text" name="street" class="form-control" id="street" value="{{ $client->street }}">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                <div class="form-group">
+                    <label for="street_number">Número</label>
+                    <input type="text" name="street_number" class="form-control" data-mask="000000" id="street_number" value="{{ $client->street_number }}">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <div class="form-group">
+                    <label for="complement">Complemento</label>
+                    <input type="text" name="complement" class="form-control" id="complement" value="{{ $client->complement }}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-lg-2 pull-right">
+                <button type="submit" class="btn btn-success btn-block btn-sm">
+                    <i class="fa fa-save"></i> Salvar
+                </button>
+            </div>
+        </div>
+    </form>
 
     <div class="row" style="margin-top: 21px;">
         {{-- assinaturas --}}

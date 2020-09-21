@@ -19,11 +19,15 @@ class ChartController extends Controller
 
             $s = Carbon::now()->startOfMonth()->subMonths($months)->addMonths($i);
             $e = Carbon::now()->endOfMonth()->subMonths($months)->addMonths($i)->subDay();
-
-            $sum = DB::table('client_process_payments')->whereBetween('payed_at', [$s->format('Y-m-d'), $e->format('Y-m-d')]);
+            $total = 0;
+            $total += DB::table('client_process_payments')
+                ->whereBetween('payed_at', [$s->format('Y-m-d'), $e->format('Y-m-d')])
+                ->sum('value');
+            $total += DB::table('client_subscription_payments')
+                ->whereBetween('pay_at', [$s->format('Y-m-d'), $e->format('Y-m-d')])
+                ->sum('price');
             array_push($period, $s->formatLocalized('%b/%y'));
-            array_push($values, (float)$sum->sum('value'));
-            array_push($log, [$s, $e, $sum->get()]);
+            array_push($values, (float)$total);
         }
         return response()->json(['periods' => $period, 'values' => $values], 200);
     }

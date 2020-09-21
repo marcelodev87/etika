@@ -172,7 +172,6 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
         Route::get('/{internalTask}/editar', ['uses' => 'InternalTaskController@edit', 'as' => 'edit', 'roles' => ['adm', 'usr']]);
         Route::put('/{internalTask}', ['uses' => 'InternalTaskController@update', 'as' => 'update', 'roles' => ['adm', 'usr']]);
         Route::delete('/{internalTask}', ['uses' => 'InternalTaskController@destroy', 'as' => 'delete', 'roles' => ['adm', 'usr']]);
-
     });
 
     # rota de cartórios
@@ -190,7 +189,7 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
         Route::get('', ['uses' => 'SubscriptionController@index', 'as' => 'index', 'roles' => ['adm', 'usr']]);
         Route::get('adicionar', ['uses' => 'SubscriptionController@create', 'as' => 'create', 'roles' => ['adm', 'usr']]);
         Route::post('/', ['uses' => 'SubscriptionController@store', 'as' => 'store', 'roles' => ['adm', 'usr']]);
-
+        Route::get('/{subscription}', ['uses' => 'SubscriptionController@edit', 'as' => 'edit', 'roles' => ['adm']]);
         Route::put('/{subscription}', ['uses' => 'SubscriptionController@update', 'as' => 'update', 'roles' => ['adm', 'usr']]);
         Route::delete('/{subscription}', ['uses' => 'SubscriptionController@destroy', 'as' => 'delete', 'roles' => ['adm', 'usr']]);
 
@@ -240,7 +239,7 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
             Route::get('received', ['uses' => 'ChartController@received', 'as' => 'received']);
         });
         Route::group(['prefix' => 'widgets', 'as' => 'widgets.'], function () {
-            Route::get('have-something-open', ['uses' => 'WidgetController@haveSomethingOpen', 'as' => 'haveSomethingOpen']);
+            Route::get('clients-registred', ['uses' => 'WidgetController@clientsRegistred', 'as' => 'clientsRegistred']);
         });
     });
 

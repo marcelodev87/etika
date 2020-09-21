@@ -1,4 +1,4 @@
-<div class="col-lg-3 col-xs-6 haveSomethingOpen">
+<div class="col-lg-3 col-xs-6 clientsRegistred">
     <div class="media-box">
         <div class="media-icon pull-left"><i class="fa fa-users"></i></div>
         <div class="media-info">

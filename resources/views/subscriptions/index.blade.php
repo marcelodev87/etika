@@ -20,66 +20,6 @@
             </a>
         </div>
 
-        <div class="col-md-6 collapse" id="create-subscription">
-            <div class="chart-box">
-                <form action="{{ route('app.subscriptions.store') }}">
-                    @csrf
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Nome</label>
-                                <input type="text" name="name" class="form-control" required minlength="4">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Valor</label>
-                                <input type="text" class="form-control" name="value" data-mask="000.000,00" data-mask-reverse="true" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <button type="submit" class="btn btn-xs btn-success">
-                                <i class="fa fa-save"></i> Salvar
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div class="col-md-6 collapse" id="edit-subscription">
-            <div class="chart-box">
-                <form action="{{ route('app.subscriptions.update', ':SUB') }}">
-                    @csrf
-                    @method('put')
-                    <input type="hidden" name="sub" value="">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Nome</label>
-                                <input type="text" name="name" class="form-control" required minlength="4">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Valor</label>
-                                <input type="text" class="form-control" name="value" data-mask="000.000,00" data-mask-reverse="true" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <button type="submit" class="btn btn-xs btn-success">
-                                <i class="fa fa-save"></i> Salvar
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
         <div class="col-md-12">
             <div class="chart-box">
                 <div class="bs-example" data-example-id="hoverable-table">
@@ -88,6 +28,7 @@
                         <tr>
                             <th>Nome</th>
                             <th>Valor</th>
+                            <th class="text-center">Ações</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -97,8 +38,11 @@
 
                                 <td>{{ $sub->name }}</td>
                                 <td>{{ brl($sub->price) }}</td>
+                                <td class="text-center">{{ count(json_decode($sub->tasks, true)['tasks']) }}</td>
                                 <td class="text-right">
-
+                                    <a href="{{ route('app.subscriptions.edit', $sub->id) }}" class="btn btn-xs btn-primary">
+                                        <i class="fa fa-edit"></i> Editar
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
