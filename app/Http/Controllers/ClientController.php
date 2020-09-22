@@ -22,7 +22,7 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required|string|min:5|max:50',
+            'name' => 'required|string|min:5|max:200',
             'document' => 'required|string|min:14|max:18',
             'type' => 'required',
             'internal_code' => 'nullable|integer',
@@ -87,7 +87,7 @@ class ClientController extends Controller
     public function update(Client $client, Request $request)
     {
         $rules = [
-            'name' => 'required|string|min:5|max:50',
+            'name' => 'required|string|min:5|max:200',
             'document' => 'required|string|min:14|max:18',
             'type' => 'required',
             'internal_code' => 'nullable|integer',
