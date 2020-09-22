@@ -30,6 +30,8 @@ if (!function_exists('numberIntegerToRoman')) {
         return $nRoman;
     }
 }
+setlocale(LC_ALL, 'pt_BR.utf-8', 'ptb', 'pt_BR', 'portuguese-brazil', 'portuguese-brazilian', 'bra', 'brazil', 'br');
+
 $array = $_POST['array'];
 $nome_igreja = $array['igreja']['name'];
 $cep_igreja = $array['igreja']['zip'];

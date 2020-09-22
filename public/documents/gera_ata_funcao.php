@@ -1,4 +1,5 @@
 <?php
+setlocale(LC_ALL, 'pt_BR.utf-8', 'ptb', 'pt_BR', 'portuguese-brazil', 'portuguese-brazilian', 'bra', 'brazil', 'br');
 
 if (!isset($_POST['data'])) {
     return "";

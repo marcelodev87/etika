@@ -42,6 +42,7 @@ function numberIntegerToRoman($num, $debug = false){
 
     return $nRoman;
 }
+setlocale(LC_ALL, 'pt_BR.utf-8', 'ptb', 'pt_BR', 'portuguese-brazil', 'portuguese-brazilian', 'bra', 'brazil', 'br');
 
 // SELECIONA IGREJA -------------------------------  SELECIONA IGREJA ------------------------  SELECIONA IGREJA
 $id_empresa = $_POST['id_empresa'];
