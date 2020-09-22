@@ -83,7 +83,7 @@
                                     <a href="#modal-adiar" data-toggle="modal" data-task-type="{{ $tarefa['type'] }}" data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-danger processTaskAdiar">
                                         <i class="fa fa-times"></i> Adiar
                                     </a>
-                                    <a href="{{ route('app.clients.subscriptions.tasks.done', [$tarefa['client_id'],$tarefa['subscription_id'], $tarefa['id']]) }}" data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-success processTaskFinalizar" onclick="return confirm('Deseja mesmo finalizar?')">
+                                    <a href="{{ route('app.assinaturaTaskClose',  $tarefa['id']) }}" data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-success processTaskFinalizar" onclick="return confirm('Deseja mesmo finalizar?')">
                                         <i class="fa fa-check"></i> Finalizar
                                     </a>
                                 @endif
@@ -220,31 +220,34 @@
                     $endpoint = "{{ route('app.task.comments.process', ':TASK') }}";
                     break;
                 case 'subscription_task':
-                    $endpoint = "{{ route('app.task.comments.subscription', ':TASK')  }}";
+                    $endpoint = "{{ route('app.assinaturaTaskComments', ':TASK')  }}";
                     break;
             }
             $endpoint = $endpoint.replace(':TASK', $task);
             if ($endpoint != "") {
                 $.get($endpoint, function (response) {
                     var $html = '';
-                    if(response.data.length > 1){
+                    if(response.data.length){
+                        var $html = '';
                         $.each(response.data, function (i, e) {
-
                             $html += '<div class="panel panel-default">';
                             $html += '<div class="panel-heading">';
                             $html += '<h4><b>' + e.user + ' - ' + e.date + '</b></h4>';
                             $html += '</div>';
                             $html += '<div class="panel-body">' + e.comment;
                             $html += '<div class="files">';
+
                             $.each(e.files, function (x, z) {
                                 $html += '<a href="' + z + '" class="btn btn-xs btn-default" target="_blank">';
                                 $html += '<i class="fa fa-paperclip"></i> Anexo';
                                 $html += '</a>';
                             })
+
                             $html += '</div>';
                             $html += '</div>';
                             $html += '</div>';
                         });
+                        console.log($html)
                     }else{
                          $html += '<h4 class="text-center">Sem comentários</h4>';
                     }

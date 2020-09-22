@@ -530,7 +530,6 @@
             $endpoint = $endpoint.replace(':PROCESS', process);
             $.get($endpoint, function (response) {
                 $.each(response.data, function (i, e) {
-                    console.log(e);
                     var $html = '';
                     $html += '<div class="panel panel-default">';
                     $html += '<div class="panel-heading">';
