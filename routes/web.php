@@ -22,7 +22,6 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
         Route::put('/{user}', ['uses' => 'UserController@update', 'as' => 'update', 'roles' => ['adm']]);
         Route::patch('/{user}/status', ['uses' => 'UserController@changeStatus', 'as' => 'updateStatus', 'roles' => ['adm']]);
         Route::delete('/{user}', ['uses' => 'UserController@destroy', 'as' => 'delete', 'roles' => ['adm']]);
-
     });
 
     # rota de perfil
@@ -35,7 +34,6 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
         Route::patch('/change-password', ['uses' => 'ProfileController@changePassword', 'as' => 'update_password']);
         Route::put('/change-information', ['uses' => 'ProfileController@changeInformation', 'as' => 'update_information']);
         Route::patch('/change-email', ['uses' => 'ProfileController@changeEmail', 'as' => 'update_email']);
-
     });
 
     # rota de cliente
@@ -226,11 +224,11 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
 
     # rota de relatorios
     Route::group(['prefix' => 'relatorios', 'as' => 'relatorios.'], function () {
-        Route::get('/processos-abertos', ['uses' => 'RelatorioController@processoAberto', 'as' => 'processoAberto', 'roles' => ['adm']]);
-        Route::get('/processos-fechados', ['uses' => 'RelatorioController@processoFechado', 'as' => 'processoFechado', 'roles' => ['adm']]);
-        Route::get('/pagamentos-abertos', ['uses' => 'RelatorioController@pagamentoAberto', 'as' => 'pagamentoAberto', 'roles' => ['adm']]);
-        Route::get('/tarefas-abertas', ['uses' => 'RelatorioController@tarefaAberta', 'as' => 'tarefaAberta', 'roles' => ['adm']]);
-        Route::get('/tarefas-fechadas', ['uses' => 'RelatorioController@tarefaFechada', 'as' => 'tarefaFechada', 'roles' => ['adm']]);
+        Route::get('/processos-abertos', ['uses' => 'RelatorioController@processoAberto', 'as' => 'processoAberto', 'roles' => ['adm', 'usr']]);
+        Route::get('/processos-fechados', ['uses' => 'RelatorioController@processoFechado', 'as' => 'processoFechado', 'roles' => ['adm', 'usr']]);
+        Route::get('/pagamentos-abertos', ['uses' => 'RelatorioController@pagamentoAberto', 'as' => 'pagamentoAberto', 'roles' => ['adm', 'usr']]);
+        Route::get('/tarefas-abertas', ['uses' => 'RelatorioController@tarefaAberta', 'as' => 'tarefaAberta', 'roles' => ['adm', 'usr']]);
+        Route::get('/tarefas-fechadas', ['uses' => 'RelatorioController@tarefaFechada', 'as' => 'tarefaFechada', 'roles' => ['adm', 'usr']]);
     });
 
 
@@ -244,9 +242,9 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
     });
 
 
-    Route::post('single-task-delay', ['uses' => 'ClientTaskController@delay', 'as' => 'singleTaskDelay', 'roles' => ['adm']]);
-    Route::post('process-task-delay', ['uses' => 'ClientProcessTaskController@delay', 'as' => 'processTaskDelay', 'roles' => ['adm']]);
-    Route::post('subscription-task-delay', ['uses' => 'ClientSubscriptionTaskController@delay', 'as' => 'subscriptionTaskDelay', 'roles' => ['adm']]);
+    Route::post('single-task-delay', ['uses' => 'ClientTaskController@delay', 'as' => 'singleTaskDelay', 'roles' => ['adm', 'usr']]);
+    Route::post('process-task-delay', ['uses' => 'ClientProcessTaskController@delay', 'as' => 'processTaskDelay', 'roles' => ['adm', 'usr']]);
+    Route::post('subscription-task-delay', ['uses' => 'ClientSubscriptionTaskController@delay', 'as' => 'subscriptionTaskDelay', 'roles' => ['adm', 'usr']]);
 
     // LOAD COMMENTS
     Route::group(['prefix' => 'task-comments', 'as' => 'task.comments.'], function () {
@@ -259,9 +257,5 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
 Route::get("/sair", function () {
     (Auth::check()) ? Auth::logout() : null;
     return redirect()->route('login');
-});
-
-Route::get('teste', function(){
-    return view('mails.SendPasswordToUser');
 });
 

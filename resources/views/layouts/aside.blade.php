@@ -31,12 +31,6 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{!! route('app.notaryAddresses.index') !!}">
-                        <i class="fa fa-warehouse"></i> <span>Cartórios</span>
-                    </a>
-                </li>
-
-                <li>
                     <a href="{!! route('app.subscriptions.index') !!}">
                         <i class="fa fa-file-signature"></i> <span>Assinaturas</span>
                     </a>
@@ -69,6 +63,12 @@
             <li>
                 <a href="{!! route('app.mandatos') !!}">
                     <i class="fa fa-ribbon"></i> <span>Mandatos</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{!! route('app.notaryAddresses.index') !!}">
+                    <i class="fa fa-warehouse"></i> <span>Cartórios</span>
                 </a>
             </li>
 
