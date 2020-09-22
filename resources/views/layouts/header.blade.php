@@ -8,7 +8,7 @@
         </span>
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg">
-            <img src="{!! asset('img/logo-lg.png') !!}" class="img-responsive">
+            <img src="{!! asset('img/logo-lg.jpeg') !!}" class="img-responsive">
         </span>
     </a>
 

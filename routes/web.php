@@ -246,6 +246,10 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
     Route::post('process-task-delay', ['uses' => 'ClientProcessTaskController@delay', 'as' => 'processTaskDelay', 'roles' => ['adm', 'usr']]);
     Route::post('subscription-task-delay', ['uses' => 'ClientSubscriptionTaskController@delay', 'as' => 'subscriptionTaskDelay', 'roles' => ['adm', 'usr']]);
 
+    Route::get('assinatura-task-close/{clientSubscriptionTask}', ['uses' => 'ClientSubscriptionTaskController@done', 'as' => 'assinaturaTaskClose']);
+    Route::get('assinatura-task-comments/{clientSubscriptionTask}', ['uses' => 'ClientSubscriptionTaskController@comments', 'as' => 'assinaturaTaskComments']);
+    Route::post('assinatura-task-comments/{clientSubscriptionTask}', ['uses' => 'ClientSubscriptionTaskController@newComment', 'as' => 'assinaturaTaskNewComment']);
+
     // LOAD COMMENTS
     Route::group(['prefix' => 'task-comments', 'as' => 'task.comments.'], function () {
         Route::get('single/{task}', ['uses' => 'ClientTaskCommentController@index', 'as' => 'single']);

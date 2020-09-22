@@ -28,6 +28,11 @@ class Client extends Model
         return $this->hasMany(ClientSubscription::class);
     }
 
+    public function subscriptionTasks()
+    {
+        return $this->hasMany(ClientSubscriptionTask::class, 'client_id');
+    }
+
     public function mandatos()
     {
         return $this->hasMany(ClientMandato::class);

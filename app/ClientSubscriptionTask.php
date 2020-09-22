@@ -35,6 +35,10 @@ class ClientSubscriptionTask extends Model
         return $this->belongsTo(User::class, 'closed_by');
     }
 
+    public function responsible()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     public function isLate()
     {
@@ -48,4 +52,6 @@ class ClientSubscriptionTask extends Model
         }
         return false;
     }
+
+
 }

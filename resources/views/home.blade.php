@@ -8,6 +8,8 @@
 
 @section('content')
 
+    @include('widgets.open')
+
     @if(auth()->user()->hasRole('adm'))
         <div class="row">
             @include('widgets.boxes.clientsRegistred')

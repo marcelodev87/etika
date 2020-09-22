@@ -12,7 +12,6 @@
         {{-- Sidebar Menu --}}
         <ul class="sidebar-menu tree" data-widget="tree">
 
-
             @if(auth()->user()->hasAnyRole(['adm']))
                 <li class="header dark-bg">Módulos</li>
                 <li>

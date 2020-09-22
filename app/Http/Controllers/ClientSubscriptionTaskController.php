@@ -11,27 +11,18 @@ use Illuminate\Support\Facades\Validator;
 
 class ClientSubscriptionTaskController extends Controller
 {
-    public function done(Client $client, ClientSubscription $clientSubscription, ClientSubscriptionTask $clientSubscriptionTask)
+    public function done(ClientSubscriptionTask $clientSubscriptionTask)
     {
-
-        if(!$clientSubscriptionTask->closed){
-            if ($clientSubscriptionTask->client_subscription_id == $clientSubscription->id && $clientSubscription->client_id == $client->id) {
-                if($clientSubscriptionTask->user_id == auth()->user()->id || auth()->user()->hasRole('adm')){
-                    $clientSubscriptionTask->update([
-                        'closed' => 1,
-                        'closed_by' => auth()->user()->id,
-                        'closed_at' => Carbon::now()->format('Y-m-d H:i:s')
-                    ]);
-                    session()->flash('flash-success', 'Tarefa finalizada com sucesso');
-                }else{
-                    session()->flash('flash-warning', 'Você não pode fechar essa tarefa');
-                }
-            }else{
-                session()->flash('flash-warning', 'Não podemos fechar essa tarefa.');
-            }
-        }else{
+        if ($clientSubscriptionTask->closed) {
             session()->flash('flash-warning', 'Tarefa já está fechada');
+            return redirect()->back();
         }
+        $clientSubscriptionTask->update([
+            'closed' => 1,
+            'closed_by' => auth()->user()->id,
+            'closed_at' => Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+        session()->flash('flash-success', 'Tarefa finalizada com sucesso');
         return redirect()->back();
     }
 
@@ -53,7 +44,7 @@ class ClientSubscriptionTaskController extends Controller
             return response()->json(['message' => $validator->errors()->first()], 400);
         }
         $hours = $request->qt;
-        if($request->tipo == 'd'){
+        if ($request->tipo == 'd') {
             $hours = $request->qt * 24;
         }
 
@@ -67,9 +58,43 @@ class ClientSubscriptionTaskController extends Controller
         ]);
         $task->comments()->create([
             'user_id' => auth()->user()->id,
-            'comment' => '<b>fez o adiamento</b> antigo: '.$oldHour->format('d/m/Y H:i:s') . ' ~ novo ' . $newHour->format('d/m/Y H:i:s') . '; total de '. $hours . ' hora(s) adicionada.'
+            'comment' => '<b>fez o adiamento</b> antigo: ' . $oldHour->format('d/m/Y H:i:s') . ' ~ novo ' . $newHour->format('d/m/Y H:i:s') . '; total de ' . $hours . ' hora(s) adicionada.'
         ]);
 
         return response()->json(['message' => 'atualizado com sucesso'], 200);
+    }
+
+    public function comments(ClientSubscriptionTask $clientSubscriptionTask)
+    {
+        $arr = [];
+        foreach ($clientSubscriptionTask->comments as $c) {
+            array_push($arr, [
+                'user' => $c->user->name,
+                'date' => $c->created_at->format('d/m/Y H:i:s'),
+                'comment' => $c->comment,
+                'files' => json_decode($c->files)
+            ]);
+        }
+        return response()->json(['data' => $arr], 200);
+    }
+
+    public function newComment(ClientSubscriptionTask $clientSubscriptionTask, Request $request)
+    {
+        $files = [];
+        if ($request->has('files')) {
+            foreach ($request->file('files') as $file) {
+                $name = 'comments/' . md5(uniqid(rand(), true)) . '.' . $file->extension();
+                $file->move(storage_path() . '/app/public/comments', $name);
+                array_push($files, $name);
+            }
+        }
+
+        $clientSubscriptionTask->comments()->create([
+            'comment' => $request->comment,
+            'user_id' => auth()->user()->id,
+            'files' => json_encode($files),
+        ]);
+
+        return response()->json([], 201);
     }
 }

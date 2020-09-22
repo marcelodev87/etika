@@ -7,7 +7,7 @@
                 <h4 class="modal-title">Comentário</h4>
             </div>
 
-            <form method="post" action="{{ route('app.clients.tasks.comments.store', [$client->id, ':TASK']) }}" id="form-comment" enctype="multipart/form-data">
+            <form method="post" action="" id="form-comment" enctype="multipart/form-data">
                 <input type="hidden" name="task_id" value="">
                 <div class="modal-body">
                     <div class="form-group">

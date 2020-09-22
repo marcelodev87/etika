@@ -167,6 +167,7 @@
     </form>
 
     <div class="row" style="margin-top: 21px;">
+
         {{-- assinaturas --}}
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -288,6 +289,7 @@
                         </tr>
                         </thead>
                         <tbody>
+
                         @foreach($client->tasks as $task)
                             <tr>
                                 <td>{{ $task->id }}</td>
@@ -296,7 +298,7 @@
                                 <td class="{{ $task->isLate() ? 'text-danger text-bold' : '' }}">{{ $task->end_at->format('d/m/y H:i:') }}00</td>
                                 <td>
                                     @if($task->closed)
-                                        {{ $task->closed_at->format('d/m/Y H:i:s') }} ({{ $task->closedBy->name }})
+                                        {{ $task->closed_at->format('d/m/Y H:i:s') }} <br>{{ $task->closedBy->name }}
                                     @endif
                                 </td>
                                 <td>{{ $task->comments()->count()}}</td>
@@ -315,11 +317,41 @@
                                 </td>
                             </tr>
                         @endforeach
+
+                        @foreach($client->subscriptionTasks as $st)
+                            <tr>
+                                <td>{{ $st->id }}</td>
+                                <td>{{ $st->task->name }}</td>
+                                <td>{{ $st->responsible->name }}</td>
+                                <td class="{{ $st->isLate() ? 'text-danger text-bold' : '' }}">{{ $st->end_at->format('d/m/y H:i:') }}00</td>
+                                <td>
+                                    @if($st->closed)
+                                        {{ $st->closed_at->format('d/m/Y H:i:s') }} <br>{{ $st->closedBy->name }}
+                                    @endif
+                                </td>
+                                <td>{{ $st->comments()->count()}}</td>
+                                <td class="text-right">
+                                    @if(!$st->closed)
+                                        <a href="{{ route('app.assinaturaTaskClose', $st->id) }}" class="btn btn-xs btn-success" onclick="return confirm('Deseja realmente finalizar?')">
+                                            <i class="fa fa-check"></i> Finalizar
+                                        </a>
+                                    @endif
+                                    <a href="#modal-comment" data-toggle="modal" data-type="assinatura" data-client-task="{{ $st->id }}" class="btn btn-default btn-xs">
+                                        <i class="fa fa-plus"></i> Comentário
+                                    </a>
+                                    <a href="javascript:void(0)" class="btn btn-primary btn-xs" onclick="showComments({{ $st->id }}, 'assinatua')">
+                                        <i class="fa fa-eye"></i> Comentário
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+
     </div>
 
     @include('widgets.comments')
@@ -455,9 +487,13 @@
             });
         });
 
-        function showComments(task) {
+        function showComments(task, type= "single") {
             const $block = $('.sidebar-right-blank');
-            var $endpoint = "{{ route('app.task.comments.single', ':TASK') }}";
+            if(type == "single"){
+                var $endpoint = "{{ route('app.task.comments.single', ':TASK') }}";
+            }else{
+                var $endpoint = "{{ route('app.assinaturaTaskComments', ':TASK') }}";
+            }
             $endpoint = $endpoint.replace(':TASK', task);
             $.get($endpoint, function (response) {
                 $.each(response.data, function (i, e) {
@@ -522,7 +558,12 @@
         $('#modal-comment').on('show.bs.modal', function (e) {
             var $button = e.relatedTarget;
             var $taskId = $($button).attr('data-client-task')
-            $('#form-comment').find('[name="task_id"]').val($taskId);
+            var $endpoint = "{{ route('app.clients.tasks.comments.store', [$client->id, ':TASK']) }}".replace(':TASK', $taskId);
+            if($($button).attr('data-type') == 'assinatura'){
+                var $endpoint = "{{ route('app.assinaturaTaskNewComment', ':TASK') }}".replace(':TASK', $taskId);
+            }
+            console.log($endpoint)
+            $('#form-comment').attr('action', $endpoint);
         })
 
         $('.summernote').summernote({
@@ -544,7 +585,7 @@
             var $button = $form.find('button[type="submit"]');
             var $buttonText = $button.html();
             var $data = new FormData($form[0]);
-            var $endpoint = $form.attr('action').replace(':TASK', $form.find('[name="task_id"]').val());
+            var $endpoint = $form.attr('action');
             $.ajax({
                 url: $endpoint,
                 type: $form.attr('method'),
