@@ -224,11 +224,11 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
 
     # rota de relatorios
     Route::group(['prefix' => 'relatorios', 'as' => 'relatorios.'], function () {
-        Route::get('/processos-abertos', ['uses' => 'RelatorioController@processoAberto', 'as' => 'processoAberto', 'roles' => ['adm', 'usr']]);
-        Route::get('/processos-fechados', ['uses' => 'RelatorioController@processoFechado', 'as' => 'processoFechado', 'roles' => ['adm', 'usr']]);
-        Route::get('/pagamentos-abertos', ['uses' => 'RelatorioController@pagamentoAberto', 'as' => 'pagamentoAberto', 'roles' => ['adm', 'usr']]);
-        Route::get('/tarefas-abertas', ['uses' => 'RelatorioController@tarefaAberta', 'as' => 'tarefaAberta', 'roles' => ['adm', 'usr']]);
-        Route::get('/tarefas-fechadas', ['uses' => 'RelatorioController@tarefaFechada', 'as' => 'tarefaFechada', 'roles' => ['adm', 'usr']]);
+        Route::get('/processos-abertos', ['uses' => 'RelatorioController@processoAberto', 'as' => 'processoAberto']);
+        Route::get('/processos-fechados', ['uses' => 'RelatorioController@processoFechado', 'as' => 'processoFechado']);
+        Route::get('/pagamentos-abertos', ['uses' => 'RelatorioController@pagamentoAberto', 'as' => 'pagamentoAberto']);
+        Route::get('/tarefas-abertas', ['uses' => 'RelatorioController@tarefaAberta', 'as' => 'tarefaAberta']);
+        Route::get('/tarefas-fechadas', ['uses' => 'RelatorioController@tarefaFechada', 'as' => 'tarefaFechada']);
     });
 
 
@@ -263,3 +263,30 @@ Route::get("/sair", function () {
     return redirect()->route('login');
 });
 
+Route::get('import', function () {
+    $json = json_decode(file_get_contents(public_path('empresa.json')), true);
+    $array = [];
+    foreach ($json as $item) {
+        $d = [
+            'name' => $item['nome_empresa'],
+            'document' => $item['cnpj_cpf_empresa'],
+            'email' => $item['email'],
+            'phone' => maskPhone($item['telefone']),
+            'type' => 'Igreja',
+            'zip' => $item['cep'],
+            'state' => ($item['uf'] == "NULL") ? null : $item['uf'],
+            'city' => $item['cidade'],
+            'neighborhood' => $item['bairro'],
+            'street' => $item['endereco'],
+            'complement' => $item['complemento']
+        ];
+        array_push($array, $d);
+
+        // include
+        if(!\App\Client::where('document', $d['document'])->exists()){
+            \App\Client::create($d);
+        }
+    }
+
+    return response()->json($array);
+});

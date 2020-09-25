@@ -52,26 +52,26 @@ if (!function_exists('menuPath')) {
     }
 }
 
-if(!function_exists('numberIntegerToRoman')){
+if (!function_exists('numberIntegerToRoman')) {
     function numberIntegerToRoman($num, $debug = false)
     {
         $n = intval($num);
         $nRoman = '';
 
         $default = array(
-            'M'     => 1000,
-            'CM'     => 900,
-            'D'     => 500,
-            'CD'     => 400,
-            'C'     => 100,
-            'XC'     => 90,
-            'L'     => 50,
-            'XL'     => 40,
-            'X'     => 10,
-            'IX'     => 9,
-            'V'     => 5,
-            'IV'     => 4,
-            'I'     => 1,
+            'M' => 1000,
+            'CM' => 900,
+            'D' => 500,
+            'CD' => 400,
+            'C' => 100,
+            'XC' => 90,
+            'L' => 50,
+            'XL' => 40,
+            'X' => 10,
+            'IX' => 9,
+            'V' => 5,
+            'IV' => 4,
+            'I' => 1,
         );
 
         foreach ($default as $roman => $number) {
@@ -93,5 +93,21 @@ if (!function_exists('menuPath')) {
             }
         }
         return '';
+    }
+}
+
+if (!function_exists('maskPhone')) {
+    function maskPhone($phone)
+    {
+        $number = preg_replace('/\D/', '', $phone);
+        $length = strlen($number);
+        if ($length >= 10) {
+            $block = ($length == 11) ? 5 : 4;
+            $ddd = substr($number, 0 ,2);
+            $firstBlock = substr($number, 2, $block);
+            $secondBlock = substr($number, -4);
+            $phone = "({$ddd}) {$firstBlock}-{$secondBlock}";
+        }
+        return $phone;
     }
 }
