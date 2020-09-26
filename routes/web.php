@@ -288,5 +288,5 @@ Route::get('import', function () {
         }
     }
 
-    return response()->json($array);
+    return response()->json(['message' => 'Importação concluída'], 200);
 });
