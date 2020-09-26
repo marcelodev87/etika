@@ -269,7 +269,7 @@ Route::get('import', function () {
     foreach ($json as $item) {
         $d = [
             'name' => $item['nome_empresa'],
-            'document' => $item['cnpj_cpf_empresa'],
+            'document' => maskDocument($item['cnpj_cpf_empresa']),
             'email' => $item['email'],
             'phone' => maskPhone($item['telefone']),
             'type' => 'Igreja',
