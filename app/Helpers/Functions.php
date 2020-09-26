@@ -103,11 +103,36 @@ if (!function_exists('maskPhone')) {
         $length = strlen($number);
         if ($length >= 10) {
             $block = ($length == 11) ? 5 : 4;
-            $ddd = substr($number, 0 ,2);
+            $ddd = substr($number, 0, 2);
             $firstBlock = substr($number, 2, $block);
             $secondBlock = substr($number, -4);
             $phone = "({$ddd}) {$firstBlock}-{$secondBlock}";
         }
         return $phone;
+    }
+}
+
+if (!function_exists('maskDocument')) {
+    function maskDocument($str)
+    {
+        $str = (string)preg_replace('/\D/', '', $str);
+        $maskared = "";
+        $k = 0;
+        // if cpf have 10 digitis
+        if(strlen($str) <= 10){
+            $str = str_pad($str, 11, 0, STR_PAD_RIGHT);
+        }
+
+        $mask = (strlen($str) > 11) ? '##.###.###/####-##' : '###.###.###-##';
+        for ($i = 0; $i <= strlen($mask) -1; $i++) {
+            if ($mask[$i] === '#') {
+                if (isset($str[$k]))
+                    $maskared .= $str[$k++];
+            } else {
+                if (isset($mask[$i]))
+                    $maskared .= $mask[$i];
+            }
+        }
+        return $maskared;
     }
 }
