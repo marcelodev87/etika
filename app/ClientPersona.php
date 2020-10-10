@@ -8,6 +8,10 @@ class ClientPersona extends Model
 {
     protected $guarded = [];
     protected $dates = ['dob', 'created_at', 'updated_at'];
+    /**
+     * @var mixed
+     */
+    private $client;
 
 
     public function client()
@@ -32,7 +36,16 @@ class ClientPersona extends Model
 
     public function fullAddress()
     {
-        $address = $this->addresses()->where('main', 1)->first();
+        $addresses = $this->addresses();
+        if (!$addresses->count()) {
+            throw new \Exception("#{$this->id} - {$this->name} não tem nenhum endereço cadastrado");
+        }
+
+        if (!$addresses->where('main', 1)->first()) {
+            throw new \Exception("#{$this->id} - {$this->name} não tem um endereço setado como principal para puxar os dados");
+        }
+
+        $address = $addresses->where('main', 1)->first();
         $a = $address->street;
         if ($address->street_number) {
             $a .= ', ' . $address->street_number;

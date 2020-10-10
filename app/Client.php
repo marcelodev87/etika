@@ -40,7 +40,11 @@ class Client extends Model
 
     public function fullAddress()
     {
-        $a = $this->street;
+        $a = null;
+        if ($this->street) {
+            $a .= $this->street;
+        }
+
         if ($this->street_number) {
             $a .= ', ' . $this->street_number;
         }

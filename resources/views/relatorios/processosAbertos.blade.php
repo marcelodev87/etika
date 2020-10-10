@@ -21,6 +21,7 @@
                 <th>Cliente</th>
                 <th>UF</th>
                 <th>Processo</th>
+                <th>Criado em</th>
                 <th></th>
             </tr>
             </thead>
@@ -37,7 +38,10 @@
                             {{ $processo->process->name }}
                         </a>
                     </td>
-                    <td class="text-right">
+                    <td>
+                        <span class="hidden">{{ $processo->created_at->timestamp }}</span>{{ $processo->created_at->format('d/m/Y') }}
+                    </td>
+                    <td class="text-right noorder">
                         <button type="button" class="btn btn-xs btn-success" onclick="showHistory({{$processo->client_id}}, {{$processo->id}})">
                             <i class="fa fa-history"></i>
                         </button>
@@ -65,7 +69,12 @@
 
 @section('script')
     <script type="text/javascript">
-        $("#datatable").dataTable();
+        $("#datatable").dataTable({
+            columnDefs: [
+                {orderable: false, targets: 5}
+            ],
+            language: $datatableBR,
+        });
 
 
         function showHistory(client, process) {

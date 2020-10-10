@@ -21,6 +21,7 @@
                 <th>Cliente</th>
                 <th>UF</th>
                 <th>Processo</th>
+                <th>Criado em</th>
                 <th></th>
             </tr>
             </thead>
@@ -36,6 +37,9 @@
                         <a href="{{ route('app.clients.processes.index',[$processo->client_id, $processo->id]) }}">
                             {{ $processo->process->name }}
                         </a>
+                    </td>
+                    <td>
+                        <span class="hidden">{{ $processo->created_at->timestamp }}</span>{{ $processo->created_at->format('d/m/Y') }}
                     </td>
                     <td class="text-right">
                         <button type="button" class="btn btn-xs btn-success" onclick="showHistory({{$processo->client_id}}, {{$processo->id}})">
@@ -64,7 +68,12 @@
 
 @section('script')
     <script type="text/javascript">
-        $("#datatable").dataTable();
+        $("#datatable").dataTable({
+            columnDefs: [
+                {orderable: false, targets: 5}
+            ],
+            language: $datatableBR,
+        });
 
         function showHistory(client, process) {
             const $block = $('.sidebar-right-blank');
