@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\ClientTask;
+use App\Mail\NewTaskNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class ClientTaskController extends Controller
@@ -43,6 +45,8 @@ class ClientTaskController extends Controller
                 'user_id' => auth()->user()->id,
                 'comment' => '<b>criou essa tarefa</b>'
             ]);
+            $resp = User::find($input['user_id']);
+            Mail::to($resp->email)->send(new NewTaskNotification(["name" => $resp->name]));
             return response()->json([], 201);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 400);
