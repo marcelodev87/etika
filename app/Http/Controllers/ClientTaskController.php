@@ -6,6 +6,7 @@ use App\Client;
 use App\ClientTask;
 use App\Mail\NewTaskNotification;
 use Carbon\Carbon;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
