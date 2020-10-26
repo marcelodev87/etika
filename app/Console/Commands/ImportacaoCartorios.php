@@ -57,7 +57,7 @@ class ImportacaoCartorios extends Command
                 ];
                 NotaryAddress::create($array);
             }
-            @unlink('./public/cartorios.json')
+            @unlink('./public/cartorios.json');
         }
     }
 }
