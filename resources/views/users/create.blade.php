@@ -23,7 +23,7 @@
     <div class="row">
         <form action="{!! route('app.users.store') !!}" method="post" id="user-add-form">
             @csrf
-            <div class="col-md-4 col-md-offset-4">
+            <div class="col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
                 <div class="chart-box">
 
                     <h4 class="text-center text-uppercase">Dados do Usuário</h4>
@@ -34,18 +34,23 @@
                         <input class="form-control" name="name" type="text">
                     </fieldset>
 
-                    <fieldset class="form-group">
-                        <label>Aniversário</label>
-                        <input class="form-control" name="dob" type="date" style="line-height: 15px">
-                    </fieldset>
-
-                    <fieldset class="form-group">
-                        <label>Gênero</label>
-                        <select class="form-control" name="gender">
-                            <option value="Feminino">Feminino</option>
-                            <option value="Masculino">Masculino</option>
-                        </select>
-                    </fieldset>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6">
+                            <fieldset class="form-group">
+                                <label>Aniversário</label>
+                                <input class="form-control" name="dob" type="date" style="line-height: 15px">
+                            </fieldset>
+                        </div>
+                        <div class="col-md-6 col-lg-6">
+                            <fieldset class="form-group">
+                                <label>Gênero</label>
+                                <select class="form-control" name="gender">
+                                    <option value="Feminino">Feminino</option>
+                                    <option value="Masculino">Masculino</option>
+                                </select>
+                            </fieldset>
+                        </div>
+                    </div>
 
                     <fieldset class="form-group">
                         <label>E-mail</label>
@@ -63,15 +68,31 @@
                         </fieldset>
                     </div>
 
-                    <fieldset class="form-group">
-                        <label>Papel</label>
-                        <select name="role_id" class="form-control">
-                            @if(auth()->user()->hasRole('adm'))
-                                <option value="1">Administrador</option>
-                            @endif
-                            <option value="2">Usuário</option>
-                        </select>
-                    </fieldset>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6">
+                            <fieldset class="form-group">
+                                <label>Papel</label>
+                                <select name="role_id" class="form-control">
+                                    @if(auth()->user()->hasRole('adm'))
+                                        <option value="1">Administrador</option>
+                                    @endif
+                                    <option value="2">Usuário</option>
+                                </select>
+                            </fieldset>
+                        </div>
+                        <div class="col-md-6 col-lg-6">
+                            <fieldset class="form-group">
+                                <label>Setor</label>
+                                <select class="form-control" name="sector">
+                                    <option value="">Selecione</option>
+                                    @foreach(loadSectors() as $key => $value)
+                                        <option value="{{$value}}">{{$value}}</option>
+                                    @endforeach
+                                </select>
+                            </fieldset>
+                        </div>
+                    </div>
+
 
                     <fieldset class="form-group">
                         <label class="checkbox" style="margin-left: 20px">
@@ -82,18 +103,15 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <a href="{!! route('app.users.index') !!}" class="btn btn-xs btn-default">
+                            <a href="{!! route('app.users.index') !!}" class="btn btn-sm btn-primary btn-block">
                                 <i class="fa fa-reply"></i> Voltar
                             </a>
                         </div>
                         <div class="col-md-6">
-                            <button type="submit" class="btn btn-xs btn-success">
+                            <button type="submit" class="btn btn-sm btn-block btn-success">
                                 <i class="fa fa-save"></i> Salvar
                             </button>
                         </div>
-                    </div>
-
-
                     </div>
 
                     <div class="alert-blockquote" style="display: none">

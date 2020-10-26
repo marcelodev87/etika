@@ -62,6 +62,7 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => bcrypt(Str::random(40)),
                 'status' => 1,
+                'sector' => $request->sector,
             ]);
             $user->roles()->sync($request->role_id);
 
@@ -123,6 +124,7 @@ class UserController extends Controller
                 'gender' => $request->gender,
                 'dob' => $request->dob,
                 'status' => $request->status,
+                'sector' => $request->sector,
             ]);
 
             $user->roles()->sync($request->role_id);

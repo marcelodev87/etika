@@ -2,11 +2,11 @@
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration; 
+use Illuminate\Database\Migrations\Migration;
 
 class CreateUsersTable extends Migration
 {
-    /** 
+    /**
      * Run the migrations.
      *
      * @return void
@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('gender')->nullable()->comment('Será usado => m|f');
             $table->string('password');
             $table->boolean('status')->default(0);
+            $table->string('sector')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

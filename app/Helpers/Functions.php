@@ -119,12 +119,12 @@ if (!function_exists('maskDocument')) {
         $maskared = "";
         $k = 0;
         // if cpf have 10 digitis
-        if(strlen($str) <= 10){
+        if (strlen($str) <= 10) {
             $str = str_pad($str, 11, 0, STR_PAD_RIGHT);
         }
 
         $mask = (strlen($str) > 11) ? '##.###.###/####-##' : '###.###.###-##';
-        for ($i = 0; $i <= strlen($mask) -1; $i++) {
+        for ($i = 0; $i <= strlen($mask) - 1; $i++) {
             if ($mask[$i] === '#') {
                 if (isset($str[$k]))
                     $maskared .= $str[$k++];
@@ -134,5 +134,14 @@ if (!function_exists('maskDocument')) {
             }
         }
         return $maskared;
+    }
+}
+
+if (!function_exists('loadSectors')) {
+    function loadSectors()
+    {
+        $data = file_get_contents('setores.json');
+        $data = json_decode($data, true);
+        return $data;
     }
 }
