@@ -7,6 +7,7 @@ use App\ClientSubscription;
 use App\ClientSubscriptionTask;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ClientSubscriptionTaskController extends Controller
@@ -68,11 +69,15 @@ class ClientSubscriptionTaskController extends Controller
     {
         $arr = [];
         foreach ($clientSubscriptionTask->comments as $c) {
+            $files = [];
+            foreach (json_decode($c->files, true) as $file){
+                array_push($files, Storage::disk('public')->url($file));
+            }
             array_push($arr, [
                 'user' => $c->user->name,
                 'date' => $c->created_at->format('d/m/Y H:i:s'),
                 'comment' => $c->comment,
-                'files' => json_decode($c->files)
+                'files' => $files
             ]);
         }
         return response()->json(['data' => $arr], 200);
