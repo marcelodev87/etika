@@ -71,6 +71,12 @@
                 </a>
             </li>
 
+            <li>
+                <a href="{!! route('app.sectorTasks.index') !!}">
+                    <i class="fa fa-book-open"></i> <span>Meu Setor</span>
+                </a>
+            </li>
+
 
             @php
                 $arrayMenuGeraDocumentos = [

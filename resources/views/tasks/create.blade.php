@@ -37,6 +37,17 @@
                             <input name="price" type="text" class="form-control" value="{{ old('price') }}" data-mask="##0.000,00" data-mask-reverse="true">
                         </div>
                     </div>
+                    <div class="col-xs-12">
+                        <fieldset class="form-group">
+                            <label>Setor</label>
+                            <select class="form-control" name="setor">
+                                <option value="">Selecione</option>
+                                @foreach(loadSectors() as $key => $value)
+                                    <option value="{{$value}}">{{$value}}</option>
+                                @endforeach
+                            </select>
+                        </fieldset>
+                    </div>
                     <div class="col-xs-12 col-sm-6">
                         <a href="{!! route('app.tasks.index') !!}" class="btn btn-sm btn-block btn-default">
                             <i class="fa fa-reply"></i> Voltar

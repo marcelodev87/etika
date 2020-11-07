@@ -18,6 +18,7 @@ class CreateInternalTasksTable extends Migration
             $table->string('name')->nullable();
             $table->string('slug')->unique();
             $table->decimal('price', 10, 2)->default(0);
+            $table->string('setor')->nullable();
             $table->timestamps();
         });
     }

@@ -24,6 +24,7 @@
                             <th>#</th>
                             <th>Nome</th>
                             <th>Preço</th>
+                            <th>Setor</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -33,6 +34,7 @@
                                 <td>{{ $task->id }}</td>
                                 <td>{{ $task->name }}</td>
                                 <td>{{ $task->price }}</td>
+                                <td>{{ $task->setor }}</td>
                                 <td class="text-right">
                                     <a href="{!! route('app.tasks.edit', $task->id) !!}" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="left" title="Editar">
                                         <i class="fa fa-edit"></i>

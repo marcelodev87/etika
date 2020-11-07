@@ -256,6 +256,8 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
         Route::get('process/{task}', ['uses' => 'ClientProcessTaskCommentController@index', 'as' => 'process']);
         Route::get('subscription/{task}', ['uses' => 'ClientSubscriptionTaskCommentController@index', 'as' => 'subscription']);
     });
+
+    Route::get('meu-setor', 'InternalTaskController@sector')->name('sectorTasks.index');
 });
 
 Route::get("/sair", function () {

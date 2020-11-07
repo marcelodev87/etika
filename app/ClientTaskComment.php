@@ -13,4 +13,5 @@ class ClientTaskComment extends Model
         return $this->belongsTo(ClientTask::class);
     }
 
+
 }
