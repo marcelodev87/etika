@@ -26,6 +26,13 @@
 
                         <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-4">
                             <fieldset class="form-group">
+                                <label>Natural</label>
+                                <input class="form-control" name="natural" type="text">
+                            </fieldset>
+                        </div>
+
+                        <div class="col-md-xs-12 col-md-sm-6 col-md-4 col-lg-4">
+                            <fieldset class="form-group">
                                 <label>Documento</label>
                                 <input class="form-control" name="document" type="text" data-mask="000.000.000-00">
                             </fieldset>
