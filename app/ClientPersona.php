@@ -51,10 +51,10 @@ class ClientPersona extends Model
             $a .= ', ' . $address->number;
         }
         if ($address->complement) {
-            $a .= ' (' . $address->complement . ')';
+            $a .= ' - ' . $address->complement . '';
         }
 
-        $a .= ', ' . $address->city . ', ' . $address->neighborhood . ' - ' . $address->state . ' - ' . $address->zip;
+        $a .= ' - ' . $address->neighborhood . ' - ' . $address->city . ' - ' . $address->state . ' - ' . $address->zip;
 
         return $a;
     }
