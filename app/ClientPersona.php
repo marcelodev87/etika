@@ -47,8 +47,8 @@ class ClientPersona extends Model
 
         $address = $addresses->where('main', 1)->first();
         $a = $address->street;
-        if ($address->street_number) {
-            $a .= ', ' . $address->street_number;
+        if ($address->number) {
+            $a .= ', ' . $address->number;
         }
         if ($address->complement) {
             $a .= ' (' . $address->complement . ')';
