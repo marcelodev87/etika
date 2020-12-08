@@ -70,6 +70,7 @@
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jszip-2.5.0/dt-1.10.21/b-1.6.2/b-html5-1.6.2/datatables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 <script src="{{ asset('js/datatable_pt-BR.js') }}"></script>
+<script src="//cdn.datatables.net/plug-ins/1.10.22/sorting/natural.js"></script>
 @yield('script')
 </body>
 </html>

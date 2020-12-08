@@ -93,7 +93,6 @@ class ClientPersonaController extends Controller
             'marital_status' => 'nullable|string|min:3',
             'profession' => 'nullable|string|min:3',
             'dob' => 'nullable|date_format:d/m/Y',
-            'natural' => 'required|string',
         ];
         $errors = [];
         $fields = [

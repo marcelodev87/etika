@@ -200,7 +200,14 @@
             });
         });
 
-        $("#datatable").dataTable();
+        $("#datatable").dataTable({
+            order: [
+                [0, "asc"]
+            ],
+            columnDefs: [
+                {type: 'natural', targets: 0}
+            ]
+        });
 
 
     </script>
