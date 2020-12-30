@@ -143,6 +143,12 @@
 
                 </ul>
             </li>
+
+            <li>
+                <a href="{!! route('app.payments') !!}">
+                    <i class="fa fa-hand-holding-usd"></i> Pagamentos
+                </a>
+            </li>
         </ul>
 
     </section>

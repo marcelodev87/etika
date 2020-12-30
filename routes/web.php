@@ -285,10 +285,14 @@ Route::get('import', function () {
         array_push($array, $d);
 
         // include
-        if(!\App\Client::where('document', $d['document'])->exists()){
+        if (!\App\Client::where('document', $d['document'])->exists()) {
             \App\Client::create($d);
         }
     }
 
     return response()->json(['message' => 'Importação concluída'], 200);
 });
+
+
+Route::get('pagamentos', 'PaymentsController@index')->name('app.payments');
+Route::post('pagamentos', 'PaymentsController@load')->name('app.payments.load');

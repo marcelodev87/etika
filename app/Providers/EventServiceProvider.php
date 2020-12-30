@@ -31,7 +31,7 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
         ClientSubscriptionPayment::observe(ClientSubscriptionPaymentObserver::class);
-        
+
         //
     }
 }
