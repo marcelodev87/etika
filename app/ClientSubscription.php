@@ -19,4 +19,8 @@ class ClientSubscription extends Model
         return $this->hasMany(ClientSubscriptionPayment::class);
     }
 
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'client_id');
+    }
 }

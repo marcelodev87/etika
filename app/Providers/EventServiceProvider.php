@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\ClientSubscriptionPayment;
+use App\Observers\ClientSubscriptionPaymentObserver;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -28,7 +30,8 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-
+        ClientSubscriptionPayment::observe(ClientSubscriptionPaymentObserver::class);
+        
         //
     }
 }

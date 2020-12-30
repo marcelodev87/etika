@@ -122,7 +122,9 @@
                         $button.attr('disabled', 'disabled').html('<i class="fas fa-spinner fa-pulse"></i> Carregando...');
                     },
                     success: (response) => { // aqui vai o que der certo
-                        window.location.href = "{!! route('app.subscriptions.index') !!}";
+                        setTimeout(function () {
+                            window.location.href = "{!! route('app.subscriptions.index') !!}";
+                        }, 500)
                     },
                     error: (response) => { // aqui vai o que acontece quando ocorrer o erro
                         console.log(response)

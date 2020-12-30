@@ -3,32 +3,34 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ClientProcess extends Model
 {
     protected $guarded = [];
 
-    public function tasks()
+    public function tasks(): HasMany
     {
         return $this->hasMany(ClientProcessTask::class);
     }
 
-    public function client()
+    public function client(): BelongsTo
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Client::class, 'client_id');
     }
 
-    public function process()
+    public function process(): BelongsTo
     {
         return $this->belongsTo(InternalProcess::class);
     }
 
-    public function payments()
+    public function payments(): HasMany
     {
         return $this->hasMany(ClientProcessPayment::class);
     }
 
-    public function totalPrice()
+    public function totalPrice(): int
     {
         $valorProcesso = $this->price;
         $valorExtra = $this->tasks()->sum('price');
@@ -36,12 +38,12 @@ class ClientProcess extends Model
         return $valorTotal;
     }
 
-    public function totalPayed()
+    public function totalPayed(): int
     {
         return $this->payments()->sum('value');
     }
 
-    public function logs()
+    public function logs(): HasMany
     {
         return $this->hasMany(ClientProcessLog::class);
     }

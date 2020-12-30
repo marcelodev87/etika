@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\ClientSubscription;
 use App\ClientSubscriptionPayment;
+use App\Mail\NewPayment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -34,12 +36,13 @@ class ClientSubscriptionPaymentController extends Controller
         }
 
         try {
-            $clientSubscription->payments()->create([
+            $payment = $clientSubscription->payments()->create([
                 'pay_at' => Carbon::createFromFormat('d/m/Y', $request->pay_at)->format('Y-m-d'),
                 'price' => brlToNumeric($request->price),
                 'description' => $input['description'],
                 'file' => ($request->hasFile('file')) ? Storage::disk('public')->put('comprovantes', $request->file('file')) : null,
             ]);
+
             session()->flash('flash-succes', 'Pagamento adicionado com sucesso');
             return response()->json(['message' => 'Cadastrado'], 201);
         } catch (\Exception $e) {
