@@ -53,7 +53,7 @@
                     <fieldset class="form-group form-group-sm">
                         <select class="form-control selectpicker" name="load_file">
                             <option value="">Tipo de geração</option>
-                            <option value="gera_ata_funcao">Ata de Função</option>
+                            <option value="gera_ata_funcao">Ata de Fundação</option>
                         </select>
                     </fieldset>
 
