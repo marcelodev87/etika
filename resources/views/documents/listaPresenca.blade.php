@@ -15,7 +15,7 @@
         <i class="fa fa-copy"></i> Geração de Documentos
     </li>
     <li class="active">
-        Edital de Convocação
+        Lista de Presença
     </li>
     @endbreadcrumb
 @endsection
@@ -39,7 +39,7 @@
     <div class="row">
         <div class="col-md-4 col-lg-3">
             <div class="chart-box">
-                <form method="post" action="{!! route('app.documents.editalConvocacao') !!}">
+                <form method="post" action="{!! route('app.documents.listaPresenca') !!}">
                     @csrf
                     <fieldset class="form-group form-group-sm">
                         <select class="form-control selectpicker" name="client_id" required>
@@ -106,18 +106,32 @@
 
                             <div align=justify style='background-color:#FFFFFF;  padding: 25px 50px 25px 50px;'>
 
-                                <h2 class="text-center">Edital de Convocação <span style='color:red !important;'>do(a)</span> {{ $igreja }}</h2>
+                                <h2 class="text-center">LISTA DE PRESENÇA DA REUNIÃO DE FUNDAÇÃO <span style='color:red !important;'>DO(A)</span> {{ $igreja }}</h2>
+                                <p class="text-center">DATA: <span style='color:red !important;'>{{ $data }} HORA: 19HS</span></p>
+                                <p class="text-center">Realizada na {{ $endereco_igreja }} – {{ $complemento_igreja }} – {{ $bairro_igreja }} – {{ $cidade_igreja }} - {{ $uf_igreja }} – CEP: {{ $cep_igreja }}</p>
                                 <br/>
+                                <table class="table table-bordered text-center">
+                                    <thead>
+                                      <tr>
+                                        <th class="text-center col-4" scope="col">NOME</th>
+                                        <th class="text-center col-4" scope="col">CPF</th>
+                                        <th class="text-center col-4" scope="col">ASSINATURA</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
 
-                                <p>
-                                    Convido as pessoas interessadas em primeira convocação para a reunião de Fundação <span style='color:red !important;'>do(a)</span> {{ $igreja }} uma organização religiosa sem fins lucrativos, a comparecerem no dia <span style='color:red !important;'>{{ $data }}</span> às 19h, na {{ $endereco_igreja }} – {{ $complemento_igreja }} – {{ $bairro_igreja }} – {{ $cidade_igreja }} - {{ $uf_igreja }} – CEP: {{ $cep_igreja }}, ocasião em que serão deliberados os seguintes assuntos:</p>
-                                    <br/>
+                                        @foreach ($post[2] as $d)
+                                            <tr>
+                                                <td>{{ $d->name }}</td>
+                                                <td>{{ $d->document }}</td>
+                                                <td></td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                  </table>
 
-                                    <p>1 - Aprovação da denominação da Igreja;</p>
-                                    <p>2 - Fundação da Igreja;</p>
-                                    <p>3 - Aprovação do endereço da sede;</p>
-                                    <p>4 - Aprovação do Estatuto Social; e,</p>
-                                    <p>5 - Indicação e Posse dos membros da Diretoria.</p>
+
+
                                     <br/>
                                 <p class="text-center">{{ $cidade_igreja }} - {{ $uf_igreja }}, <span style='color:red !important;'>{{ $data }}</span>.</p>
                                 <br/>

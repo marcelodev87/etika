@@ -98,6 +98,9 @@
                     <li class="{{ menuPath(['app.documents.editalConvocacao'], 'active') }}">
                         <a href="{{ route('app.documents.editalConvocacao') }}">Edital de Convocação</a>
                     </li>
+                    <li class="{{ menuPath(['app.documents.listaPresenca'], 'active') }}">
+                        <a href="{{ route('app.documents.listaPresenca') }}">Lista de Presença</a>
+                    </li>
                     <li class="{{ menuPath(['app.documents.estatutoCongregacional'], 'active') }}">
                         <a href="{{ route('app.documents.estatutoCongregacional') }}">Congregacional</a>
                     </li>
