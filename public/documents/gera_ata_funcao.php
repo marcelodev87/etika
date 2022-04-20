@@ -19,8 +19,7 @@ if (isset($data['diretoria']['presidente'])) {
     {$data['diretoria']['presidente']['exp_rg']}, e inscrito<span style='color:blue !important;'>(a)</span> no CPF de n°
 	{$data['diretoria']['presidente']['cpf']}, residente e domiciliado<span style='color:blue !important;'>(a)</span> na
     {$data['diretoria']['presidente']['endereco']};
-	</p>
-	</br>";
+	</p>";
 } else {
     $presidente = "PRESIDENTE NÃO CADASTRADO";
 }
@@ -39,8 +38,7 @@ if (isset($data['diretoria']['vice_presidente'])) {
 	<span style='color:blue !important;'>portador(a)</span> do RG de n°: {$data['diretoria']['vice_presidente']['rg']} expedido pelo {$data['diretoria']['vice_presidente']['exp_rg']}, e inscrito<span style='color:blue !important;'>(a)</span> no CPF de n°
     {$data['diretoria']['vice_presidente']['cpf']}, residente e domiciliado<span style='color:blue !important;'>(a)</span> na
     {$data['diretoria']['vice_presidente']['endereco']};
-	</p>
-	</br>";
+	</p>";
 } else {
     $vice_presidente = "VICE PRESIDENTE NÃO CADASTRADO";
 }
@@ -58,8 +56,7 @@ if (isset($data['diretoria']['tesoureiros'])) {
 		{$val['estado_civil']}, {$val['profissao']}, <span style='color:blue !important;'>portador(a)</span> do RG de n°:
 		{$val['rg']} expedido pelo {$val['exp_rg']}, e <span style='color:blue !important;'>inscrito(a)</span> no CPF de n°
 		{$val['cpf']}, residente e <span style='color:blue !important;'>domiciliado(a)</span> na {$val['endereco']};
-		</p>
-		</br>";
+		</p>";
         array_push($tesoureiros, $h);
     }
 }
@@ -78,8 +75,7 @@ if (isset($data['diretoria']['secretarios'])) {
 		{$val['estado_civil']}, {$val['profissao']}, <span style='color:blue !important;'>portador(a)</span> do RG de n°:
 		{$val['rg']} expedido pelo {$val['exp_rg']}, e <span style='color:blue !important;'>inscrito(a)</span> no CPF de n°
 		{$val['cpf']}, residente e <span style='color:blue !important;'>domiciliado(a)</span> na {$val['endereco']};
-		</p>
-		</br>";
+		</p>";
         array_push($secretarios, $h);
     }
 }
@@ -125,7 +121,7 @@ deu posse à Diretoria eleita. Após o Ato Solene, o Presidente interrompeu a se
 de lida foi aprovada por unanimidade. Nada mais havendo a tratar, eu, <span style='color:blue !important;'>secretário(a)</span>, lavrei a presente ata e assino com o Presidente.
 </p>";
 
-$texto .= "<p>{$data['igreja']['cidade']}, <span style='color:blue !important;'>{$data['post']['fundacao']}</span>.</p>";
+$texto .= "<p>{$data['igreja']['cidade']} - {$data['igreja']['uf']}, <span style='color:blue !important;'>{$data['post']['fundacao']}</span>.</p>";
 
 
 $texto .= "<p>	_________________________________________________</p>";
@@ -155,6 +151,9 @@ if (count($data['diretoria']['secretarios'])) {
     }
 }
 
+$texto .= "<p>	_________________________________________________</p>";
+$texto .= "<p>Lúcia de Fátima Pereira Machado</p>";
+$texto .= "<p>ADVOGADA - OAB/RJ  n°135.542</p>";
 
 $texto .= "</div>";
 echo $texto;

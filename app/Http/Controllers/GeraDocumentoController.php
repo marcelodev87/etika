@@ -75,6 +75,7 @@ class GeraDocumentoController extends Controller
         $data['igreja'] = [
             'nome' => $igreja->name,
             'cidade' => $igreja->city,
+            'uf' => $igreja->state,
             'endereco' => $igreja->fullAddress(),
         ];
         $data['diretoria']['presidente'] = [
