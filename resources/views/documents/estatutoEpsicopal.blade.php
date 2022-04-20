@@ -35,7 +35,7 @@
                     <div class="form-group">
                         <label>Igreja</label>
                         <select class="form-control selectpicker" name="client_id" title="Selecione a Igreja" required>
-                            @foreach(\App\Client::where('type', 'igreja')->get() as $user)
+                            @foreach(\App\Client::where('type', 'igreja')->orderBy('name','asc')->get() as $user)
                                 <option value="{{$user->id}}" {{ ($request->has('client_id') && $request->client_id == $user->id) ? 'selected' : '' }}>{{ $user->name }}</option>
                             @endforeach
                         </select>
