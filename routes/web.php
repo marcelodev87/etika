@@ -240,6 +240,7 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
         });
         Route::group(['prefix' => 'widgets', 'as' => 'widgets.'], function () {
             Route::get('clients-registred', ['uses' => 'WidgetController@clientsRegistred', 'as' => 'clientsRegistred']);
+            Route::get('new-processes', ['uses' => 'WidgetController@newProcesses', 'as' => 'clientsRegistred']);
         });
     });
 
