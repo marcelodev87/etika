@@ -241,6 +241,8 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
         Route::group(['prefix' => 'widgets', 'as' => 'widgets.'], function () {
             Route::get('clients-registred', ['uses' => 'WidgetController@clientsRegistred', 'as' => 'clientsRegistred']);
             Route::get('new-processes', ['uses' => 'WidgetController@newProcesses', 'as' => 'newProcesses']);
+            Route::get('closed-processes', ['uses' => 'WidgetController@closedProcesses', 'as' => 'closedProcesses']);
+            Route::get('closed-processes-30', ['uses' => 'WidgetController@closedProcesses30', 'as' => 'closedProcesses30']);
             Route::get('new-clients-subscription', ['uses' => 'WidgetController@newClientsSubscription', 'as' => 'newClientsSubscription']);
             Route::get('expired-terms', ['uses' => 'WidgetController@expiredTerms', 'as' => 'expiredTerms']);
         });

@@ -12,6 +12,8 @@
         <div class="row">
             @include('widgets.boxes.clientsRegistred')
             @include('widgets.boxes.newProcesses')
+            @include('widgets.boxes.closedProcesses')
+            @include('widgets.boxes.closedProcesses30')
             @include('widgets.boxes.newClientsSubscription')
             @include('widgets.boxes.expiredTerms')
         </div>
@@ -66,6 +68,12 @@
         })
         $.get('{{ route('app.api.widgets.newProcesses') }}', function (response) {
             $('.newProcesses').find('.count').html(response.total);
+        })
+        $.get('{{ route('app.api.widgets.closedProcesses') }}', function (response) {
+            $('.closedProcesses').find('.count').html(response.total);
+        })
+        $.get('{{ route('app.api.widgets.closedProcesses30') }}', function (response) {
+            $('.closedProcesses30').find('.count').html(response.total);
         })
         $.get('{{ route('app.api.widgets.newClientsSubscription') }}', function (response) {
             $('.newClientsSubscription').find('.count').html(response.total);

@@ -28,7 +28,7 @@
             </thead>
             <tbody>
             @foreach ($tarefas as $tarefa)
-                @if(auth()->user()->hasRole('adm') || auth()->user()->id == $tarefa['responsible_id'])
+                {{-- @if(auth()->user()->hasRole('adm') || auth()->user()->id == $tarefa['responsible_id']) --}}
                     @php
 
                         switch ($tarefa['type']){
@@ -93,7 +93,7 @@
                             </a>
                         </td>
                     </tr>
-                @endif
+                {{-- @endif --}}
             @endforeach
             </tbody>
         </table>
