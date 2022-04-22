@@ -19,19 +19,19 @@ class WidgetController extends Controller
 
     public function newProcesses()
     {
-        $newProcesses = ClientProcess::whereMonth('created_at','=',date('m'))->count();
+        $newProcesses = ClientProcess::whereMonth('created_at','=',date('m'))->whereYear('created_at','=',date('Y'))->count();
         return response()->json(['total' => $newProcesses], 200);
     }
 
     public function newClientsSubscription()
     {
-        $newClientsSubscription = ClientSubscription::whereMonth('created_at','=',date('m'))->count();
+        $newClientsSubscription = ClientSubscription::whereMonth('created_at','=',date('m'))->whereYear('created_at','=',date('Y'))->count();
         return response()->json(['total' => $newClientsSubscription], 200);
     }
 
     public function expiredTerms()
     {
-        $expiredTerms = ClientMandato::whereDate('end_at', '<' , date('Ymd'))->count();
+        $expiredTerms = ClientMandato::whereDate('end_at', '<' , date('Ymd'))->whereYear('created_at','=',date('Y'))->count();
         return response()->json(['total' => $expiredTerms], 200);
     }
 }
