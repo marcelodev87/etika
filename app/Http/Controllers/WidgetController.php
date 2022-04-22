@@ -31,7 +31,7 @@ class WidgetController extends Controller
 
     public function expiredTerms()
     {
-        $expiredTerms = ClientMandato::whereDate('end_at', '<' , date('Ymd'))->whereYear('created_at','=',date('Y'))->count();
+        $expiredTerms = ClientMandato::whereDate('end_at', '<' , date('Ymd'))->count();
         return response()->json(['total' => $expiredTerms], 200);
     }
 }
