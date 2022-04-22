@@ -9,13 +9,13 @@
 @section('content')
 
     @include('widgets.open')
-
-    @if(auth()->user()->hasRole('adm'))
         <div class="row">
             @include('widgets.boxes.clientsRegistred')
             @include('widgets.boxes.newProcesses')
+            @include('widgets.boxes.newClientsSubscription')
+            @include('widgets.boxes.expiredTerms')
         </div>
-
+    @if(auth()->user()->hasRole('adm'))
         <div class="row">
             @include('widgets.charts.received')
         </div>
@@ -63,6 +63,15 @@
 
         $.get('{{ route('app.api.widgets.clientsRegistred') }}', function (response) {
             $('.clientsRegistred').find('.count').html(response.total);
+        })
+        $.get('{{ route('app.api.widgets.newProcesses') }}', function (response) {
+            $('.newProcesses').find('.count').html(response.total);
+        })
+        $.get('{{ route('app.api.widgets.newClientsSubscription') }}', function (response) {
+            $('.newClientsSubscription').find('.count').html(response.total);
+        })
+        $.get('{{ route('app.api.widgets.expiredTerms') }}', function (response) {
+            $('.expiredTerms').find('.count').html(response.total);
         })
         @endif
 
