@@ -6,7 +6,10 @@ use App\Client;
 use App\ClientMandato;
 use App\ClientProcess;
 use App\ClientSubscription;
+use App\ClientSubscriptionTask;
+use App\InternalTask;
 use Carbon\Carbon;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -46,5 +49,11 @@ class WidgetController extends Controller
     {
         $expiredTerms = ClientMandato::whereDate('end_at', '<' , date('Ymd'))->count();
         return response()->json(['total' => $expiredTerms], 200);
+    }
+
+    public function digitalCertificate()
+    {
+        $digitalCertificate = ClientSubscriptionTask::where('task_id', '15')->where('closed', '0')->count();
+        return response()->json(['total' => $digitalCertificate], 200);
     }
 }

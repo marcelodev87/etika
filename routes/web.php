@@ -245,6 +245,7 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
             Route::get('closed-processes-30', ['uses' => 'WidgetController@closedProcesses30', 'as' => 'closedProcesses30']);
             Route::get('new-clients-subscription', ['uses' => 'WidgetController@newClientsSubscription', 'as' => 'newClientsSubscription']);
             Route::get('expired-terms', ['uses' => 'WidgetController@expiredTerms', 'as' => 'expiredTerms']);
+            Route::get('digital-certificate', ['uses' => 'WidgetController@digitalCertificate', 'as' => 'digitalCertificate']);
         });
     });
 

@@ -16,6 +16,7 @@
             @include('widgets.boxes.closedProcesses30')
             @include('widgets.boxes.newClientsSubscription')
             @include('widgets.boxes.expiredTerms')
+            @include('widgets.boxes.digitalCertificate')
         </div>
     @if(auth()->user()->hasRole('adm'))
         <div class="row">
@@ -80,6 +81,9 @@
         })
         $.get('{{ route('app.api.widgets.expiredTerms') }}', function (response) {
             $('.expiredTerms').find('.count').html(response.total);
+        })
+        $.get('{{ route('app.api.widgets.digitalCertificate') }}', function (response) {
+            $('.digitalCertificate').find('.count').html(response.total);
         })
         @endif
 

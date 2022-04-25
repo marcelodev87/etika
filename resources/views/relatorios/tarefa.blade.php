@@ -21,8 +21,8 @@
                 <th>Tipo</th>
                 <th>Cliente</th>
                 <th>Responsável</th>
-                <th>Data Entrega</th>
-                <th>Data Criação</th>
+                <th>Prazo</th>
+                <th>Data da Criação</th>
                 <th></th>
             </tr>
             </thead>

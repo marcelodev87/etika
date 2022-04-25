@@ -135,13 +135,13 @@
                         <a href="{{ route('app.relatorios.processoAberto') }}">Processos Abertos</a>
                     </li>
                     <li class="{{ menuPath(['app.relatorios.processoFechado'], 'active') }}">
-                        <a href="{{ route('app.relatorios.processoFechado') }}">Processos Fechados</a>
+                        <a href="{{ route('app.relatorios.processoFechado') }}">Processos Finalizados</a>
                     </li>
                     <li class="{{ menuPath(['app.relatorios.tarefaAberta'], 'active') }}">
                         <a href="{{ route('app.relatorios.tarefaAberta') }}">Tarefas Abertas</a>
                     </li>
                     <li class="{{ menuPath(['app.relatorios.tarefaFechada'], 'active') }}">
-                        <a href="{{ route('app.relatorios.tarefaFechada') }}">Tarefas Fechadas</a>
+                        <a href="{{ route('app.relatorios.tarefaFechada') }}">Tarefas Finalizadas</a>
                     </li>
                     <li class="{{ menuPath(['app.relatorios.pagamentoAberto'], 'active') }}">
                         <a href="{{ route('app.relatorios.pagamentoAberto') }}">Pagamentos Abertos</a>
