@@ -134,8 +134,8 @@
                     <div class="form-group">
                         <label>Os membros do ministério serão remunerados por suas funções Eclesiáticas?</label>
                         <select class="form-control selectpicker" name="remuneracao" required>
-                            <option value="1" {{ ($request->has('remuneracao') && $request->remuneracao == 1) ? 'selected' : '' }}>Sim, em todos os casos</option>
-                            <option value="2" {{ ($request->has('remuneracao') && $request->remuneracao == 2) ? 'selected' : '' }}>Sim, apenas em casos de trabalho integral com registro em carteira</option>
+                            <option value="1" {{ ($request->has('remuneracao') && $request->remuneracao == 1) ? 'selected' : '' }}>Sim, todos os Ministros</option>
+                            <option value="2" {{ ($request->has('remuneracao') && $request->remuneracao == 2) ? 'selected' : '' }}>Sim, apenas os Pastores</option>
                             <option value="3" {{ ($request->has('remuneracao') && $request->remuneracao == 3) ? 'selected' : '' }}>Não, todo trabalho ministerial será considerado voluntário</option>
                         </select>
                     </div>
@@ -287,7 +287,7 @@
 		</br>
 
 
-		<p align=justify style='color:red !important;'><strong>Art. $a º -</strong> Constituída por tempo indeterminado na cidade de $cidade_igreja - $uf_igreja, na data de $data_fundacao, a $igrejaM, é uma organização religiosa sem fins econômicos e com número ilimitado de membros, com sede $sede na $endereco_igreja – $complemento_igreja – $bairro_igreja – $cidade_igreja - $uf_igreja – CEP: " . preg_replace($pattern_cep, $replacement_cep, $cep_igreja) . ", doravante neste Estatuto denominada IGREJA.</br>";
+		<p align=justify style='color:red !important;'><strong>Art. $a º -</strong> Constituída por tempo indeterminado, na data de $data_fundacao, a $igrejaM, é uma <strong>organização religiosa</strong> sem fins econômicos e com número ilimitado de membros, com sede $sede na $endereco_igreja – $complemento_igreja – $bairro_igreja – $cidade_igreja - $uf_igreja – CEP: " . preg_replace($pattern_cep, $replacement_cep, $cep_igreja) . ", com foro na cidade de $cidade_igreja - $uf_igreja, doravante neste Estatuto denominada IGREJA.</br>";
                                 /*
                                 I - A IGREJA tem por denominação social $igrejaM;</br>
                                 II - A IGREJA tem por finalidade prestar culto a Deus em Espírito e em Verdade e seguir as tradições e doutrinas do Evangelho do Senhor Jesus Cristo revelado nas Escrituras Sagradas, a Bíblia;</br>
@@ -316,15 +316,22 @@
 		<h2><strong>CAPÍTULO $capR</br> MEMBROS, SEUS DIREITOS E DEVERES</strong></h2>
 		</br>
 
-		<p align=justify ><strong>Art. $a" . 'º' . " -</strong> Membros da IGREJA são pessoas que fazem parte desta organização religiosa com a finalidade de receberem orientação fundamentadas através da Bíblia Sagrada, que espontaneamente declaram seu desejo por escrito de se filiar a IGREJA.</p>";
+		<p align=justify ><strong>Art. $a" . 'º' . " -</strong> Membros da IGREJA são pessoas que fazem parte desta organização religiosa com a finalidade de receberem orientação fundamentadas através da Bíblia Sagrada, que espontaneamente declaram seu desejo por escrito de se filiar a IGREJA.</br>
+            <strong>Parágrafo único -</strong> A IGREJA pode ter número ilimitado de membros, pessoas de ambos os sexos, independente de nacionalidade, cor, condição social ou política, contanto que estejam em conformidade com as finalidades deste estatuto e regulamento interno da IGREJA.
+            </p>";
 
                                 $a++;
 
                                 echo "
 
-		<p align=justify ><strong>Art. $a" . 'º' . " -</strong> A IGREJA pode ter número ilimitado de membros, pessoas de ambos os sexos, independente de nacionalidade, cor, condição social ou política, contanto que estejam em conformidade com as finalidades deste estatuto e regulamento interno da IGREJA.</br>
+		<p align=justify ><strong>Art. $a" . 'º' . " -</strong> A admissão dos membros se dará mediante ao Batismo na Águas e desde que aceite ensinamentos de nosso Senhor Jesus Cristo, fundamentado nas Santas Escrituras, o estatuto social e os regulamentos internos da Igreja, e no caso de menor de dezoito anos, autorização dos pais ou responsáveis.
+        </p>";
+                                $a++;
 
-		<strong>Parágrafo Único –</strong> A IGREJA reserva-se ao direito de aceitar como membros os que forem batizados e aceitarem o batismo nas águas por imersão com bom testemunho público tendo unicamente a Bíblia Sagrada por sua regra de fé e governo.</p></br>";
+                                echo "
+
+		<p align=justify ><strong>Art. $a" . 'º' . " -</strong> A demissão dos membros se dará a qualquer tempo por sua livre escolha, através de uma carta ao Presidente anunciando tal decisão.
+        </p>";
 
                                 $a++;
 
@@ -468,22 +475,24 @@
 
                                     case "1":
 
-                                        $remuneracao = "<p align=justify style='color:red !important;'><strong>Art. $a" . 'º' . " -</strong> Todos os Ministros receberão ajuda de custo por seu ofício, porém isso não representará ou gerará vínculo empregatício, quer com a Denominação, quer com a IGREJA ou mesmo com a Igreja local onde for enviado, servindo nas Igrejas deste Ministério onde for enviado por espontânea doação do seu trabalho voluntário à Causa do Senhor Jesus Cristo.</br>
-			<strong>Parágrafo Único: </strong> A ajuda de custo deverá ser oficializada através de um documento específico para este fim e todas as contribuições e recolhimentos ficam sob a responsabilidade do beneficiário, isentando a IGREJA de toda e qualquer responsabilidade.</p>";
+                                        $remuneracao = "<p align=justify style='color:red !important;'><strong>Art. $a" . 'º' . " -</strong> Todos os Ministros poderão receber ajuda de custo por seu ofício, porém isso não representará ou gerará vínculo empregatício com a IGREJA ou mesmo com a Igreja filial onde for enviado, servindo nas Igrejas deste Ministério onde for enviado por espontânea doação do seu trabalho voluntário à Causa do Senhor Jesus Cristo.</br>
+
+			                            <strong>Parágrafo Único: </strong> O pagamento da remuneração deverá ser oficializada através de um documento específico para este fim e todas as contribuições e recolhimentos ficam sob a responsabilidade do beneficiário, isentando a IGREJA de toda e qualquer responsabilidade.</p>";
                                         break;
 
                                     case "2":
 
-                                        $remuneracao = "<p align=justify style='color:red !important;' ><strong>Art. $a" . 'º' . " -</strong> Apenas os pastores receberão remuneração por seu ofício, a título de Prebenda Pastoral, sendo efetuados todos os descontos e pagamentos de impostos de contribuinte autônomo, desde que se dediquem de maneira integral a IGREJA e seus projetos.</br>
+                                        $remuneracao = "<p align=justify style='color:red !important;' ><strong>Art. $a" . 'º' . " -</strong> Apenas os pastores poderão receber remuneração por seu ofício, a título de Prebenda Pastoral, sendo efetuados todos os descontos e pagamentos de impostos de contribuinte autônomo, desde que se dediquem de maneira integral a IGREJA e seus projetos. </br>
+                                        <strong>§1° -</strong> O pagamento da remuneração deverá ser oficializada através de um documento específico para este fim e todas as contribuições e recolhimentos ficam sob a responsabilidade do beneficiário, isentando a IGREJA de toda e qualquer responsabilidade.</br>
 
-			<strong>Parágrafo Único: </strong> A nomeação como Ministro para exercício de qualquer outro cargo ministerial não representará ou gerará vínculo empregatício, quer com a Denominação, quer com a IGREJA ou mesmo com a Igreja local onde for enviado, servindo nas Igrejas deste Ministério onde for enviado por espontânea doação do seu trabalho voluntário à Causa do Senhor Jesus Cristo. </p>";
+			                            <strong>§2° -</strong> A nomeação como Ministro para exercício de qualquer outro cargo ministerial não representará ou gerará vínculo empregatício com a IGREJA ou mesmo com a Igreja filial onde for enviado, servindo nas Igrejas deste Ministério onde for enviado por espontânea doação do seu trabalho voluntário à Causa do Senhor Jesus Cristo. </p>";
                                         break;
 
                                     case "3":
 
-                                        $remuneracao = "<p align=justify style='color:red !important;' ><strong>Art. $a" . 'º' . " -</strong> A nomeação como Ministro não representará ou gerará vínculo empregatício, quer com a Denominação, quer com a IGREJA ou mesmo com a Igreja local onde for enviado, servindo nas Igrejas deste Ministério onde for enviado por espontânea doação do seu trabalho voluntário à Causa do Senhor Jesus Cristo, sem exigir qualquer remuneração.</br>
+                                        $remuneracao = "<p align=justify style='color:red !important;' ><strong>Art. $a" . 'º' . " -</strong> A nomeação como Ministro não representará ou gerará vínculo empregatício com a IGREJA ou mesmo com a Igreja filial onde for enviado, servindo nas Igrejas deste Ministério onde for enviado por espontânea doação do seu trabalho voluntário à Causa do Senhor Jesus Cristo, sem exigir qualquer remuneração.</br>
 
-			<strong>Parágrafo Único: </strong> Os Ministros podem receber valores a título de ajuda de custo ou reembolso, sempre que necessitarem de recursos financeiros para servirem a IGREJA e a seus objetivos. </p>";
+			                            <strong>Parágrafo Único: </strong> Os Ministros podem receber valores a título de ajuda de custo ou reembolso, sempre que necessitarem de recursos financeiros para servirem a IGREJA e a seus objetivos. </p>";
                                         break;
                                 }
                                 echo "$remuneracao";
@@ -516,12 +525,15 @@
                                         $mandato_presidente2 = "<p align=justify ><strong>Art. $a" . 'º' . " -</strong> O fundador da IGREJA, $nome_presidente, será Presidente da IGREJA de maneira vitalícia, enquanto o mesmo estiver cumprindo os preceitos das Sagradas Escrituras e a Sã Doutrina de Nosso Senhor Jesus Cristo.</br>
 
 			<strong>§1° - </strong>Em caso de saída do cargo do presidente vitalício, o mesmo deverá indicar algum membro da Liderança para a ocupação do cargo de presidente, que passará a ser exercido por tempo indeterminado, enquanto o mesmo estiver cumprindo os preceitos das Sagradas Escrituras e a Sã Doutrina de Nosso Senhor Jesus Cristo.  </br>
-			<strong>§2° - </strong>Em caso de saída do cargo do presidente vitalício, e o mesmo estiver impossibilitado de indicar algum membro da Liderança para a ocupação do cargo de presidente, o <span style='color:red !important;'>Vice Presidente / Tesoureiro</span> assume o cargo de maneira direta.</p></br>";
+			<strong>§2° - </strong>Em caso de saída do cargo do presidente vitalício, e o mesmo estiver impossibilitado de indicar algum membro da Liderança para a ocupação do cargo de presidente, o <span style='color:red !important;'>Vice Presidente / Tesoureiro</span> assume o cargo de maneira direta.</br>
+            <strong>§3° - </strong>Para as deliberações referentes à destituição dos administradores, é exigido o voto concorde da maioria dos presentes à reunião especialmente, conforme mencionado no <span style='color:red !important;'>artigo 30</span> deste Estatuto, convocada para esse fim pelos Ministros da IGREJA, não podendo ela deliberar, caso o acusado não se enquadre em quaisquer características mencionadas no artigo 8 deste Estatuto.</p></br>";
                                         break;
 
                                     case "200":
                                         $a++;
-                                        $mandato_presidente2 = "<p align=justify ><strong>Art. $a" . 'º' . " -</strong> O fundador da IGREJA, $nome_presidente, será Presidente da IGREJA por tempo indeterminado, enquanto o mesmo estiver cumprindo os preceitos das Sagradas Escrituras e a Sã Doutrina de Nosso Senhor Jesus Cristo.</p>";
+                                        $mandato_presidente2 = "<p align=justify ><strong>Art. $a" . 'º' . " -</strong> O fundador da IGREJA, $nome_presidente, será Presidente da IGREJA por tempo indeterminado, enquanto o mesmo estiver cumprindo os preceitos das Sagradas Escrituras e a Sã Doutrina de Nosso Senhor Jesus Cristo.
+                                        </br>
+            <strong>Parágrafo único - </strong>Para as deliberações referentes à destituição dos administradores, é exigido o voto concorde da maioria dos presentes à reunião especialmente, conforme mencionado no <span style='color:red !important;'>artigo 30</span> deste Estatuto, convocada para esse fim pelos Ministros da IGREJA, não podendo ela deliberar, caso o acusado não se enquadre em quaisquer características mencionadas no <span style='color:red !important;'>artigo 8</span> deste Estatuto.</p>";
                                         break;
 
                                     default :
@@ -735,9 +747,8 @@
 		</br>
 
 		<p align=justify ><strong>Art. $a" . 'º' . " -</strong>  Em caso de vacância do cargo de presidência, o cargo de Presidente será ocupado pelo <span style='color:red !important;' >$diretoria_vice / Tesoureiro.</span></br>
-
-		<strong>§1º -</strong> A perda do mandato será declarada através de uma reunião, convocada para este fim, depois de uma junta de pastores do mesmo ministério tiver julgado o acusado, cabendo-lhe pleno direito de exercer suas defesas;</br>
-		<strong>§2º -</strong> O substituto para  o cargo vago será eleito e empossado com aprovação da maioria dos presentes, que cumprirá o seu mandato pelo tempo de mandato restante.</p></br>";
+        <strong>Parágrafo único -</strong> A vacância poderá ocorrer mediante morte ou renúncia através de pedido por escrito entregue ao Tesoureiro;</br>
+		</p></br>";
 
                                 echo $vacanciap;
 
@@ -745,7 +756,8 @@
 
                                 // VACANCIA DIRETORIA ----------------------------- VACANCIA DIRETORIA ------------------------------ VACANCIA DIRETORIA
 
-                                $vacanciad = "<p align=justify style='color:red !important;'><strong>Art. $a" . 'º' . " -</strong> No caso de vacância dos demais cargos da diretoria, caberá ao presidente da IGREJA designar outro substituto ao cargo vago.</p>";
+                                $vacanciad = "<p align=justify style='color:red !important;'><strong>Art. $a" . 'º' . " -</strong> No caso de vacância dos demais cargos da diretoria, caberá ao presidente da IGREJA designar outro substituto ao cargo vago.</br>
+                                    <strong>Parágrafo único -</strong> A vacância poderá ocorrer mediante ao fim do mandato, morte ou renúncia através de pedido por escrito entregue ao presidente.</p>";
 
                                 echo $vacanciad; ;
                                 // DOS BENS ----------------------------  DOS BENS --------------------------  DOS BENS -------------
@@ -774,9 +786,11 @@
 		<h2><strong>CAPÍTULO $capR</br>DA CONVOCAÇÃO ESPECIAL</strong></h2>
 		</br>
 
-		<p align=justify ><strong>Art. $a" . 'º' . " -</strong> Com o propósito de defender os interesses da IGREJA, se fará uma convocação especial em uma assembléia geral extraordinária, com todos os membros da diretoria e do ministério efetivos, a fim de tomarem ciência da deliberação doutrinárias para o bom crescimento e divulgação do evangelho. <br/>
+		<p align=justify ><strong>Art. $a" . 'º' . " -</strong> Com o propósito de defender os interesses da IGREJA, se fará uma convocação especial para uma reunião, com todos os membros da diretoria e do ministério efetivos, a fim de tomarem ciência da deliberação doutrinárias para o bom crescimento e divulgação do evangelho. <br/>
 
-		<strong>Parágrafo Único -</strong> Para tal convocação, o Presidente deverá convocar uma reunião, com no mínimo 15 dias de antecedência, através de edital fixado no quadro de avisos da IGREJA.
+            <strong>§1° –</strong> Para tal convocação, o Presidente deverá convocar uma reunião, com no mínimo 15 dias de antecedência, através de edital fixado no quadro de avisos da IGREJA.<br/>
+            <strong>§2° –</strong> Esta reunião será sempre presidida pelo Presidente da IGREJA.<br/>
+            <strong>§3° –</strong> Em caso de impossibilidade de presença do Presidente, o presidente da reunião será escolhido através de votação dos presentes, estabelecendo o presidente através da maioria simples dos votos.<br/>
 		</p>";
 
                                 $a++;
@@ -795,9 +809,6 @@
                                 echo "
 
 		<p align=justify ><strong>Art. $a" . 'º' . " -</strong> Compreende-se como filiais as IGREJAS que são subordinadas e gerenciadas pela IGREJA matriz com a mesma norma deste estatuto. </p>";
-
-
-                                //////// PAREI AQUI -------------------------------- //////// PAREI AQUI -------------------------------- //////// PAREI AQUI -------------------------------- //////// PAREI AQUI -------------------------------- //////// PAREI AQUI -------------------------------- //////// PAREI AQUI -------------------------------- //////// PAREI AQUI -------------------------------- //////// PAREI AQUI -------------------------------- //////// PAREI AQUI --------------------------------
 
                                 $a++;
                                 echo "
@@ -857,7 +868,10 @@
                                 $a++;
                                 echo "
 
-		<p align=justify ><strong>Art. $a" . 'º' . " -</strong> Este estatuto só poderá ser reformado parcial ou totalmente, em casos especiais que a lei determine, ou por determinação do Presidente.</p>";
+		<p align=justify ><strong>Art. $a" . 'º' . " -</strong> Este estatuto só poderá ser reformado parcial ou totalmente, em casos especiais que a lei determine, ou por determinação do Presidente.</br>
+            <strong>§1° -</strong> Em caso de Reforma por determinação do Presidente, o mesmo deverá convocar uma reunião, com no mínimo 15 dias de antecedência, através de edital fixado no quadro de avisos da IGREJA, para deliberação da reforma.</br>
+            <strong>§2° -</strong> A reunião para reforma do estatuto iniciará em dia e horário determinado pelo edital e a Reforma do Estatuto ocorrerá mediante a leitura, discussão e aprovação de ⅔ dos membros presentes da IGREJA.</br>
+            </p>";
 
                                 $a++;
                                 echo "
@@ -913,7 +927,7 @@
 
 
 
-		<p>$cidade_igreja, $data_fundacao</p>
+		<p>$cidade_igreja, $data_fundacao.</p>
 
 
 
@@ -922,7 +936,8 @@
 		<p>PRESIDENTE</p>
 
 		<p>__________________________________________________</p>
-		<p>ADVOGADO</p>";
+		<p>Lúcia de Fátima Pereira Machado</p>
+        <p>ADVOGADA - OAB/RJ  n°135.542</p>";
 
 
                                 ?>
