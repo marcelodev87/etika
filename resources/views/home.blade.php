@@ -30,7 +30,6 @@
 
 @section('script')
     <script type="text/javascript">
-        @if(auth()->user()->hasRole('adm'))
         $.get('{{ route('app.api.charts.received') }}', function (response) {
             var ctx = document.getElementById('chartReceived');
             var chartReceived = new Chart(ctx, {
@@ -85,8 +84,6 @@
         $.get('{{ route('app.api.widgets.digitalCertificate') }}', function (response) {
             $('.digitalCertificate').find('.count').html(response.total);
         })
-        @endif
-
 
     </script>
 @endsection()
