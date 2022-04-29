@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\ClientMandato;
 use App\ClientProcess;
+use App\ClientProcessTask;
 use App\ClientSubscription;
 use App\ClientSubscriptionTask;
 use App\InternalTask;
@@ -53,7 +54,35 @@ class WidgetController extends Controller
 
     public function digitalCertificate()
     {
-        $digitalCertificate = ClientSubscriptionTask::where('task_id', '15')->where('closed', '0')->count();
+        $digitalCertificate = DB::table('internal_tasks')
+            ->join('client_subscription_tasks', 'client_subscription_tasks.task_id', '=' , 'internal_tasks.id')
+            ->where('internal_tasks.name', 'like', 'Assinatura Advogado')
+            ->where('client_subscription_tasks.closed' , '=' , '0')
+            ->count();
+
         return response()->json(['total' => $digitalCertificate], 200);
+    }
+
+    public function lawyerSignature()
+    {
+        $lawyerSignature = DB::table('internal_tasks')
+            ->join('client_process_tasks', 'client_process_tasks.task_id', '=' , 'internal_tasks.id')
+            ->where('internal_tasks.name', 'like', 'Assinatura Advogado')
+            ->where('client_process_tasks.closed' , '=' , '0')
+            ->where('client_process_tasks.updated_at','>', Carbon::now()->subDays(60))
+            ->count();
+
+        return response()->json(['total' => $lawyerSignature], 200);
+    }
+
+    public function sentProcesses()
+    {
+        $sentProcesses = DB::table('internal_tasks')
+            ->join('client_process_tasks', 'client_process_tasks.task_id', '=' , 'internal_tasks.id')
+            ->where('internal_tasks.name', 'like', 'Enviar documentos para registro')
+            ->where('client_process_tasks.closed' , '=' , '1')
+            ->where('client_process_tasks.updated_at','>', Carbon::now()->subDays(60))
+            ->count();
+        return response()->json(['total' => $sentProcesses], 200);
     }
 }

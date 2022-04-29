@@ -10,14 +10,26 @@
 
     @include('widgets.open')
         <div class="row">
+            <div class="col-md-12 pl-5">
+                <h2>Geral</h2>
+            </div>
             @include('widgets.boxes.clientsRegistred')
+            @include('widgets.boxes.newClientsSubscription')
+            @include('widgets.boxes.digitalCertificate')
+
+        </div>
+        <div class="row">
+            <div class="col-md-12 pl-5">
+                <h2 class="m-5">Legalização</h2>
+            </div>
             @include('widgets.boxes.newProcesses')
             @include('widgets.boxes.closedProcesses')
             @include('widgets.boxes.closedProcesses30')
-            @include('widgets.boxes.newClientsSubscription')
             @include('widgets.boxes.expiredTerms')
-            @include('widgets.boxes.digitalCertificate')
+            @include('widgets.boxes.lawyerSignature')
+            @include('widgets.boxes.sentProcesses')
         </div>
+
     @if(auth()->user()->hasRole('adm'))
         <div class="row">
             @include('widgets.charts.received')
@@ -25,7 +37,7 @@
     @endif
 
 
-@endsection
+    @endsection
 
 
 @section('script')
@@ -83,6 +95,12 @@
         })
         $.get('{{ route('app.api.widgets.digitalCertificate') }}', function (response) {
             $('.digitalCertificate').find('.count').html(response.total);
+        })
+        $.get('{{ route('app.api.widgets.lawyerSignature') }}', function (response) {
+            $('.lawyerSignature').find('.count').html(response.total);
+        })
+        $.get('{{ route('app.api.widgets.sentProcesses') }}', function (response) {
+            $('.sentProcesses').find('.count').html(response.total);
         })
 
     </script>

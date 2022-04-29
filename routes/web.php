@@ -246,6 +246,8 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
             Route::get('new-clients-subscription', ['uses' => 'WidgetController@newClientsSubscription', 'as' => 'newClientsSubscription']);
             Route::get('expired-terms', ['uses' => 'WidgetController@expiredTerms', 'as' => 'expiredTerms']);
             Route::get('digital-certificate', ['uses' => 'WidgetController@digitalCertificate', 'as' => 'digitalCertificate']);
+            Route::get('lawyer-signature', ['uses' => 'WidgetController@lawyerSignature', 'as' => 'lawyerSignature']);
+            Route::get('sent-processes', ['uses' => 'WidgetController@sentProcesses', 'as' => 'sentProcesses']);
         });
     });
 

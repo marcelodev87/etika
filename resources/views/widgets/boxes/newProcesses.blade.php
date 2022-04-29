@@ -1,6 +1,6 @@
 <div class="col-lg-3 col-xs-6 newProcesses">
     <div class="media-box bg-sea">
-        <div class="media-icon pull-left"><i class="fa fa-paperclip"></i></div>
+        <div class="media-icon pull-left"><i class="fa fa-copy"></i></div>
         <div class="media-info">
             <h5>Novos Processos - Mês atual</h5>
             <h3 class="count">
