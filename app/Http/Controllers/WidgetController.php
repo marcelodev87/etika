@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\ClientMandato;
 use App\ClientProcess;
+use App\ClientProcessPayment;
 use App\ClientProcessTask;
 use App\ClientSubscription;
+use App\ClientSubscriptionPayment;
 use App\ClientSubscriptionTask;
 use App\InternalTask;
 use Carbon\Carbon;
@@ -104,5 +106,31 @@ class WidgetController extends Controller
             ->count();
 
         return response()->json(['total' => $pendingTasks], 200);
+    }
+
+    public function processesPayments()
+    {
+        $processesPayments = ClientProcessPayment::whereMonth('payed_at','=',date('m'))->whereYear('payed_at','=',date('Y'))->count();
+        return response()->json(['total' => $processesPayments], 200);
+    }
+
+    public function processesPaymentsValue()
+    {
+        $processesPaymentsValue = ClientProcessPayment::whereMonth('payed_at','=',date('m'))->whereYear('payed_at','=',date('Y'))->sum('value');
+        $processesPaymentsValue = 'R$ '.$processesPaymentsValue;
+        return response()->json(['total' => $processesPaymentsValue], 200);
+    }
+
+    public function subscriptionPayments()
+    {
+        $subscriptionPayments = ClientSubscriptionPayment::whereMonth('pay_at','=',date('m'))->whereYear('pay_at','=',date('Y'))->count();
+        return response()->json(['total' => $subscriptionPayments], 200);
+    }
+
+    public function subscriptionPaymentsValue()
+    {
+        $subscriptionPaymentsValue = ClientSubscriptionPayment::whereMonth('pay_at','=',date('m'))->whereYear('pay_at','=',date('Y'))->sum('price');
+        $subscriptionPaymentsValue = 'R$ '.$subscriptionPaymentsValue;
+        return response()->json(['total' => $subscriptionPaymentsValue], 200);
     }
 }

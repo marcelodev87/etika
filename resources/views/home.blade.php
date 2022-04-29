@@ -34,6 +34,15 @@
 
     @if(auth()->user()->hasRole('adm'))
         <div class="row">
+            <div class="col-md-12 pl-5">
+                <h2 class="m-5">Financeiro</h2>
+            </div>
+            @include('widgets.boxes.processesPayments')
+            @include('widgets.boxes.processesPaymentsValue')
+            @include('widgets.boxes.subscriptionPayments')
+            @include('widgets.boxes.subscriptionPaymentsValue')
+        </div>
+        <div class="row">
             @include('widgets.charts.received')
         </div>
     @endif
@@ -109,6 +118,18 @@
         })
         $.get('{{ route('app.api.widgets.pendingTasks') }}', function (response) {
             $('.pendingTasks').find('.count').html(response.total);
+        })
+        $.get('{{ route('app.api.widgets.processesPayments') }}', function (response) {
+            $('.processesPayments').find('.count').html(response.total);
+        })
+        $.get('{{ route('app.api.widgets.processesPaymentsValue') }}', function (response) {
+            $('.processesPaymentsValue').find('.count').html(response.total);
+        })
+        $.get('{{ route('app.api.widgets.subscriptionPayments') }}', function (response) {
+            $('.subscriptionPayments').find('.count').html(response.total);
+        })
+        $.get('{{ route('app.api.widgets.subscriptionPaymentsValue') }}', function (response) {
+            $('.subscriptionPaymentsValue').find('.count').html(response.total);
         })
     </script>
 @endsection()

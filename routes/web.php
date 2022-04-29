@@ -250,6 +250,10 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
             Route::get('sent-processes', ['uses' => 'WidgetController@sentProcesses', 'as' => 'sentProcesses']);
             Route::get('pending-tasks', ['uses' => 'WidgetController@pendingTasks', 'as' => 'pendingTasks']);
             Route::get('pending-tasks-subscription', ['uses' => 'WidgetController@pendingTasksSubscription', 'as' => 'pendingTasksSubscription']);
+            Route::get('processes-payments', ['uses' => 'WidgetController@processesPayments', 'as' => 'processesPayments']);
+            Route::get('processes-payments-value', ['uses' => 'WidgetController@processesPaymentsValue', 'as' => 'processesPaymentsValue']);
+            Route::get('subscription-payments', ['uses' => 'WidgetController@subscriptionPayments', 'as' => 'subscriptionPayments']);
+            Route::get('subscription-payments-value', ['uses' => 'WidgetController@subscriptionPaymentsValue', 'as' => 'subscriptionPaymentsValue']);
         });
     });
 
