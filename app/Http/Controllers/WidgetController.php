@@ -56,7 +56,7 @@ class WidgetController extends Controller
     {
         $digitalCertificate = DB::table('internal_tasks')
             ->join('client_subscription_tasks', 'client_subscription_tasks.task_id', '=' , 'internal_tasks.id')
-            ->where('internal_tasks.name', 'like', 'Assinatura Advogado')
+            ->where('internal_tasks.name', 'like', 'Certificado Digital')
             ->where('client_subscription_tasks.closed' , '=' , '0')
             ->count();
 
