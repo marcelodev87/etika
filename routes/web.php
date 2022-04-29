@@ -248,6 +248,8 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
             Route::get('digital-certificate', ['uses' => 'WidgetController@digitalCertificate', 'as' => 'digitalCertificate']);
             Route::get('lawyer-signature', ['uses' => 'WidgetController@lawyerSignature', 'as' => 'lawyerSignature']);
             Route::get('sent-processes', ['uses' => 'WidgetController@sentProcesses', 'as' => 'sentProcesses']);
+            Route::get('pending-tasks', ['uses' => 'WidgetController@pendingTasks', 'as' => 'pendingTasks']);
+            Route::get('pending-tasks-subscription', ['uses' => 'WidgetController@pendingTasksSubscription', 'as' => 'pendingTasksSubscription']);
         });
     });
 

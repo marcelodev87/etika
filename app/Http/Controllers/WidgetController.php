@@ -85,4 +85,24 @@ class WidgetController extends Controller
             ->count();
         return response()->json(['total' => $sentProcesses], 200);
     }
+
+    public function pendingTasksSubscription()
+    {
+        $pendingTasksSubscription = DB::table('internal_tasks')
+            ->join('client_subscription_tasks', 'client_subscription_tasks.task_id', '=' , 'internal_tasks.id')
+            ->where('client_subscription_tasks.closed' , '=' , '0')
+            ->count();
+
+        return response()->json(['total' => $pendingTasksSubscription], 200);
+    }
+
+    public function pendingTasks()
+    {
+        $pendingTasks = DB::table('internal_tasks')
+            ->join('client_tasks', 'client_tasks.task_id', '=' , 'internal_tasks.id')
+            ->where('client_tasks.closed' , '=' , '0')
+            ->count();
+
+        return response()->json(['total' => $pendingTasks], 200);
+    }
 }

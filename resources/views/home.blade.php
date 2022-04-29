@@ -16,6 +16,8 @@
             @include('widgets.boxes.clientsRegistred')
             @include('widgets.boxes.newClientsSubscription')
             @include('widgets.boxes.digitalCertificate')
+            @include('widgets.boxes.pendingTasksSubscription')
+            @include('widgets.boxes.pendingTasks')
 
         </div>
         <div class="row">
@@ -102,6 +104,11 @@
         $.get('{{ route('app.api.widgets.sentProcesses') }}', function (response) {
             $('.sentProcesses').find('.count').html(response.total);
         })
-
+        $.get('{{ route('app.api.widgets.pendingTasksSubscription') }}', function (response) {
+            $('.pendingTasksSubscription').find('.count').html(response.total);
+        })
+        $.get('{{ route('app.api.widgets.pendingTasks') }}', function (response) {
+            $('.pendingTasks').find('.count').html(response.total);
+        })
     </script>
 @endsection()
