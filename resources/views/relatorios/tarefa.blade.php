@@ -185,19 +185,18 @@
                 return b - a;
             }
         });
-        $(document).ready(function() {
-            $('#datatable').dataTable({
-                "aoColumns": [
-                    null,
-                    null,
-                    null,
-                    null,
-                    {
-                        "sType": "date-euro"
-                    },
-                    null
-                ]
-            });
+        $('#datatable').dataTable({
+            "columns": [
+
+                null,
+                null,
+                null,
+                null,
+                {
+                    "type": "date-euro"
+                },
+                null
+            ]
         });
 
         $('#modal-adiar').on('show.bs.modal', function(event) {
