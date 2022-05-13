@@ -19,7 +19,7 @@
             <thead>
                 <tr>
                     <th>Cod. Interno</th>
-                    <th>Cliente</th>
+                    <th>Igreja</th>
                     <th>Início</th>
                     <th>Término</th>
                     <th></th>

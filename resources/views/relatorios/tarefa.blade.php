@@ -187,7 +187,6 @@
         });
         $('#datatable').dataTable({
             "columns": [
-
                 null,
                 null,
                 null,
