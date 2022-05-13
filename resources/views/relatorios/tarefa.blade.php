@@ -17,32 +17,33 @@
     <div class="chart-box">
         <table class="table table-hover table-striped" id="datatable">
             <thead>
-            <tr>
-                <th>Tipo</th>
-                <th>Cliente</th>
-                <th>Responsável</th>
-                <th>Prazo</th>
-                <th>Data da Criação</th>
-                <th></th>
-            </tr>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Cliente</th>
+                    <th>Responsável</th>
+                    <th>Prazo</th>
+                    <th>Data da Criação</th>
+                    <th></th>
+                </tr>
             </thead>
             <tbody>
-            @foreach ($tarefas as $tarefa)
-                {{-- @if(auth()->user()->hasRole('adm') || auth()->user()->id == $tarefa['responsible_id']) --}}
+                @foreach ($tarefas as $tarefa)
+                    {{-- @if (auth()->user()->hasRole('adm') ||
+    auth()->user()->id == $tarefa['responsible_id']) --}}
                     @php
 
-                        switch ($tarefa['type']){
+                        switch ($tarefa['type']) {
                             case 'single_task':
                                 $url = route('app.clients.show', $tarefa['client_id']);
-                                $tipo = "Tarefa";
+                                $tipo = 'Tarefa';
                                 break;
                             case 'process_task':
                                 $url = route('app.clients.processes.index', [$tarefa['client_id'], $tarefa['process_id']]);
-                                $tipo = "Processo";
+                                $tipo = 'Processo';
                                 break;
                             case 'subscription_task':
                                 $url = route('app.clients.subscriptions.tasks.show', [$tarefa['client_id'], $tarefa['subscription_id']]);
-                                $tipo = "Assinatura";
+                                $tipo = 'Assinatura';
                                 break;
                         }
                     @endphp
@@ -63,45 +64,54 @@
                         <td>{{ $tarefa['criacao'] }}</td>
                         <td class="text-right">
 
-                            @if($type != 'closed')
-                                @if($tarefa['type'] == 'single_task')
-                                    <a href="#modal-adiar" data-toggle="modal" data-task-type="{{ $tarefa['type'] }}" data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-danger singleTaskAdiar">
+                            @if ($type != 'closed')
+                                @if ($tarefa['type'] == 'single_task')
+                                    <a href="#modal-adiar" data-toggle="modal" data-task-type="{{ $tarefa['type'] }}"
+                                        data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-danger singleTaskAdiar">
                                         <i class="fa fa-times"></i> Adiar
                                     </a>
 
-                                    <a href="{{ route('app.clients.tasks.done',[$tarefa['client_id'], $tarefa['id']]) }}" class="btn btn-xs btn-success" onclick="return confirm('Deseja mesmo finalizar?')">
+                                    <a href="{{ route('app.clients.tasks.done', [$tarefa['client_id'], $tarefa['id']]) }}"
+                                        class="btn btn-xs btn-success" onclick="return confirm('Deseja mesmo finalizar?')">
                                         <i class="fa fa-check"></i> Finalizar
                                     </a>
                                 @elseif($tarefa['type'] == 'process_task')
-                                    <a href="#modal-adiar" data-toggle="modal" data-task-type="{{ $tarefa['type'] }}" data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-danger processTaskAdiar">
+                                    <a href="#modal-adiar" data-toggle="modal" data-task-type="{{ $tarefa['type'] }}"
+                                        data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-danger processTaskAdiar">
                                         <i class="fa fa-times"></i> Adiar
                                     </a>
-                                    <a href="{{ route('app.clients.processes.tasks.done', [$tarefa['client_id'],$tarefa['process_id'], $tarefa['id']]) }}" data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-success processTaskFinalizar" onclick="return confirm('Deseja mesmo finalizar?')">
+                                    <a href="{{ route('app.clients.processes.tasks.done', [$tarefa['client_id'], $tarefa['process_id'], $tarefa['id']]) }}"
+                                        data-task="{{ $tarefa['id'] }}"
+                                        class="btn btn-xs btn-success processTaskFinalizar"
+                                        onclick="return confirm('Deseja mesmo finalizar?')">
                                         <i class="fa fa-check"></i> Finalizar
                                     </a>
                                 @else
-                                    <a href="#modal-adiar" data-toggle="modal" data-task-type="{{ $tarefa['type'] }}" data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-danger processTaskAdiar">
+                                    <a href="#modal-adiar" data-toggle="modal" data-task-type="{{ $tarefa['type'] }}"
+                                        data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-danger processTaskAdiar">
                                         <i class="fa fa-times"></i> Adiar
                                     </a>
-                                    <a href="{{ route('app.assinaturaTaskClose',  $tarefa['id']) }}" data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-success processTaskFinalizar" onclick="return confirm('Deseja mesmo finalizar?')">
+                                    <a href="{{ route('app.assinaturaTaskClose', $tarefa['id']) }}"
+                                        data-task="{{ $tarefa['id'] }}"
+                                        class="btn btn-xs btn-success processTaskFinalizar"
+                                        onclick="return confirm('Deseja mesmo finalizar?')">
                                         <i class="fa fa-check"></i> Finalizar
                                     </a>
                                 @endif
                             @endif
-                            <a href="javascript:void(0)" class="btn btn-xs btn-info showComments" data-task-type="{{ $tarefa['type'] }}" data-task="{{ $tarefa['id'] }}">
+                            <a href="javascript:void(0)" class="btn btn-xs btn-info showComments"
+                                data-task-type="{{ $tarefa['type'] }}" data-task="{{ $tarefa['id'] }}">
                                 <i class="fa fa-comments"></i>
                             </a>
                         </td>
                     </tr>
-                {{-- @endif --}}
-            @endforeach
+                    {{-- @endif --}}
+                @endforeach
             </tbody>
         </table>
     </div>
 
     @include('widgets.comments')
-
-
 @endsection
 
 @section('modal')
@@ -121,7 +131,7 @@
                         <div class="form-group">
                             <label>Quantidade</label>
                             <select class="form-control" name="qt">
-                                @for($i= 1; $i <= 24; $i++)
+                                @for ($i = 1; $i <= 24; $i++)
                                     <option value="{{ $i }}">{{ $i }}</option>
                                 @endfor
                             </select>
@@ -146,14 +156,51 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('script')
     <script type="text/javascript">
-        $("#datatable").dataTable();
+        jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+            "date-euro-pre": function(a) {
+                var x;
 
-        $('#modal-adiar').on('show.bs.modal', function (event) {
+                if (a.trim() !== '') {
+                    var frDatea = a.trim().split(' ');
+                    var frTimea = (undefined != frDatea[1]) ? frDatea[1].split(':') : [00, 00, 00];
+                    var frDatea2 = frDatea[0].split('/');
+                    x = (frDatea2[2] + frDatea2[1] + frDatea2[0] + frTimea[0] + frTimea[1] + ((undefined !=
+                        frTimea[2]) ? frTimea[2] : 0)) * 1;
+                } else {
+                    x = Infinity;
+                }
+
+                return x;
+            },
+
+            "date-euro-asc": function(a, b) {
+                return a - b;
+            },
+
+            "date-euro-desc": function(a, b) {
+                return b - a;
+            }
+        });
+        $(document).ready(function() {
+            $('#datatable').dataTable({
+                "aoColumns": [
+                    null,
+                    null,
+                    null,
+                    null,
+                    {
+                        "sType": "date-euro"
+                    },
+                    null
+                ]
+            });
+        });
+
+        $('#modal-adiar').on('show.bs.modal', function(event) {
             var $target = $(event.relatedTarget);
             var $type = $target.attr('data-task-type');
             var $task = $target.attr('data-task');
@@ -162,10 +209,10 @@
             $modal.find('input[name="task_type"]').val($type);
         });
 
-        $('#form-adiamento').on('submit', function (e) {
+        $('#form-adiamento').on('submit', function(e) {
             e.preventDefault()
             var $confirm = confirm('Desja mesmo fazer esta ação?');
-            if($confirm){
+            if ($confirm) {
 
                 var $form = $(this);
                 var $button = $form.find('button[type="submit"]');
@@ -191,7 +238,8 @@
                     processData: false,
                     cache: false,
                     beforeSend: () => { // aqui vai o que tem que ser feito antes de chamar o endpoint
-                        $button.attr('disabled', 'disabled').html('<i class="fas fa-spinner fa-pulse"></i> Carregando...');
+                        $button.attr('disabled', 'disabled').html(
+                            '<i class="fas fa-spinner fa-pulse"></i> Carregando...');
                     },
                     success: (response) => { // aqui vai o que der certo
                         window.location.reload();
@@ -208,7 +256,7 @@
         });
 
         {{-- Mostrar Comentários --}}
-        $('body').on('click', '.showComments', function () {
+        $('body').on('click', '.showComments', function() {
             var $type = $(this).attr('data-task-type');
             var $task = $(this).attr('data-task');
             var $endpoint = "";
@@ -220,16 +268,16 @@
                     $endpoint = "{{ route('app.task.comments.process', ':TASK') }}";
                     break;
                 case 'subscription_task':
-                    $endpoint = "{{ route('app.assinaturaTaskComments', ':TASK')  }}";
+                    $endpoint = "{{ route('app.assinaturaTaskComments', ':TASK') }}";
                     break;
             }
             $endpoint = $endpoint.replace(':TASK', $task);
             if ($endpoint != "") {
-                $.get($endpoint, function (response) {
+                $.get($endpoint, function(response) {
                     var $html = '';
-                    if(response.data.length){
+                    if (response.data.length) {
                         var $html = '';
-                        $.each(response.data, function (i, e) {
+                        $.each(response.data, function(i, e) {
                             $html += '<div class="panel panel-default">';
                             $html += '<div class="panel-heading">';
                             $html += '<h4><b>' + e.user + ' - ' + e.date + '</b></h4>';
@@ -237,8 +285,9 @@
                             $html += '<div class="panel-body">' + e.comment;
                             $html += '<div class="files">';
 
-                            $.each(e.files, function (x, z) {
-                                $html += '<a href="' + z + '" class="btn btn-xs btn-default" target="_blank">';
+                            $.each(e.files, function(x, z) {
+                                $html += '<a href="' + z +
+                                    '" class="btn btn-xs btn-default" target="_blank">';
                                 $html += '<i class="fa fa-paperclip"></i> Anexo';
                                 $html += '</a>';
                             })
@@ -248,8 +297,8 @@
                             $html += '</div>';
                         });
                         console.log($html)
-                    }else{
-                         $html += '<h4 class="text-center">Sem comentários</h4>';
+                    } else {
+                        $html += '<h4 class="text-center">Sem comentários</h4>';
                     }
                     $('.sidebar-right-blank').find('.body').append($html);
                 });
@@ -258,8 +307,8 @@
         });
 
         function showComments(type, task) {
-            $.get($endpoint, function (response) {
-                $.each(response.data, function (i, e) {
+            $.get($endpoint, function(response) {
+                $.each(response.data, function(i, e) {
                     var $html = '';
                     $html += '<div class="panel panel-default">';
                     $html += '<div class="panel-heading">';
@@ -268,8 +317,9 @@
                     $html += '<div class="panel-body">' + e.comment;
                     $html += '<div class="files">';
 
-                    $.each(e.files, function (x, z) {
-                        $html += '<a href="' + z + '" class="btn btn-xs btn-default" target="_blank">';
+                    $.each(e.files, function(x, z) {
+                        $html += '<a href="' + z +
+                            '" class="btn btn-xs btn-default" target="_blank">';
                         $html += '<i class="fa fa-paperclip"></i> Anexo';
                         $html += '</a>';
                     })

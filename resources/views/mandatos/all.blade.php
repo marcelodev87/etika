@@ -14,42 +14,69 @@
 
 
 @section('content')
-
     <div class="chart-box mt-2">
         <table class="table table-striped" id="datatable">
             <thead>
-            <tr>
-                <th>Cod. Interno</th>
-                <th>Cliente</th>
-                <th>Início</th>
-                <th>Término</th>
-                <th></th>
-            </tr>
+                <tr>
+                    <th>Cod. Interno</th>
+                    <th>Cliente</th>
+                    <th>Início</th>
+                    <th>Término</th>
+                    <th></th>
+                </tr>
             </thead>
             <tbody>
-            @foreach($mandatos as $mandato)
-                <tr>
-                    <td>{{ $mandato->client->internal_code }}</td>
-                    <td>{{ $mandato->client->name }}</td>
-                    <td>{{ $mandato->start_at->format('d/m/Y') }}</td>
-                    <td>{{ $mandato->end_at->format('d/m/Y') }}</td>
-                    <td class="text-right">
-                        <form method="post" action="{{ route('app.clients.mandatos.delete', [$mandato->client->id, $mandato->id]) }}" onsubmit="return confirm('Deseja mesmo deletar?')">
-                            @csrf
-                            @method('delete')
-                            <button type="submit" class="btn btn-xs btn-danger">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
+                @foreach ($mandatos as $mandato)
+                    <tr>
+                        <td>{{ $mandato->client->internal_code }}</td>
+                        <td>{{ $mandato->client->name }}</td>
+                        <td>{{ $mandato->start_at->format('d/m/Y') }}</td>
+                        <td>{{ $mandato->end_at->format('d/m/Y') }}</td>
+                        <td class="text-right">
+                            <form method="post"
+                                action="{{ route('app.clients.mandatos.delete', [$mandato->client->id, $mandato->id]) }}"
+                                onsubmit="return confirm('Deseja mesmo deletar?')">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-xs btn-danger">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
 @endsection
 @section('script')
     <script type="text/javascript">
-        $("#datatable").dataTable();
+        jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+            "date-uk-pre": function(a) {
+                var ukDatea = a.split('/');
+                return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+            },
+
+            "date-uk-asc": function(a, b) {
+                return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+            },
+
+            "date-uk-desc": function(a, b) {
+                return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+            }
+        });
+        $(document).ready(function() {
+            $('#datatable').dataTable({
+                "aoColumns": [
+                    null,
+                    null,
+                    null,
+                    {
+                        "sType": "date-uk"
+                    },
+                    null
+                ]
+            });
+        });
     </script>
 @endsection
