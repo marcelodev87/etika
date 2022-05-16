@@ -55,8 +55,9 @@
             "columns": [
                 null,
                 null,
-                null,
                 {
+                    "type": "date"
+                },                {
                     "type": "date"
                 },
                 null
