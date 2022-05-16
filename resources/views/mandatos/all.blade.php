@@ -52,10 +52,15 @@
 @section('script')
     <script type="text/javascript">
          $("#datatable").dataTable({
-            columnDefs: [
-                {orderable: false, targets: 5}
-            ],
-            language: $datatableBR,
+            "columns": [
+                null,
+                null,
+                null,
+                {
+                    "type": "date"
+                },
+                null
+            ]
         });
     </script>
 @endsection
