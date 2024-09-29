@@ -13,27 +13,27 @@
         <ul class="sidebar-menu tree" data-widget="tree">
 
             @if(auth()->user()->hasAnyRole(['adm']))
-                <li class="header dark-bg">Módulos</li>
-                <li>
-                    <a href="{!! route('app.processes.index') !!}">
-                        <i class="fa fa-clipboard-check"></i> <span>Processos</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{!! route('app.tasks.index') !!}">
-                        <i class="fa fa-check-circle"></i> <span>Tarefas</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{!! route('app.services.index') !!}">
-                        <i class="fa fa-tags"></i> <span>Serviços</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{!! route('app.subscriptions.index') !!}">
-                        <i class="fa fa-file-signature"></i> <span>Assinaturas</span>
-                    </a>
-                </li>
+            <li class="header dark-bg">Módulos</li>
+            <li>
+                <a href="{!! route('app.processes.index') !!}">
+                    <i class="fa fa-clipboard-check"></i> <span>Processos</span>
+                </a>
+            </li>
+            <li>
+                <a href="{!! route('app.tasks.index') !!}">
+                    <i class="fa fa-check-circle"></i> <span>Tarefas</span>
+                </a>
+            </li>
+            <li>
+                <a href="{!! route('app.services.index') !!}">
+                    <i class="fa fa-tags"></i> <span>Serviços</span>
+                </a>
+            </li>
+            <li>
+                <a href="{!! route('app.subscriptions.index') !!}">
+                    <i class="fa fa-file-signature"></i> <span>Assinaturas</span>
+                </a>
+            </li>
             @endif
 
 
@@ -46,11 +46,11 @@
             </li>
 
             @if (auth()->user()->hasAnyRole(['adm']))
-                <li>
-                    <a href="{!! route('app.users.index') !!}">
-                        <i class="fa fa-user-secret"></i> <span>Usuários</span>
-                    </a>
-                </li>
+            <li>
+                <a href="{!! route('app.users.index') !!}">
+                    <i class="fa fa-user-secret"></i> <span>Usuários</span>
+                </a>
+            </li>
             @endif
 
             <li>
@@ -79,19 +79,19 @@
 
 
             @php
-                $arrayMenuGeraDocumentos = [
-                    'app.documents.ataFundacao',
-                    'app.documents.estatutoEspecial',
-                    'app.documents.contratoAbertura',
-                    'app.documents.contratoContabil'
-                    ];
+            $arrayMenuGeraDocumentos = [
+            'app.documents.ataFundacao',
+            'app.documents.estatutoEspecial',
+            'app.documents.contratoAbertura',
+            'app.documents.contratoContabil'
+            ];
             @endphp
             <li class="treeview {{ menuPath($arrayMenuGeraDocumentos, 'menu-open') }}">
                 <a href="javascript:void(0)">
                     <i class="fa fa-copy"></i><span>Geração de Documentos</span>
                     <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span>
                 </a>
-                <ul class="treeview-menu" {{ (menuPath($arrayMenuGeraDocumentos)) ? 'style=display:block' : null }} >
+                <ul class="treeview-menu" {{ (menuPath($arrayMenuGeraDocumentos)) ? 'style=display:block' : null }}>
                     <li class="{{ menuPath(['app.documents.ataFundacao'], 'active') }}">
                         <a href="{{ route('app.documents.ataFundacao') }}">Ata de Fundação</a>
                     </li>
@@ -114,20 +114,20 @@
             </li>
 
             @php
-                $arrayMenuRelatorio = [
-                    'app.relatorios.processoAberto',
-                    'app.relatorios.processoAberto',
-                    'app.relatorios.pagamentoAberto',
-                    'app.relatorios.tarefaAberta',
-                    'app.relatorios.tarefaFechada',
-                ];
+            $arrayMenuRelatorio = [
+            'app.relatorios.processoAberto',
+            'app.relatorios.processoAberto',
+            'app.relatorios.pagamentoAberto',
+            'app.relatorios.tarefaAberta',
+            'app.relatorios.tarefaFechada',
+            ];
             @endphp
             <li class="treeview {{ menuPath($arrayMenuRelatorio, 'menu-open') }}">
                 <a href="javascript:void(0)">
                     <i class="fa fa-copy"></i><span>Relatórios</span>
                     <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span>
                 </a>
-                <ul class="treeview-menu" {{ (menuPath($arrayMenuRelatorio)) ? 'style=display:block' : null }} >
+                <ul class="treeview-menu" {{ (menuPath($arrayMenuRelatorio)) ? 'style=display:block' : null }}>
                     <li class="{{ menuPath(['app.relatorios.processoAberto'], 'active') }}">
                         <a href="{{ route('app.relatorios.processoAberto') }}">Processos Abertos</a>
                     </li>

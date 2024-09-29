@@ -26,7 +26,7 @@ class InternalProcessController extends Controller
     {
         $input = $request->all();
         $input['slug'] = Str::slug($input['name']);
-        $input['price'] = str_replace(['.',','],['', '.'], $input['price']);
+        $input['price'] = str_replace(['.', ','], ['', '.'], $input['price']);
         $rules = [
             'name' => 'required|string|min:3',
             'slug' => 'required|string|unique:internal_processes',
@@ -38,20 +38,20 @@ class InternalProcessController extends Controller
             'price' => 'price',
         ];
         $validator = Validator::make($input, $rules, $errors, $fields);
-        if($validator->fails()){
+        if ($validator->fails()) {
             session()->flash('flash-warning', $validator->errors()->first());
             return redirect()->back()->withInput($request->all());
         }
 
         try {
             InternalProcess::create([
-               'name' => $input['name'],
-               'slug' => $input['slug'],
-               'price' => $input['price'],
+                'name' => $input['name'],
+                'slug' => $input['slug'],
+                'price' => $input['price'],
             ]);
             session()->flash('flash-success', 'Processo cadastrado com sucesso');
             return redirect()->route('app.processes.index');
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             session()->flash('flash-warning', $e->getMessage());
             return redirect()->back();
         }
@@ -68,10 +68,10 @@ class InternalProcessController extends Controller
     {
         $input = $request->all();
         $input['slug'] = Str::slug($input['name']);
-        $input['price'] = str_replace(['.',','],['', '.'], $input['price']);
+        $input['price'] = str_replace(['.', ','], ['', '.'], $input['price']);
         $rules = [
             'name' => 'required|string|min:3',
-            'slug' => 'required|string|unique:internal_processes,slug,'.$internalProcess->id,
+            'slug' => 'required|string|unique:internal_processes,slug,' . $internalProcess->id,
             'price' => 'required|numeric|min:0',
         ];
         $errors = [];
@@ -80,7 +80,7 @@ class InternalProcessController extends Controller
             'price' => 'price',
         ];
         $validator = Validator::make($input, $rules, $errors, $fields);
-        if($validator->fails()){
+        if ($validator->fails()) {
             session()->flash('flash-warning', $validator->errors()->first());
             return redirect()->back()->withInput($request->all());
         }
@@ -93,7 +93,7 @@ class InternalProcessController extends Controller
             ]);
             session()->flash('flash-success', 'Processo editado com sucesso');
             return redirect()->route('app.processes.index');
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             session()->flash('flash-warning', $e->getMessage());
             return redirect()->back();
         }
@@ -111,10 +111,10 @@ class InternalProcessController extends Controller
     {
         $internalProcess->tasks()->wherePivot('position', $request->key)->delete();
 
-            $x = $internalProcess->tasks()->wherePivot('position', '>', $request->key)->get();
-            foreach ($x as $y){
-                $internalProcess->tasks()->updateExistingPivot($y->id, ['position' => $y->pivot->position - 1]);
-            }
+        $x = $internalProcess->tasks()->wherePivot('position', '>', $request->key)->get();
+        foreach ($x as $y) {
+            $internalProcess->tasks()->updateExistingPivot($y->id, ['position' => $y->pivot->position - 1]);
+        }
 
         return redirect()->back();
     }
@@ -142,6 +142,4 @@ class InternalProcessController extends Controller
         $internalProcess->tasks()->updateExistingPivot($taskNew, ['position' => $newOldKey]);
         return redirect()->back();
     }
-
-
 }

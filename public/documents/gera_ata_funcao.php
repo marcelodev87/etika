@@ -149,5 +149,3 @@ if (count($data['diretoria']['secretarios'])) {
 
 $texto .= "</div>";
 echo $texto;
-
-?>

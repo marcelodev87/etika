@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Validator;
 class ClientMandatoController extends Controller
 {
 
-    public function all(){
+    public function all()
+    {
         $mandatos = ClientMandato::all();
         return view('mandatos.all', compact('mandatos'));
     }

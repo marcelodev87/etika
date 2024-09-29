@@ -1,32 +1,32 @@
 @extends('layouts.app')
 
 @section('header')
-    @breadcrumb(['title' => 'Painel'])
-    <li class="active"><i class="fa fa-th"></i> Painel</li>
-    @endbreadcrumb
+@breadcrumb(['title' => 'Painel'])
+<li class="active"><i class="fa fa-th"></i> Painel</li>
+@endbreadcrumb
 @endsection
 
 @section('content')
 
-    @include('widgets.open')
+@include('widgets.open')
 
-    @if(auth()->user()->hasRole('adm'))
-        <div class="row">
-            @include('widgets.boxes.clientsRegistred')
-        </div>
+@if(auth()->user()->hasRole('adm'))
+<div class="row">
+    @include('widgets.boxes.clientsRegistred')
+</div>
 
-        <div class="row">
-            @include('widgets.charts.received')
-        </div>
-    @endif
+<div class="row">
+    @include('widgets.charts.received')
+</div>
+@endif
 
 
 @endsection
 
 
 @section('script')
-    <script type="text/javascript">
-        @if(auth()->user()->hasRole('adm'))
+<script type="text/javascript">
+    @if(auth()->user()->hasRole('adm'))
         $.get('{{ route('app.api.charts.received') }}', function (response) {
             var ctx = document.getElementById('chartReceived');
             var chartReceived = new Chart(ctx, {
@@ -66,5 +66,5 @@
         @endif
 
 
-    </script>
+</script>
 @endsection()

@@ -1,272 +1,310 @@
 @extends('layouts.app')
 
 @section('header')
-    @breadcrumb(['title' => 'Geração de Documentos'])
-    <li>
-        <a href="{!! route('app.index') !!}">
-            <i class="fa fa-th"></i> Painel
-        </a>
-    </li>
-    <li class="active">
-        <i class="fa fa-copy"></i> Geração de Documentos
-    </li>
-    <li class="active">
-        Estatuto Especial
-    </li>
-    @endbreadcrumb
+@breadcrumb(['title' => 'Geração de Documentos'])
+<li>
+    <a href="{!! route('app.index') !!}">
+        <i class="fa fa-th"></i> Painel
+    </a>
+</li>
+<li class="active">
+    <i class="fa fa-copy"></i> Geração de Documentos
+</li>
+<li class="active">
+    Estatuto Especial
+</li>
+@endbreadcrumb
 @endsection
 
 @section('style')
-    <style>
-        .chart-box {
-            margin-bottom: 14px;
-        }
-    </style>
+<style>
+    .chart-box {
+        margin-bottom: 14px;
+    }
+</style>
 @endsection
 
 @section('content')
 
-    <div class="row">
-        <div class="col-md-4">
-            <form method="post" action="{{ route('app.documents.estatutoEpiscopal') }}">
-                @csrf
-                <div class="chart-box">
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" action="{{ route('app.documents.estatutoEpiscopal') }}">
+            @csrf
+            <div class="chart-box">
 
-                    <div class="form-group">
-                        <label>Igreja</label>
-                        <select class="form-control selectpicker" name="client_id" title="Selecione a Igreja" required>
-                            @foreach(\App\Client::where('type', 'igreja')->get() as $user)
-                                <option value="{{$user->id}}" {{ ($request->has('client_id') && $request->client_id == $user->id) ? 'selected' : '' }}>{{ $user->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Sede</label>
-                        <select name="sede" class="form-control selectpicker">
-                            <option value="Provisória" {{ ($request->has('sede') && $request->sede == "Provisória") ? 'selected' : '' }}>Provisória</option>
-                            <option value="Definitiva" {{ ($request->has('sede') && $request->sede == "Definitiva") ? 'selected' : '' }}>Definitiva</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Data de fundação da Igreja</label>
-                        <input type="text" class="form-control" name="data_fundacao" value="{{ ($request->has('data_fundacao')) ? $request->data_fundacao : ''  }} " required minlength="10" data-mask="00/00/0000" placeholder="dd/mm/aaaa">
-                    </div>
-                    <div class="form-group">
-                        <label>Mencionar membros fundadores?</label>
-                        <input type="text" class="form-control" name="fundadores" value="{{ ($request->has('fundadores')) ? $request->fundadores : '' }}">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Haverá conselho fiscal?</label>
-                        <select class="form-control selectpicker" name="conselho" required>
-                            <option value="0" {{ ($request->has('conselho') && $request->conselho == 0) ? 'selected' : '' }}>Não</option>
-                            <option value="1" {{ ($request->has('conselho') && $request->conselho == 1) ? 'selected' : '' }}>Sim</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Haverá vice residente?</label>
-                        <select class="form-control selectpicker" name="vice" required>
-                            <option value="0" {{ ($request->has('vice') && $request->vice == 0) ? 'selected' : '' }}>Não, o tesoureiro ocupará o cargo em caso de vacância</option>
-                            <option value="1" {{ ($request->has('vice') && $request->vice == 1) ? 'selected' : '' }}>Sim</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Tesoureiro</label>
-                        <select class="form-control selectpicker outputMembers" name="tesouraria" required>
-                            <option value="1" {{ ($request->has('tesouraria') && $request->tesouraria == 0) ? 'selected' : '' }}>Tesoureiro</option>
-                            <option value="2" {{ ($request->has('tesouraria') && $request->tesouraria == 1) ? 'selected' : '' }}>1º e 2º Tesoureiro</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Secretario</label>
-                        <select class="form-control selectpicker" name="secretaria" required>
-                            <option value="1" {{ ($request->has('secretaria') && $request->secretaria == 1) ? 'selected' : '' }}>Secretário</option>
-                            <option value="2" {{ ($request->has('secretaria') && $request->secretaria == 2) ? 'selected' : '' }}>1º e 2º Secretário</option>
-                            <option value="0" {{ ($request->has('secretaria') && $request->secretaria == 0) ? 'selected' : '' }}>Sem Secretário</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Madato do presidente:</label>
-                        <select class="form-control selectpicker" name="m_presidente" required>
-                            <option value="100" selected>Vitalício</option>
-                            <option value="200">Indeterminado</option>
-                            @for($i=1; $i<= 15; $i++)
-                                <option value="{{ $i }}" {{ ($request->has('m_presidente') && $request->m_presidente == $i) ? 'selected' : '' }}>{{ $i }}</option>
-                            @endfor
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Madato da diretoria:</label>
-                        <select class="form-control selectpicker" name="m_diretoria" required>
-                            @for($i=1; $i<= 15; $i++)
-                                <option value="{{ $i }}" {{ ($request->has('m_diretoria') && $request->m_diretoria == $i) ? 'selected' : '' }}>{{ $i }}</option>
-                            @endfor
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>As movimentações financeiras serão feitas pelo:</label>
-                        <select class="form-control selectpicker" name="m_financeiras" required>
-                            <option value="1" {{ ($request->has('m_financeiras') && $request->m_financeiras == 1) ? 'selected' : '' }}>Pelo presidente, de forma isolada</option>
-                            <option value="2" {{ ($request->has('m_financeiras') && $request->m_financeiras == 2) ? 'selected' : '' }}>Pelo Tesoureiro e pelo Presidente, em conjunto</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Escolha os cargos ministeriais que a igreja terá: Todas as igrejas já terão a função de pastor!</label>
-                        @php
-                            $cargos = ['Apóstolo', 'Bispo', 'Diácono', 'Dirigente', 'Evangelista', 'Missionário', 'Obreiro', 'Presbítero'];
-                        @endphp
-                        <select class="form-control selectpicker" name="cargom[]" multiple title="Selecione">
-                            @foreach($cargos as $cargo)
-                                <option value="{{ $cargo }}">{{ $cargo }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Os membros do ministério serão remunerados por suas funções Eclesiáticas?</label>
-                        <select class="form-control selectpicker" name="remuneracao" required>
-                            <option value="1" {{ ($request->has('remuneracao') && $request->remuneracao == 1) ? 'selected' : '' }}>Sim, em todos os casos</option>
-                            <option value="2" {{ ($request->has('remuneracao') && $request->remuneracao == 2) ? 'selected' : '' }}>Sim, apenas em casos de trabalho integral com registro em carteira</option>
-                            <option value="3" {{ ($request->has('remuneracao') && $request->remuneracao == 3) ? 'selected' : '' }}>Não, todo trabalho ministerial será considerado voluntário</option>
-                        </select>
-                    </div>
-
+                <div class="form-group">
+                    <label>Igreja</label>
+                    <select class="form-control selectpicker" name="client_id" title="Selecione a Igreja" required>
+                        @foreach(\App\Client::where('type', 'igreja')->get() as $user)
+                        <option value="{{$user->id}}" {{ ($request->has('client_id') && $request->client_id ==
+                            $user->id) ? 'selected' : '' }}>{{ $user->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
-                <button type="submit" class="btn btn-success btn-block">
-                    <i class="fa fa-print"></i> Gerar
-                </button>
-            </form>
-        </div>
+                <div class="form-group">
+                    <label>Sede</label>
+                    <select name="sede" class="form-control selectpicker">
+                        <option value="Provisória" {{ ($request->has('sede') && $request->sede == "Provisória") ?
+                            'selected' : '' }}>Provisória</option>
+                        <option value="Definitiva" {{ ($request->has('sede') && $request->sede == "Definitiva") ?
+                            'selected' : '' }}>Definitiva</option>
+                    </select>
+                </div>
 
-        <div class="col-md-8">
-            <div class="chart-box">
-                <div id="output">
+                <div class="form-group">
+                    <label>Data de fundação da Igreja</label>
+                    <input type="text" class="form-control" name="data_fundacao"
+                        value="{{ ($request->has('data_fundacao')) ? $request->data_fundacao : ''  }} " required
+                        minlength="10" data-mask="00/00/0000" placeholder="dd/mm/aaaa">
+                </div>
+                <div class="form-group">
+                    <label>Mencionar membros fundadores?</label>
+                    <input type="text" class="form-control" name="fundadores"
+                        value="{{ ($request->has('fundadores')) ? $request->fundadores : '' }}">
+                </div>
 
-                    @if($request->isMethod('post'))
-                        @php
-                            $nome_igreja = $igreja->name;
-                            $endereco_igreja = $igreja->street . ', '. $igreja->street_number;
-                            $complemento_igreja = $igreja->complement ?? '';
-                            $bairro_igreja = $igreja->neighborhood;
-                            $cidade_igreja = $igreja->city;
-                            $uf_igreja = $igreja->state;
-                            $cep_igreja = $igreja->zip;
+                <div class="form-group">
+                    <label>Haverá conselho fiscal?</label>
+                    <select class="form-control selectpicker" name="conselho" required>
+                        <option value="0" {{ ($request->has('conselho') && $request->conselho == 0) ? 'selected' : ''
+                            }}>Não</option>
+                        <option value="1" {{ ($request->has('conselho') && $request->conselho == 1) ? 'selected' : ''
+                            }}>Sim</option>
+                    </select>
+                </div>
 
-                            $igrejaM = strtoupper($nome_igreja);
+                <div class="form-group">
+                    <label>Haverá vice residente?</label>
+                    <select class="form-control selectpicker" name="vice" required>
+                        <option value="0" {{ ($request->has('vice') && $request->vice == 0) ? 'selected' : '' }}>Não, o
+                            tesoureiro ocupará o cargo em caso de vacância</option>
+                        <option value="1" {{ ($request->has('vice') && $request->vice == 1) ? 'selected' : '' }}>Sim
+                        </option>
+                    </select>
+                </div>
 
-                            $presidente = $igreja->members()->where('role', 'Presidente')->first();
-                            if(!$presidente){
-                                $texto1 = "<h2 style='color:red !important;'>NÃO TEM PRESIDENTE CADASTRADO</h2>";
-					            $nome_presidente = "Nome Presidente";
-                            }else{
-                                $nome_presidente = $presidente->name;
-                            }
+                <div class="form-group">
+                    <label>Tesoureiro</label>
+                    <select class="form-control selectpicker outputMembers" name="tesouraria" required>
+                        <option value="1" {{ ($request->has('tesouraria') && $request->tesouraria == 0) ? 'selected' :
+                            '' }}>Tesoureiro</option>
+                        <option value="2" {{ ($request->has('tesouraria') && $request->tesouraria == 1) ? 'selected' :
+                            '' }}>1º e 2º Tesoureiro</option>
+                    </select>
+                </div>
 
-                        if ($request->fundadores != "") {
-                            $fundadores ="<span style='color:blue !important;'>tem como fundadores o {$request->fundadores}</span>";
-                        }else{
-                            $fundadores ="";
-                        }
+                <div class="form-group">
+                    <label>Secretario</label>
+                    <select class="form-control selectpicker" name="secretaria" required>
+                        <option value="1" {{ ($request->has('secretaria') && $request->secretaria == 1) ? 'selected' :
+                            '' }}>Secretário</option>
+                        <option value="2" {{ ($request->has('secretaria') && $request->secretaria == 2) ? 'selected' :
+                            '' }}>1º e 2º Secretário</option>
+                        <option value="0" {{ ($request->has('secretaria') && $request->secretaria == 0) ? 'selected' :
+                            '' }}>Sem Secretário</option>
+                    </select>
+                </div>
 
-                        $sede = "<span style='color:blue !important;'>{$request->sede}</span>";
+                <div class="form-group">
+                    <label>Madato do presidente:</label>
+                    <select class="form-control selectpicker" name="m_presidente" required>
+                        <option value="100" selected>Vitalício</option>
+                        <option value="200">Indeterminado</option>
+                        @for($i=1; $i<= 15; $i++) <option value="{{ $i }}" {{ ($request->has('m_presidente') &&
+                            $request->m_presidente == $i) ? 'selected' : '' }}>{{ $i }}</option>
+                            @endfor
+                    </select>
+                </div>
 
-                        switch($request->vice){
-                            case "1":
-                                $diretoria_vice = "<span style='color:red !important;'>Vice-Presidente</span>";
-                                break;
-                            case "0":
-                                $vice = "";
-                                $diretoria_vice = "";
-                                break;
-                        }
+                <div class="form-group">
+                    <label>Madato da diretoria:</label>
+                    <select class="form-control selectpicker" name="m_diretoria" required>
+                        @for($i=1; $i<= 15; $i++) <option value="{{ $i }}" {{ ($request->has('m_diretoria') &&
+                            $request->m_diretoria == $i) ? 'selected' : '' }}>{{ $i }}</option>
+                            @endfor
+                    </select>
+                </div>
 
-                        switch($request->tesouraria){
-                            case "2":
-                                $diretoria_tesouraria = "<span style='color:red !important;'>1° e 2° Tesoureiros</span>";
-                                break;
-                            case "1":
-                                $diretoria_tesouraria = "<span style='color:red !important;'>Tesoureiro</span>";
-                                break;
-                        }
+                <div class="form-group">
+                    <label>As movimentações financeiras serão feitas pelo:</label>
+                    <select class="form-control selectpicker" name="m_financeiras" required>
+                        <option value="1" {{ ($request->has('m_financeiras') && $request->m_financeiras == 1) ?
+                            'selected' : '' }}>Pelo presidente, de forma isolada</option>
+                        <option value="2" {{ ($request->has('m_financeiras') && $request->m_financeiras == 2) ?
+                            'selected' : '' }}>Pelo Tesoureiro e pelo Presidente, em conjunto</option>
+                    </select>
+                </div>
 
-                        switch($request->secretaria){
-                            case "2":
-                                $diretoria_secretaria = "<span style='color:red !important;'>1° e 2° Secretários</span>";
-                                break;
-                            case "1":
-                                $diretoria_secretaria = "<span style='color:red !important;'>Secretario</span>";
-                                break;
-                            case "0":
-                                $diretoria_secretaria = "";
-                                break;
-                        }
+                <div class="form-group">
+                    <label>Escolha os cargos ministeriais que a igreja terá: Todas as igrejas já terão a função de
+                        pastor!</label>
+                    @php
+                    $cargos = ['Apóstolo', 'Bispo', 'Diácono', 'Dirigente', 'Evangelista', 'Missionário', 'Obreiro',
+                    'Presbítero'];
+                    @endphp
+                    <select class="form-control selectpicker" name="cargom[]" multiple title="Selecione">
+                        @foreach($cargos as $cargo)
+                        <option value="{{ $cargo }}">{{ $cargo }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-                        $dtFundacao = \Carbon\Carbon::createFromFormat('d/m/Y', $request->data_fundacao)->format('Y-m-d');
-                        $dissolucao = "<span style='color:red !important;'>do seu Presidente</span>";
-                        $data_extenso = strftime("%d de %B de %Y", strtotime($dtFundacao));
-                        $data_fundacao = "<span style='color:red !important;'>$data_extenso</span>";
+                <div class="form-group">
+                    <label>Os membros do ministério serão remunerados por suas funções Eclesiáticas?</label>
+                    <select class="form-control selectpicker" name="remuneracao" required>
+                        <option value="1" {{ ($request->has('remuneracao') && $request->remuneracao == 1) ? 'selected' :
+                            '' }}>Sim, em todos os casos</option>
+                        <option value="2" {{ ($request->has('remuneracao') && $request->remuneracao == 2) ? 'selected' :
+                            '' }}>Sim, apenas em casos de trabalho integral com registro em carteira</option>
+                        <option value="3" {{ ($request->has('remuneracao') && $request->remuneracao == 3) ? 'selected' :
+                            '' }}>Não, todo trabalho ministerial será considerado voluntário</option>
+                    </select>
+                </div>
 
-                        $m_presidente = $request->m_presidente;
-                        switch($m_presidente){
-                            case "100":
-                                $mandato_presidente = "<span style='color:red !important;'>O mandato do Presidente será vitalício.</span>";
-                                break;
-                            case "200":
-                                $mandato_presidente = "<span style='color:red !important;'>O Presidente terá seu mandato por tempo indeterminado.</span>";
-                                break;
-                            default :
-                                $m_presidente = "<span style='color:red !important;'>".$m_presidente." anos</span>";
-                                $mandato_presidente = "<span style='color:red !important;'>O mandato do Presidente será de $m_presidente, podendo ser reeleito quantas vezes for necessário.</span>";
-                                break;
-                        }
+            </div>
 
-                        $m_diretoria = $request->m_diretoria;
-                        $m_diretoria = "<span style='color:red !important;'>".$m_diretoria." anos</span>";$escolha_diretoria = "<span style='color:red !important;'>A escolha da diretoria se dará através da indicação do Presidente.</span>";
+            <button type="submit" class="btn btn-success btn-block">
+                <i class="fa fa-print"></i> Gerar
+            </button>
+        </form>
+    </div>
 
-                        $escolha_diretoria = "<span style='color:red !important;'>A escolha da diretoria se dará através da indicação do Presidente.</span>";
+    <div class="col-md-8">
+        <div class="chart-box">
+            <div id="output">
 
-                        switch($request->m_financeiras){
-                            case "1":
-                                $cabe_presidente = "<span style='color:blue !important;'>V - Abrir e movimentar contas bancárias e assinar os documentos necessários para pagamentos e remessas de valores.</span></br>";
-                                $cabe_tesoureiro = "<span style='color:blue !important;'>VI - Supervisionar os pagamentos feitos pelo presidente;</span></br>";
-                                break;
-                            case "2":
-                                $cabe_tesoureiro = "<span style='color:blue !important;'>VI - Abrir e movimentar contas bancárias e assinar, juntamente com o Presidente, os documentos necessários para pagamentos e remessas de valores;</span></br>";
-                                $cabe_presidente = "<span style='color:blue !important;'>V - Abrir e movimentar contas bancárias e assinar, juntamente com o Tesoureiro, os documentos necessários para pagamentos e remessas de valores;</span></br>";
-                                break;
-                        }
+                @if($request->isMethod('post'))
+                @php
+                $nome_igreja = $igreja->name;
+                $endereco_igreja = $igreja->street . ', '. $igreja->street_number;
+                $complemento_igreja = $igreja->complement ?? '';
+                $bairro_igreja = $igreja->neighborhood;
+                $cidade_igreja = $igreja->city;
+                $uf_igreja = $igreja->state;
+                $cep_igreja = $igreja->zip;
 
-                        if($request->has('cargom')){
-                            $cargom = $request->cargom;
-                            $cargos_ministeriais = "<span style='color:red !important;'>".implode(", ", $cargom)."</span>";
-                        }else{
-                            $cargos_ministeriais = "<span style='color:red !important;'>Presbíteros, Diáconos e Obreiros</span>";
-                        }
+                $igrejaM = strtoupper($nome_igreja);
 
-                        $ordenacao = "<span style='color:red !important;'>As ordenações ministeriais se darão através de indicação do Pastor Presidente da IGREJA</span>";
+                $presidente = $igreja->members()->where('role', 'Presidente')->first();
+                if(!$presidente){
+                $texto1 = "<h2 style='color:red !important;'>NÃO TEM PRESIDENTE CADASTRADO</h2>";
+                $nome_presidente = "Nome Presidente";
+                }else{
+                $nome_presidente = $presidente->name;
+                }
 
-                        @endphp
+                if ($request->fundadores != "") {
+                $fundadores ="<span style='color:blue !important;'>tem como fundadores o {$request->fundadores}</span>";
+                }else{
+                $fundadores ="";
+                }
+
+                $sede = "<span style='color:blue !important;'>{$request->sede}</span>";
+
+                switch($request->vice){
+                case "1":
+                $diretoria_vice = "<span style='color:red !important;'>Vice-Presidente</span>";
+                break;
+                case "0":
+                $vice = "";
+                $diretoria_vice = "";
+                break;
+                }
+
+                switch($request->tesouraria){
+                case "2":
+                $diretoria_tesouraria = "<span style='color:red !important;'>1° e 2° Tesoureiros</span>";
+                break;
+                case "1":
+                $diretoria_tesouraria = "<span style='color:red !important;'>Tesoureiro</span>";
+                break;
+                }
+
+                switch($request->secretaria){
+                case "2":
+                $diretoria_secretaria = "<span style='color:red !important;'>1° e 2° Secretários</span>";
+                break;
+                case "1":
+                $diretoria_secretaria = "<span style='color:red !important;'>Secretario</span>";
+                break;
+                case "0":
+                $diretoria_secretaria = "";
+                break;
+                }
+
+                $dtFundacao = \Carbon\Carbon::createFromFormat('d/m/Y', $request->data_fundacao)->format('Y-m-d');
+                $dissolucao = "<span style='color:red !important;'>do seu Presidente</span>";
+                $data_extenso = strftime("%d de %B de %Y", strtotime($dtFundacao));
+                $data_fundacao = "<span style='color:red !important;'>$data_extenso</span>";
+
+                $m_presidente = $request->m_presidente;
+                switch($m_presidente){
+                case "100":
+                $mandato_presidente = "<span style='color:red !important;'>O mandato do Presidente será
+                    vitalício.</span>";
+                break;
+                case "200":
+                $mandato_presidente = "<span style='color:red !important;'>O Presidente terá seu mandato por tempo
+                    indeterminado.</span>";
+                break;
+                default :
+                $m_presidente = "<span style='color:red !important;'>".$m_presidente." anos</span>";
+                $mandato_presidente = "<span style='color:red !important;'>O mandato do Presidente será de
+                    $m_presidente, podendo ser reeleito quantas vezes for necessário.</span>";
+                break;
+                }
+
+                $m_diretoria = $request->m_diretoria;
+                $m_diretoria = "<span style='color:red !important;'>".$m_diretoria." anos</span>";$escolha_diretoria =
+                "<span style='color:red !important;'>A escolha da diretoria se dará através da indicação do
+                    Presidente.</span>";
+
+                $escolha_diretoria = "<span style='color:red !important;'>A escolha da diretoria se dará através da
+                    indicação do Presidente.</span>";
+
+                switch($request->m_financeiras){
+                case "1":
+                $cabe_presidente = "<span style='color:blue !important;'>V - Abrir e movimentar contas bancárias e
+                    assinar os documentos necessários para pagamentos e remessas de valores.</span></br>";
+                $cabe_tesoureiro = "<span style='color:blue !important;'>VI - Supervisionar os pagamentos feitos pelo
+                    presidente;</span></br>";
+                break;
+                case "2":
+                $cabe_tesoureiro = "<span style='color:blue !important;'>VI - Abrir e movimentar contas bancárias e
+                    assinar, juntamente com o Presidente, os documentos necessários para pagamentos e remessas de
+                    valores;</span></br>";
+                $cabe_presidente = "<span style='color:blue !important;'>V - Abrir e movimentar contas bancárias e
+                    assinar, juntamente com o Tesoureiro, os documentos necessários para pagamentos e remessas de
+                    valores;</span></br>";
+                break;
+                }
+
+                if($request->has('cargom')){
+                $cargom = $request->cargom;
+                $cargos_ministeriais = "<span style='color:red !important;'>".implode(", ", $cargom)."</span>";
+                }else{
+                $cargos_ministeriais = "<span style='color:red !important;'>Presbíteros, Diáconos e Obreiros</span>";
+                }
+
+                $ordenacao = "<span style='color:red !important;'>As ordenações ministeriais se darão através de
+                    indicação do Pastor Presidente da IGREJA</span>";
+
+                @endphp
 
 
-                        <div class="right_col" role="main">
-                            <h1> Geração de Documentos </h1>
-                            <h2> <?php echo $nome_igreja; ?></h2></br>
-                            <p>
-                                <strong>FONTE: Arial 12</br> ESPAÇAMENTO: 1,5</br>TEXTO: Justificado</br>TÍTULOS: Centralizados, letras maiúsculas e em negrito</br></strong>
-                            </p>
+                <div class="right_col" role="main">
+                    <h1> Geração de Documentos </h1>
+                    <h2>
+                        <?php echo $nome_igreja; ?>
+                    </h2></br>
+                    <p>
+                        <strong>FONTE: Arial 12</br> ESPAÇAMENTO: 1,5</br>TEXTO: Justificado</br>TÍTULOS: Centralizados,
+                            letras maiúsculas e em negrito</br></strong>
+                    </p>
 
-                            <div class="form-group">
-                                <?php
+                    <div class="form-group">
+                        <?php
 
                                 // FUNÇÃO PARA FORMATAR CPF
                                 $pattern = '/^([[:digit:]]{3})([[:digit:]]{3})([[:digit:]]{3})([[:digit:]]{2})$/';
@@ -927,21 +965,21 @@
 
                                 ?>
 
-                            </div>
-                        </div>
-                    @endif
-
+                    </div>
                 </div>
+                @endif
+
             </div>
         </div>
     </div>
+</div>
 
 
 @endsection
 
 
 @section('script')
-    <script type="text/javascript">
+<script type="text/javascript">
 
-    </script>
+</script>
 @endsection

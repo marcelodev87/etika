@@ -1,22 +1,22 @@
 @extends('layouts.app')
 
 @section('header')
-    @breadcrumb(['title' => 'Relatórios'])
-    <li>
-        <a href="{!! route('app.index') !!}">
-            <i class="fa fa-th"></i> Dashboard
-        </a>
-    </li>
-    <li class="active">
-        <i class="fa fa-copy"></i> Tarefas Abertas
-    </li>
-    @endbreadcrumb
+@breadcrumb(['title' => 'Relatórios'])
+<li>
+    <a href="{!! route('app.index') !!}">
+        <i class="fa fa-th"></i> Dashboard
+    </a>
+</li>
+<li class="active">
+    <i class="fa fa-copy"></i> Tarefas Abertas
+</li>
+@endbreadcrumb
 @endsection
 
 @section('content')
-    <div class="chart-box">
-        <table class="table table-hover table-striped" id="datatable">
-            <thead>
+<div class="chart-box">
+    <table class="table table-hover table-striped" id="datatable">
+        <thead>
             <tr>
                 <th>Tipo</th>
                 <th>Cliente</th>
@@ -25,133 +25,140 @@
                 <th>Data Criação</th>
                 <th></th>
             </tr>
-            </thead>
-            <tbody>
+        </thead>
+        <tbody>
             @foreach ($tarefas as $tarefa)
-                @if(auth()->user()->hasRole('adm') || auth()->user()->id == $tarefa['responsible_id'])
-                    @php
+            @if(auth()->user()->hasRole('adm') || auth()->user()->id == $tarefa['responsible_id'])
+            @php
 
-                        switch ($tarefa['type']){
-                            case 'single_task':
-                                $url = route('app.clients.show', $tarefa['client_id']);
-                                $tipo = "Tarefa";
-                                break;
-                            case 'process_task':
-                                $url = route('app.clients.processes.index', [$tarefa['client_id'], $tarefa['process_id']]);
-                                $tipo = "Processo";
-                                break;
-                            case 'subscription_task':
-                                $url = route('app.clients.subscriptions.tasks.show', [$tarefa['client_id'], $tarefa['subscription_id']]);
-                                $tipo = "Assinatura";
-                                break;
-                        }
-                    @endphp
-                    <tr>
-                        <td>
-                            <a href="{{ $url }}">
-                                {{ $tarefa['name'] }}
-                                <small>({{ $tipo }})</small>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="{{ route('app.clients.show', $tarefa['client_id']) }}">
-                                {{ $tarefa['client'] }}
-                            </a>
-                        </td>
-                        <td>{{ $tarefa['responsavel'] }}</td>
-                        <td>{!! $tarefa['entrega'] !!}</td>
-                        <td>{{ $tarefa['criacao'] }}</td>
-                        <td class="text-right">
+            switch ($tarefa['type']){
+            case 'single_task':
+            $url = route('app.clients.show', $tarefa['client_id']);
+            $tipo = "Tarefa";
+            break;
+            case 'process_task':
+            $url = route('app.clients.processes.index', [$tarefa['client_id'], $tarefa['process_id']]);
+            $tipo = "Processo";
+            break;
+            case 'subscription_task':
+            $url = route('app.clients.subscriptions.tasks.show', [$tarefa['client_id'], $tarefa['subscription_id']]);
+            $tipo = "Assinatura";
+            break;
+            }
+            @endphp
+            <tr>
+                <td>
+                    <a href="{{ $url }}">
+                        {{ $tarefa['name'] }}
+                        <small>({{ $tipo }})</small>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ route('app.clients.show', $tarefa['client_id']) }}">
+                        {{ $tarefa['client'] }}
+                    </a>
+                </td>
+                <td>{{ $tarefa['responsavel'] }}</td>
+                <td>{!! $tarefa['entrega'] !!}</td>
+                <td>{{ $tarefa['criacao'] }}</td>
+                <td class="text-right">
 
-                            @if($type != 'closed')
-                                @if($tarefa['type'] == 'single_task')
-                                    <a href="#modal-adiar" data-toggle="modal" data-task-type="{{ $tarefa['type'] }}" data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-danger singleTaskAdiar">
-                                        <i class="fa fa-times"></i> Adiar
-                                    </a>
+                    @if($type != 'closed')
+                    @if($tarefa['type'] == 'single_task')
+                    <a href="#modal-adiar" data-toggle="modal" data-task-type="{{ $tarefa['type'] }}"
+                        data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-danger singleTaskAdiar">
+                        <i class="fa fa-times"></i> Adiar
+                    </a>
 
-                                    <a href="{{ route('app.clients.tasks.done',[$tarefa['client_id'], $tarefa['id']]) }}" class="btn btn-xs btn-success" onclick="return confirm('Deseja mesmo finalizar?')">
-                                        <i class="fa fa-check"></i> Finalizar
-                                    </a>
-                                @elseif($tarefa['type'] == 'process_task')
-                                    <a href="#modal-adiar" data-toggle="modal" data-task-type="{{ $tarefa['type'] }}" data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-danger processTaskAdiar">
-                                        <i class="fa fa-times"></i> Adiar
-                                    </a>
-                                    <a href="{{ route('app.clients.processes.tasks.done', [$tarefa['client_id'],$tarefa['process_id'], $tarefa['id']]) }}" data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-success processTaskFinalizar" onclick="return confirm('Deseja mesmo finalizar?')">
-                                        <i class="fa fa-check"></i> Finalizar
-                                    </a>
-                                @else
-                                    <a href="#modal-adiar" data-toggle="modal" data-task-type="{{ $tarefa['type'] }}" data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-danger processTaskAdiar">
-                                        <i class="fa fa-times"></i> Adiar
-                                    </a>
-                                    <a href="{{ route('app.assinaturaTaskClose',  $tarefa['id']) }}" data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-success processTaskFinalizar" onclick="return confirm('Deseja mesmo finalizar?')">
-                                        <i class="fa fa-check"></i> Finalizar
-                                    </a>
-                                @endif
-                            @endif
-                            <a href="javascript:void(0)" class="btn btn-xs btn-info showComments" data-task-type="{{ $tarefa['type'] }}" data-task="{{ $tarefa['id'] }}">
-                                <i class="fa fa-comments"></i>
-                            </a>
-                        </td>
-                    </tr>
-                @endif
+                    <a href="{{ route('app.clients.tasks.done',[$tarefa['client_id'], $tarefa['id']]) }}"
+                        class="btn btn-xs btn-success" onclick="return confirm('Deseja mesmo finalizar?')">
+                        <i class="fa fa-check"></i> Finalizar
+                    </a>
+                    @elseif($tarefa['type'] == 'process_task')
+                    <a href="#modal-adiar" data-toggle="modal" data-task-type="{{ $tarefa['type'] }}"
+                        data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-danger processTaskAdiar">
+                        <i class="fa fa-times"></i> Adiar
+                    </a>
+                    <a href="{{ route('app.clients.processes.tasks.done', [$tarefa['client_id'],$tarefa['process_id'], $tarefa['id']]) }}"
+                        data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-success processTaskFinalizar"
+                        onclick="return confirm('Deseja mesmo finalizar?')">
+                        <i class="fa fa-check"></i> Finalizar
+                    </a>
+                    @else
+                    <a href="#modal-adiar" data-toggle="modal" data-task-type="{{ $tarefa['type'] }}"
+                        data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-danger processTaskAdiar">
+                        <i class="fa fa-times"></i> Adiar
+                    </a>
+                    <a href="{{ route('app.assinaturaTaskClose',  $tarefa['id']) }}" data-task="{{ $tarefa['id'] }}"
+                        class="btn btn-xs btn-success processTaskFinalizar"
+                        onclick="return confirm('Deseja mesmo finalizar?')">
+                        <i class="fa fa-check"></i> Finalizar
+                    </a>
+                    @endif
+                    @endif
+                    <a href="javascript:void(0)" class="btn btn-xs btn-info showComments"
+                        data-task-type="{{ $tarefa['type'] }}" data-task="{{ $tarefa['id'] }}">
+                        <i class="fa fa-comments"></i>
+                    </a>
+                </td>
+            </tr>
+            @endif
             @endforeach
-            </tbody>
-        </table>
-    </div>
+        </tbody>
+    </table>
+</div>
 
-    @include('widgets.comments')
+@include('widgets.comments')
 
 
 @endsection
 
 @section('modal')
-    <div class="modal fade" tabindex="-1" role="dialog" id="modal-adiar">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Adiamento</h4>
-                </div>
-
-                <form method="post" action="" id="form-adiamento">
-                    <input type="hidden" name="task_id" value="">
-                    <input type="hidden" name="task_type" value="">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Quantidade</label>
-                            <select class="form-control" name="qt">
-                                @for($i= 1; $i <= 24; $i++)
-                                    <option value="{{ $i }}">{{ $i }}</option>
-                                @endfor
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Tipo</label>
-                            <select class="form-control" name="tipo">
-                                <option value="h">Hora(s)</option>
-                                <option value="d">Dia(s)</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal">
-                            <i class="fa fa-times"></i> Fechar
-                        </button>
-                        <button type="submit" class="btn btn-sm btn-success ">
-                            <i class="fa fa-save"></i> Salvar
-                        </button>
-                    </div>
-                </form>
+<div class="modal fade" tabindex="-1" role="dialog" id="modal-adiar">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Adiamento</h4>
             </div>
+
+            <form method="post" action="" id="form-adiamento">
+                <input type="hidden" name="task_id" value="">
+                <input type="hidden" name="task_type" value="">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Quantidade</label>
+                        <select class="form-control" name="qt">
+                            @for($i= 1; $i <= 24; $i++) <option value="{{ $i }}">{{ $i }}</option>
+                                @endfor
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo</label>
+                        <select class="form-control" name="tipo">
+                            <option value="h">Hora(s)</option>
+                            <option value="d">Dia(s)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal">
+                        <i class="fa fa-times"></i> Fechar
+                    </button>
+                    <button type="submit" class="btn btn-sm btn-success ">
+                        <i class="fa fa-save"></i> Salvar
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
-
+</div>
 @endsection
 
 @section('script')
-    <script type="text/javascript">
-        $("#datatable").dataTable();
+<script type="text/javascript">
+    $("#datatable").dataTable();
 
         $('#modal-adiar').on('show.bs.modal', function (event) {
             var $target = $(event.relatedTarget);
@@ -281,5 +288,5 @@
                 });
             });
         }
-    </script>
+</script>
 @endsection
