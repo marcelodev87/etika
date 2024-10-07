@@ -56,6 +56,7 @@ class ExternalController extends Controller
         $email = $request->input('login.email');
         $password = $request->input('login.password');
 
+
         if ($this->authenticateUser($email, $password)) {
             $enterprise = Client::find($id);
 
