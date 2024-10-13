@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\Validator;
 class ClientMandatoController extends Controller
 {
 
-    public function all(){
-        $mandatos = ClientMandato::orderBy('end_at', 'ASC')->get();
+    public function all()
+    {
+        $mandatos = ClientMandato::all();
         return view('mandatos.all', compact('mandatos'));
     }
     public function index(Client $client)

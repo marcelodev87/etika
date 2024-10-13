@@ -11,15 +11,13 @@ $texto = "";
 if (isset($data['diretoria']['presidente'])) {
     $presidente = "
 	<p>
-	<strong>Presidente:</strong> {$data['diretoria']['presidente']['nome']},
-    <span style='color:blue !important;'>brasileiro(a)</span>, natural <span style='color:blue !important;'>de(a)(o)</span>
-	{$data['diretoria']['presidente']['naturalidade']},<span style='color:blue !important;'> nascido(a) </span> em
-    {$data['diretoria']['presidente']['dt_nascimento']},
-	<span style='color:blue !important;'>{$data['diretoria']['presidente']['estado_civil']}</span>, {$data['diretoria']['presidente']['profissao']}, portador<span style='color:blue !important;'>(a)</span> do RG de n°: {$data['diretoria']['presidente']['rg']} expedido pelo
-    {$data['diretoria']['presidente']['exp_rg']}, e inscrito<span style='color:blue !important;'>(a)</span> no CPF de n°
-	{$data['diretoria']['presidente']['cpf']}, residente e domiciliado<span style='color:blue !important;'>(a)</span> na
-    {$data['diretoria']['presidente']['endereco']};
-	</p>";
+	<strong>Presidente:</strong> {$data['diretoria']['presidente']['nome']}, brasileiro(a), natural de
+	{$data['diretoria']['presidente']['naturalidade']}, nascido(a) em {$data['diretoria']['presidente']['dt_nascimento']},
+	{$data['diretoria']['presidente']['estado_civil']}, {$data['diretoria']['presidente']['profissao']}, portador(a) do RG de n°:
+	{$data['diretoria']['presidente']['rg']} expedido pelo {$data['diretoria']['presidente']['exp_rg']}, e inscrito(a) no CPF de n°
+	{$data['diretoria']['presidente']['cpf']}, residente e domiciliado(a) na {$data['diretoria']['presidente']['endereco']}
+	</p>
+	</br>";
 } else {
     $presidente = "PRESIDENTE NÃO CADASTRADO";
 }
@@ -29,16 +27,13 @@ if (isset($data['diretoria']['presidente'])) {
 if (isset($data['diretoria']['vice_presidente'])) {
     $vice_presidente = "
 	<p>
-	<strong>Vice Presidente:</strong> {$data['diretoria']['vice_presidente']['nome']},
-    <span style='color:blue !important;'>brasileiro(a)</span>, natural <span style='color:blue !important;'>de(a)(o)</span>
-	{$data['diretoria']['vice_presidente']['naturalidade']},
-    <span style='color:blue !important;'>nascido(a)</span> em {$data['diretoria']['vice_presidente']['dt_nascimento']},
-	<span style='color:blue !important;'>{$data['diretoria']['vice_presidente']['estado_civil']}</span>,
-    {$data['diretoria']['vice_presidente']['profissao']},
-	<span style='color:blue !important;'>portador(a)</span> do RG de n°: {$data['diretoria']['vice_presidente']['rg']} expedido pelo {$data['diretoria']['vice_presidente']['exp_rg']}, e inscrito<span style='color:blue !important;'>(a)</span> no CPF de n°
-    {$data['diretoria']['vice_presidente']['cpf']}, residente e domiciliado<span style='color:blue !important;'>(a)</span> na
-    {$data['diretoria']['vice_presidente']['endereco']};
-	</p>";
+	<strong>Vice Presidente:</strong> {$data['diretoria']['vice_presidente']['nome']}, brasileiro(a), natural de
+	{$data['diretoria']['vice_presidente']['naturalidade']}, nascido(a) em {$data['diretoria']['vice_presidente']['dt_nascimento']},
+	{$data['diretoria']['vice_presidente']['estado_civil']}, {$data['diretoria']['vice_presidente']['profissao']},
+	portador(a) do RG de n°: {$data['diretoria']['vice_presidente']['rg']} expedido pelo {$data['diretoria']['vice_presidente']['exp_rg']},
+	e inscrito(a) no CPF de n° {$data['diretoria']['vice_presidente']['cpf']}, residente e domiciliado(a) na {$data['diretoria']['vice_presidente']['endereco']}
+	</p>
+	</br>";
 } else {
     $vice_presidente = "VICE PRESIDENTE NÃO CADASTRADO";
 }
@@ -50,13 +45,13 @@ if (isset($data['diretoria']['tesoureiros'])) {
         $x = $key + 1;
         $h = "
 		<p>
-		<strong>{$x}º Tesoureiro:</strong> {$val['nome']},
-        <span style='color:blue !important;'>brasileiro(a)</span>, natural <span style='color:blue !important;'>de(a)(o)</span>
-		{$val['naturalidade']}, <span style='color:blue !important;'> nascido(a)</span> </span> em {$val['dt_nascimento']},
-		{$val['estado_civil']}, {$val['profissao']}, <span style='color:blue !important;'>portador(a)</span> do RG de n°:
-		{$val['rg']} expedido pelo {$val['exp_rg']}, e <span style='color:blue !important;'>inscrito(a)</span> no CPF de n°
-		{$val['cpf']}, residente e <span style='color:blue !important;'>domiciliado(a)</span> na {$val['endereco']};
-		</p>";
+		<strong>{$x}º Tesoureiro:</strong> {$val['nome']}, brasileiro(a), natural de
+		{$val['naturalidade']}, nascido(a) em {$val['dt_nascimento']},
+		{$val['estado_civil']}, {$val['profissao']}, portador(a) do RG de n°:
+		{$val['rg']} expedido pelo {$val['exp_rg']}, e inscrito(a) no CPF de n°
+		{$val['cpf']}, residente e domiciliado(a) na {$val['endereco']}
+		</p>
+		</br>";
         array_push($tesoureiros, $h);
     }
 }
@@ -69,13 +64,13 @@ if (isset($data['diretoria']['secretarios'])) {
         $x = $key + 1;
         $h = "
 		<p>
-		<strong>{$x}º Secretário:</strong> {$val['nome']},
-        <span style='color:blue !important;'>brasileiro(a)</span>, natural <span style='color:blue !important;'>de(a)(o)</span>
-		{$val['naturalidade']}, <span style='color:blue !important;'> nascido(a)</span> </span> em {$val['dt_nascimento']},
-		{$val['estado_civil']}, {$val['profissao']}, <span style='color:blue !important;'>portador(a)</span> do RG de n°:
-		{$val['rg']} expedido pelo {$val['exp_rg']}, e <span style='color:blue !important;'>inscrito(a)</span> no CPF de n°
-		{$val['cpf']}, residente e <span style='color:blue !important;'>domiciliado(a)</span> na {$val['endereco']};
-		</p>";
+		<strong>{$x}º Secretário:</strong> {$val['nome']}, brasileiro(a), natural de
+		{$val['naturalidade']}, nascido(a) em {$val['dt_nascimento']},
+		{$val['estado_civil']}, {$val['profissao']}, portador(a) do RG de n°:
+		{$val['rg']} expedido pelo {$val['exp_rg']}, e inscrito(a) no CPF de n°
+		{$val['cpf']}, residente e domiciliado(a) na {$val['endereco']}
+		</p>
+		</br>";
         array_push($secretarios, $h);
     }
 }
@@ -83,13 +78,14 @@ if (isset($data['diretoria']['secretarios'])) {
 $vice = $data['diretoria']['vice_presidente']['nome'] ?? 'VICE PRESIDENTE';
 $tes = $data['diretoria']['tesoureiros'][0]['nome'] ?? 'TESOUREIRO';
 $texto .= "<div align=justify  style='background-color:#FFFFFF;  padding: 25px 50px 25px 50px;'>";
-$texto .= "<h2><strong>ATA DE FUNDAÇÃO DA {$data['igreja']['nome']}</strong></h2>";
-$texto .= "<p>Ata da reunião, realizada no dia <span style='color:blue !important;'>{$data['post']['fundacao']} </span>às 19h, na {$data['igreja']['endereco']}.
+$texto .= "<h2>ATA DE FUNDAÇÃO DA {$data['igreja']['nome']}</h2>";
+$texto .= "<p>Ata da reunião, realizada no dia <span style='color:blue !important;'>{$data['post']['fundacao']} </span>as 19h, na {$data['igreja']['endereco']}.
 Estando presente os membros fundadores, foi presidida esta reunião pelo Pastor {$data['diretoria']['presidente']['nome']}. A seguir, o Presidente
-nomeou para secretário da reunião <span style='color:blue !important;'>o(a) Sr(a). {$vice} ,
+nomeou para secretário da reunião o(a) Sr(a). <span style='color:blue !important;'> {$vice} ,
 {$tes} </span> e declarou instalada esta reunião e aberta a sessão, às dezenove horas do dia
-<span style='color:blue !important;'>{$data['post']['fundacao']}</span>, informando que a presente convocação tem como finalidade a fundação da
-<strong>{$data['igreja']['nome']}</strong>, a aprovação do Estatuto, a aprovação do endereço da sede e a ordenação da Diretoria através da indicação do Presidente conforme estabelece o Estatuto, o qual depois de lido foi aprovado por unanimidade. Os candidatos, para o mandato de
+<span style='color:blue !important;'>{$data['post']['fundacao']} </span>, informando que a presente convocação tem como finalidade a fundação da
+{$data['igreja']['nome']}, a aprovação do Estatuto, a aprovação do endereço da sede e a ordenação da Diretoria através da indicação do Presidente
+conforme estabelece o Estatuto, o qual depois de lido foi aprovado por unanimidade. Os candidatos, para o mandato de
 <span style='color:blue !important;'>00/0000 a 00/0000</span>, foram escolhidos nos cargos assim qualificados:</p>";
 
 
@@ -102,7 +98,7 @@ if (count($tesoureiros)) {
         $texto .= $t;
     }
 } else {
-    $texto .= "NÃO HÁ TESOUREIROS<br>";
+    $texto .= "NÃO HÁ TESOUREIROS";
 }
 
 if (count($secretarios)) {
@@ -110,17 +106,17 @@ if (count($secretarios)) {
         $texto .= $s;
     }
 } else {
-    $texto .= "NÃO HÁ SECRETÁRIOS<br>";
+    $texto .= "NÃO HÁ SECRETÁRIOS";
 }
 
 $texto .= "
 <p>
 Após a leitura, discussão e aprovação do estatuto e aprovação do endereço da sede, localizada na {$data['igreja']['endereco']}, o Presidente
 deu posse à Diretoria eleita. Após o Ato Solene, o Presidente interrompeu a sessão por algum tempo, a fim que fosse lavrada a ata, que depois
-de lida foi aprovada por unanimidade. Nada mais havendo a tratar, eu, <span style='color:blue !important;'>secretário(a)</span>, lavrei a presente ata e assino com o Presidente.
+de lida foi aprovada por unanimidade. Nada mais havendo a tratar, eu, secretário(a), lavrei a presente ata e assino com o Presidente.
 </p>";
 
-$texto .= "<p>{$data['igreja']['cidade']} - {$data['igreja']['uf']}, <span style='color:blue !important;'>{$data['post']['fundacao']}</span>.</p>";
+$texto .= "<p>{$data['igreja']['cidade']}, <span style='color:blue !important;'>{$data['post']['fundacao']}</span>.</p>";
 
 
 $texto .= "<p>	_________________________________________________</p>";
@@ -150,11 +146,6 @@ if (count($data['diretoria']['secretarios'])) {
     }
 }
 
-$texto .= "<p>	_________________________________________________</p>";
-$texto .= "<p>Lúcia de Fátima Pereira Machado</p>";
-$texto .= "<p>ADVOGADA - OAB/RJ  n°135.542</p>";
 
 $texto .= "</div>";
 echo $texto;
-
-?>

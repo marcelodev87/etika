@@ -16,7 +16,7 @@ class ClientPersona extends Model
 
     public function client()
     {
-        return $this->belongTo(Client::class);
+        return $this->belongsTo(Client::class);
     }
 
     public function addresses()
@@ -54,7 +54,7 @@ class ClientPersona extends Model
             $a .= ' - ' . $address->complement . '';
         }
 
-        $a .= ' - ' . $address->neighborhood . ' - ' . $address->city . ' - ' . $address->state . ' - CEP: ' . $address->zip;
+        $a .= ' - ' . $address->neighborhood . ' - ' . $address->city . ' - ' . $address->state . ' - ' . $address->zip;
 
         return $a;
     }

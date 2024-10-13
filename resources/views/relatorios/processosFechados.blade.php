@@ -1,76 +1,83 @@
 @extends('layouts.app')
 
 @section('header')
-    @breadcrumb(['title' => 'Relatórios'])
-    <li>
-        <a href="{!! route('app.index') !!}">
-            <i class="fa fa-th"></i> Dashboard
-        </a>
-    </li>
-    <li class="active">
-        <i class="fa fa-copy"></i> Processos Fechados
-    </li>
-    @endbreadcrumb
+@breadcrumb(['title' => 'Relatórios'])
+<li>
+    <a href="{!! route('app.index') !!}">
+        <i class="fa fa-th"></i> Dashboard
+    </a>
+</li>
+<li class="active">
+    <i class="fa fa-copy"></i> Processos Fechados
+</li>
+@endbreadcrumb
 @endsection
 @section('content')
-    <div class="chart-box">
-        <table class="table table-hover table-striped" id="datatable">
-            <thead>
+<div class="chart-box">
+    <table class="table table-hover table-striped" id="datatable">
+        <thead>
             <tr>
                 <th>CPF/CNPJ</th>
                 <th>Cliente</th>
                 <th>UF</th>
                 <th>Processo</th>
                 <th>Criado em</th>
+                <th>Finalizado em</th>
                 <th></th>
             </tr>
-            </thead>
-            <tbody>
+        </thead>
+        <tbody>
             @foreach ($processos as $processo)
-                <tr>
-                    <td>{{ $processo->client->document }}</td>
-                    <td>
-                        <a href="{{ route('app.clients.show', $processo->client->id) }}">{{ $processo->client->name }}</a>
-                    </td>
-                    <td>{{ $processo->client->state }}</td>
-                    <td>
-                        <a href="{{ route('app.clients.processes.index',[$processo->client_id, $processo->id]) }}">
-                            {{ $processo->process->name }}
-                        </a>
-                    </td>
-                    <td>
-                        <span class="hidden">{{ $processo->created_at->timestamp }}</span>{{ $processo->created_at->format('d/m/Y') }}
-                    </td>
-                    <td class="text-right">
-                        <button type="button" class="btn btn-xs btn-success" onclick="showHistory({{$processo->client_id}}, {{$processo->id}})">
-                            <i class="fa fa-history"></i>
-                        </button>
-                    </td>
-                </tr>
+            <tr>
+                <td>{{ $processo->client->document }}</td>
+                <td>
+                    <a href="{{ route('app.clients.show', $processo->client->id) }}">{{ $processo->client->name }}</a>
+                </td>
+                <td>{{ $processo->client->state }}</td>
+                <td>
+                    <a href="{{ route('app.clients.processes.index',[$processo->client_id, $processo->id]) }}">
+                        {{ $processo->process->name }}
+                    </a>
+                </td>
+                <td>
+                    <span class="hidden">{{ $processo->created_at->timestamp }}</span>{{
+                    $processo->created_at->format('d/m/Y') }}
+                </td>
+                <td>
+                    <span class="hidden">{{ $processo->updated_at->timestamp }}</span>{{
+                    $processo->updated_at->format('d/m/Y') }}
+                </td>
+                <td class="text-right">
+                    <button type="button" class="btn btn-xs btn-success"
+                        onclick="showHistory({{$processo->client_id}}, {{$processo->id}})">
+                        <i class="fa fa-history"></i>
+                    </button>
+                </td>
+            </tr>
             @endforeach
-            </tbody>
-        </table>
-    </div>
+        </tbody>
+    </table>
+</div>
 
-    <div class="sidebar-right-blank hide">
-        <div class="header">
-            <h3>Histórico</h3>
-            <a href="javascript:void(0)" onclick="hideComments()" class="text-danger">
-                <i class="fa fa-times"></i>
-            </a>
-        </div>
-        <div class="body">
-
-        </div>
+<div class="sidebar-right-blank hide">
+    <div class="header">
+        <h3>Histórico</h3>
+        <a href="javascript:void(0)" onclick="hideComments()" class="text-danger">
+            <i class="fa fa-times"></i>
+        </a>
     </div>
+    <div class="body">
+
+    </div>
+</div>
 @endsection
 
 
 @section('script')
-    <script type="text/javascript">
-        $("#datatable").dataTable({
+<script type="text/javascript">
+    $("#datatable").dataTable({
             columnDefs: [
-                {orderable: false, targets: 5}
+                {orderable: false, targets: 6}
             ],
             language: $datatableBR,
         });
@@ -105,5 +112,5 @@
             $block.find('h3').html('Histórico');
             $block.removeClass('hide');
         }
-    </script>
+</script>
 @endsection
