@@ -13,7 +13,7 @@ class ClientMandatoController extends Controller
 
     public function all()
     {
-        $mandatos = ClientMandato::all();
+        $mandatos = ClientMandato::orderBy('end_at', 'ASC')->get();
         return view('mandatos.all', compact('mandatos'));
     }
     public function index(Client $client)

@@ -21,28 +21,29 @@
                 <th>Tipo</th>
                 <th>Cliente</th>
                 <th>Responsável</th>
-                <th>Data Entrega</th>
-                <th>Data Criação</th>
+                <th>Prazo</th>
+                <th>Data da Criação</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach ($tarefas as $tarefa)
-            @if(auth()->user()->hasRole('adm') || auth()->user()->id == $tarefa['responsible_id'])
+            {{-- @if (auth()->user()->hasRole('adm') ||
+            auth()->user()->id == $tarefa['responsible_id']) --}}
             @php
 
-            switch ($tarefa['type']){
+            switch ($tarefa['type']) {
             case 'single_task':
             $url = route('app.clients.show', $tarefa['client_id']);
-            $tipo = "Tarefa";
+            $tipo = 'Tarefa';
             break;
             case 'process_task':
             $url = route('app.clients.processes.index', [$tarefa['client_id'], $tarefa['process_id']]);
-            $tipo = "Processo";
+            $tipo = 'Processo';
             break;
             case 'subscription_task':
             $url = route('app.clients.subscriptions.tasks.show', [$tarefa['client_id'], $tarefa['subscription_id']]);
-            $tipo = "Assinatura";
+            $tipo = 'Assinatura';
             break;
             }
             @endphp
@@ -63,14 +64,14 @@
                 <td>{{ $tarefa['criacao'] }}</td>
                 <td class="text-right">
 
-                    @if($type != 'closed')
-                    @if($tarefa['type'] == 'single_task')
+                    @if ($type != 'closed')
+                    @if ($tarefa['type'] == 'single_task')
                     <a href="#modal-adiar" data-toggle="modal" data-task-type="{{ $tarefa['type'] }}"
                         data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-danger singleTaskAdiar">
                         <i class="fa fa-times"></i> Adiar
                     </a>
 
-                    <a href="{{ route('app.clients.tasks.done',[$tarefa['client_id'], $tarefa['id']]) }}"
+                    <a href="{{ route('app.clients.tasks.done', [$tarefa['client_id'], $tarefa['id']]) }}"
                         class="btn btn-xs btn-success" onclick="return confirm('Deseja mesmo finalizar?')">
                         <i class="fa fa-check"></i> Finalizar
                     </a>
@@ -79,7 +80,7 @@
                         data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-danger processTaskAdiar">
                         <i class="fa fa-times"></i> Adiar
                     </a>
-                    <a href="{{ route('app.clients.processes.tasks.done', [$tarefa['client_id'],$tarefa['process_id'], $tarefa['id']]) }}"
+                    <a href="{{ route('app.clients.processes.tasks.done', [$tarefa['client_id'], $tarefa['process_id'], $tarefa['id']]) }}"
                         data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-success processTaskFinalizar"
                         onclick="return confirm('Deseja mesmo finalizar?')">
                         <i class="fa fa-check"></i> Finalizar
@@ -89,7 +90,7 @@
                         data-task="{{ $tarefa['id'] }}" class="btn btn-xs btn-danger processTaskAdiar">
                         <i class="fa fa-times"></i> Adiar
                     </a>
-                    <a href="{{ route('app.assinaturaTaskClose',  $tarefa['id']) }}" data-task="{{ $tarefa['id'] }}"
+                    <a href="{{ route('app.assinaturaTaskClose', $tarefa['id']) }}" data-task="{{ $tarefa['id'] }}"
                         class="btn btn-xs btn-success processTaskFinalizar"
                         onclick="return confirm('Deseja mesmo finalizar?')">
                         <i class="fa fa-check"></i> Finalizar
@@ -102,15 +103,13 @@
                     </a>
                 </td>
             </tr>
-            @endif
+            {{-- @endif --}}
             @endforeach
         </tbody>
     </table>
 </div>
 
 @include('widgets.comments')
-
-
 @endsection
 
 @section('modal')
@@ -130,7 +129,7 @@
                     <div class="form-group">
                         <label>Quantidade</label>
                         <select class="form-control" name="qt">
-                            @for($i= 1; $i <= 24; $i++) <option value="{{ $i }}">{{ $i }}</option>
+                            @for ($i = 1; $i <= 24; $i++) <option value="{{ $i }}">{{ $i }}</option>
                                 @endfor
                         </select>
                     </div>
@@ -158,7 +157,9 @@
 
 @section('script')
 <script type="text/javascript">
-    $("#datatable").dataTable();
+    jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+            "date-euro-pre": function(a) {
+                var x;
 
         $('#modal-adiar').on('show.bs.modal', function (event) {
             var $target = $(event.relatedTarget);

@@ -114,9 +114,10 @@ $content = null;
                     <p>
                         Convido as pessoas interessadas em primeira convocação para a reunião de Fundação <span
                             style='color:red !important;'>do(a)</span> {{ $igreja }} uma organização religiosa sem fins
-                        lucrativos, a comparecerem no dia XXXXXXX às 19h, na {{ $endereco_igreja }} – {{
-                        $complemento_igreja }} – {{ $bairro_igreja }} – {{ $cidade_igreja }} - {{ $uf_igreja }} – CEP:
-                        {{ $cep_igreja }}, ocasião em que serão deliberados os seguintes assuntos:</p>
+                        lucrativos, a comparecerem no dia <span style='color:red !important;'>{{ $data }}</span> às 19h,
+                        na {{ $endereco_igreja }} – {{ $complemento_igreja }} – {{ $bairro_igreja }} – {{ $cidade_igreja
+                        }} - {{ $uf_igreja }} – CEP: {{ $cep_igreja }}, ocasião em que serão deliberados os seguintes
+                        assuntos:</p>
                     <br />
 
                     <p>1 - Aprovação da denominação da Igreja;</p>
@@ -125,12 +126,15 @@ $content = null;
                     <p>4 - Aprovação do Estatuto Social; e,</p>
                     <p>5 - Indicação e Posse dos membros da Diretoria.</p>
                     <br />
-                    <p class="text-center">{{ $cidade_igreja }}, {{ $data }}.</p>
+                    <p class="text-center">{{ $cidade_igreja }} - {{ $uf_igreja }}, <span
+                            style='color:red !important;'>{{ $data }}</span>.</p>
                     <br />
 
                     <p class="text-center"> _________________________________________________</p>
-                    <p class="text-center">{{ $nome_presidente }}</p>
-                    <p class="text-center">CONTRATANTE</p>
+                    <span style='color:red !important;'>
+                        <p class="text-center">{{ $nome_presidente }}</p>
+                        <p class="text-center">PRESIDENTE</p>
+                    </span>
                     <br />
                     <br />
                 </div>

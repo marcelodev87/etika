@@ -38,6 +38,7 @@
                             <td>{{ $process->name }}</td>
                             <td>{{ brl($process->price) }}</td>
                             <td class="text-right">
+                                @if(auth()->user()->hasAnyRole(['adm']))
                                 <a href="{!! route('app.processes.edit', $process->id) !!}"
                                     class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="left"
                                     title="Editar"><i class="fa fa-edit"></i></a>
@@ -50,6 +51,7 @@
                                         title="Deletar">
                                         <i class="fa fa-trash"></i></button>
                                 </form>
+                                @endif
                             </td>
                         </tr>
                         @endforeach
