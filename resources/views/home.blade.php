@@ -1,59 +1,59 @@
 @extends('layouts.app')
 
 @section('header')
-    @breadcrumb(['title' => 'Painel'])
-    <li class="active"><i class="fa fa-th"></i> Painel</li>
-    @endbreadcrumb
+@breadcrumb(['title' => 'Painel'])
+<li class="active"><i class="fa fa-th"></i> Painel</li>
+@endbreadcrumb
 @endsection
 
 @section('content')
 
-    @include('widgets.open')
-        <div class="row">
-            <div class="col-md-12 pl-5">
-                <h2>Geral</h2>
-            </div>
-            @include('widgets.boxes.clientsRegistred')
-            @include('widgets.boxes.newClientsSubscription')
-            @include('widgets.boxes.digitalCertificate')
-            @include('widgets.boxes.pendingTasksSubscription')
-            @include('widgets.boxes.pendingTasks')
+@include('widgets.open')
+<div class="row">
+    <div class="col-md-12 pl-5">
+        <h2>Geral</h2>
+    </div>
+    @include('widgets.boxes.clientsRegistred')
+    @include('widgets.boxes.newClientsSubscription')
+    @include('widgets.boxes.digitalCertificate')
+    @include('widgets.boxes.pendingTasksSubscription')
+    @include('widgets.boxes.pendingTasks')
 
-        </div>
-        <div class="row">
-            <div class="col-md-12 pl-5">
-                <h2 class="m-5">Legalização</h2>
-            </div>
-            @include('widgets.boxes.newProcesses')
-            @include('widgets.boxes.closedProcesses')
-            @include('widgets.boxes.closedProcesses30')
-            @include('widgets.boxes.expiredTerms')
-            @include('widgets.boxes.lawyerSignature')
-            @include('widgets.boxes.sentProcesses')
-        </div>
+</div>
+<div class="row">
+    <div class="col-md-12 pl-5">
+        <h2 class="m-5">Legalização</h2>
+    </div>
+    @include('widgets.boxes.newProcesses')
+    @include('widgets.boxes.closedProcesses')
+    @include('widgets.boxes.closedProcesses30')
+    @include('widgets.boxes.expiredTerms')
+    @include('widgets.boxes.lawyerSignature')
+    @include('widgets.boxes.sentProcesses')
+</div>
 
-    @if(auth()->user()->hasRole('adm'))
-        <div class="row">
-            <div class="col-md-12 pl-5">
-                <h2 class="m-5">Financeiro</h2>
-            </div>
-            @include('widgets.boxes.processesPayments')
-            @include('widgets.boxes.processesPaymentsValue')
-            @include('widgets.boxes.subscriptionPayments')
-            @include('widgets.boxes.subscriptionPaymentsValue')
-        </div>
-        <div class="row">
-            @include('widgets.charts.received')
-        </div>
-    @endif
+@if(auth()->user()->hasRole('adm'))
+<div class="row">
+    <div class="col-md-12 pl-5">
+        <h2 class="m-5">Financeiro</h2>
+    </div>
+    @include('widgets.boxes.processesPayments')
+    @include('widgets.boxes.processesPaymentsValue')
+    @include('widgets.boxes.subscriptionPayments')
+    @include('widgets.boxes.subscriptionPaymentsValue')
+</div>
+<div class="row">
+    @include('widgets.charts.received')
+</div>
+@endif
 
 
-    @endsection
+@endsection
 
 
 @section('script')
-    <script type="text/javascript">
-        $.get('{{ route('app.api.charts.received') }}', function (response) {
+<script type="text/javascript">
+    $.get('{{ route('app.api.charts.received') }}', function (response) {
             var ctx = document.getElementById('chartReceived');
             var chartReceived = new Chart(ctx, {
                 type: 'line',
@@ -131,5 +131,5 @@
         $.get('{{ route('app.api.widgets.subscriptionPaymentsValue') }}', function (response) {
             $('.subscriptionPaymentsValue').find('.count').html(response.total);
         })
-    </script>
+</script>
 @endsection()

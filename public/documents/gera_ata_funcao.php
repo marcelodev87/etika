@@ -156,5 +156,3 @@ $texto .= "<p>ADVOGADA - OAB/RJ  n°135.542</p>";
 
 $texto .= "</div>";
 echo $texto;
-
-?>
