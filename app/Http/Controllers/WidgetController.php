@@ -3,18 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Client;
-use App\ClientMandato;
-use App\ClientProcess;
-use App\ClientProcessPayment;
-use App\ClientProcessTask;
-use App\ClientSubscription;
-use App\ClientSubscriptionPayment;
-use App\ClientSubscriptionTask;
-use App\InternalTask;
-use Carbon\Carbon;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\ClientProcess;
+use App\ClientSubscription;
+use App\ClientProcessPayment;
+use App\ClientMandato;
+use Illuminate\Support\Carbon;
+use App\ClientSubscriptionPayment;
 
 class WidgetController extends Controller
 {

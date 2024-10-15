@@ -143,7 +143,7 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
 
     # rota de processos internos
     Route::group(['prefix' => 'processos', 'as' => 'processes.'], function () {
-        Route::get('', ['uses' => 'InternalProcessController@index', 'as' => 'index'/* , 'roles' => ['adm', 'usr'] */]);
+        Route::get('', ['uses' => 'InternalProcessController@index', 'as' => 'index', 'roles' => ['adm', 'usr']]);
         Route::get('/adicionar', ['uses' => 'InternalProcessController@create', 'as' => 'create', 'roles' => ['adm', 'usr']]);
         Route::post('/', ['uses' => 'InternalProcessController@store', 'as' => 'store', 'roles' => ['adm', 'usr']]);
         Route::get('/{internalProcess}/editar', ['uses' => 'InternalProcessController@edit', 'as' => 'edit', 'roles' => ['adm', 'usr']]);
@@ -196,7 +196,6 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
         Route::match(['get', 'post'], '/estatuto-episcopal', ['uses' => 'GeraDocumentoController@estatutoEpiscopal', 'as' => 'estatutoEpiscopal', 'roles' => ['adm', 'usr']]);
         Route::match(['get', 'post'], '/contrato-contabil', ['uses' => 'GeraDocumentoController@contratoContabil', 'as' => 'contratoContabil', 'roles' => ['adm', 'usr']]);
         Route::match(['get', 'post'], '/edital-convocacao', ['uses' => 'GeraDocumentoController@editalConvocacao', 'as' => 'editalConvocacao', 'roles' => ['adm', 'usr']]);
-        Route::match(['get', 'post'], '/lista-presenca', ['uses' => 'GeraDocumentoController@listaPresenca', 'as' => 'listaPresenca', 'roles' => ['adm', 'usr']]);
         Route::match(['get', 'post'], '/contrato-abertura', ['uses' => 'GeraDocumentoController@contratoAbertura', 'as' => 'contratoAbertura', 'roles' => ['adm', 'usr']]);
         Route::match(['get', 'post'], '/estatuto-congregacional', ['uses' => 'GeraDocumentoController@estatudoCongregacional', 'as' => 'estatutoCongregacional', 'roles' => ['adm', 'usr']]);
 
@@ -234,20 +233,6 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
         });
         Route::group(['prefix' => 'widgets', 'as' => 'widgets.'], function () {
             Route::get('clients-registred', ['uses' => 'WidgetController@clientsRegistred', 'as' => 'clientsRegistred']);
-            Route::get('new-processes', ['uses' => 'WidgetController@newProcesses', 'as' => 'newProcesses']);
-            Route::get('closed-processes', ['uses' => 'WidgetController@closedProcesses', 'as' => 'closedProcesses']);
-            Route::get('closed-processes-30', ['uses' => 'WidgetController@closedProcesses30', 'as' => 'closedProcesses30']);
-            Route::get('new-clients-subscription', ['uses' => 'WidgetController@newClientsSubscription', 'as' => 'newClientsSubscription']);
-            Route::get('expired-terms', ['uses' => 'WidgetController@expiredTerms', 'as' => 'expiredTerms']);
-            Route::get('digital-certificate', ['uses' => 'WidgetController@digitalCertificate', 'as' => 'digitalCertificate']);
-            Route::get('lawyer-signature', ['uses' => 'WidgetController@lawyerSignature', 'as' => 'lawyerSignature']);
-            Route::get('sent-processes', ['uses' => 'WidgetController@sentProcesses', 'as' => 'sentProcesses']);
-            Route::get('pending-tasks', ['uses' => 'WidgetController@pendingTasks', 'as' => 'pendingTasks']);
-            Route::get('pending-tasks-subscription', ['uses' => 'WidgetController@pendingTasksSubscription', 'as' => 'pendingTasksSubscription']);
-            Route::get('processes-payments', ['uses' => 'WidgetController@processesPayments', 'as' => 'processesPayments']);
-            Route::get('processes-payments-value', ['uses' => 'WidgetController@processesPaymentsValue', 'as' => 'processesPaymentsValue']);
-            Route::get('subscription-payments', ['uses' => 'WidgetController@subscriptionPayments', 'as' => 'subscriptionPayments']);
-            Route::get('subscription-payments-value', ['uses' => 'WidgetController@subscriptionPaymentsValue', 'as' => 'subscriptionPaymentsValue']);
         });
     });
 
@@ -306,7 +291,6 @@ Route::get('import', function () {
 
 Route::get('pagamentos', 'PaymentsController@index')->name('app.payments');
 Route::post('pagamentos', 'PaymentsController@load')->name('app.payments.load');
-
 
 Route::group(['prefix' => 'external'], function () {
 

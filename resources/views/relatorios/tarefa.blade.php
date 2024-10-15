@@ -161,41 +161,7 @@
             "date-euro-pre": function(a) {
                 var x;
 
-                if (a.trim() !== '') {
-                    var frDatea = a.trim().split(' ');
-                    var frTimea = (undefined != frDatea[1]) ? frDatea[1].split(':') : [00, 00, 00];
-                    var frDatea2 = frDatea[0].split('/');
-                    x = (frDatea2[2] + frDatea2[1] + frDatea2[0] + frTimea[0] + frTimea[1] + ((undefined !=
-                        frTimea[2]) ? frTimea[2] : 0)) * 1;
-                } else {
-                    x = Infinity;
-                }
-
-                return x;
-            },
-
-            "date-euro-asc": function(a, b) {
-                return a - b;
-            },
-
-            "date-euro-desc": function(a, b) {
-                return b - a;
-            }
-        });
-        $('#datatable').dataTable({
-            "columns": [
-                null,
-                null,
-                null,
-                null,
-                {
-                    "type": "date-euro"
-                },
-                null
-            ]
-        });
-
-        $('#modal-adiar').on('show.bs.modal', function(event) {
+        $('#modal-adiar').on('show.bs.modal', function (event) {
             var $target = $(event.relatedTarget);
             var $type = $target.attr('data-task-type');
             var $task = $target.attr('data-task');
@@ -204,10 +170,10 @@
             $modal.find('input[name="task_type"]').val($type);
         });
 
-        $('#form-adiamento').on('submit', function(e) {
+        $('#form-adiamento').on('submit', function (e) {
             e.preventDefault()
             var $confirm = confirm('Desja mesmo fazer esta ação?');
-            if ($confirm) {
+            if($confirm){
 
                 var $form = $(this);
                 var $button = $form.find('button[type="submit"]');
@@ -233,8 +199,7 @@
                     processData: false,
                     cache: false,
                     beforeSend: () => { // aqui vai o que tem que ser feito antes de chamar o endpoint
-                        $button.attr('disabled', 'disabled').html(
-                            '<i class="fas fa-spinner fa-pulse"></i> Carregando...');
+                        $button.attr('disabled', 'disabled').html('<i class="fas fa-spinner fa-pulse"></i> Carregando...');
                     },
                     success: (response) => { // aqui vai o que der certo
                         window.location.reload();
@@ -251,7 +216,7 @@
         });
 
         {{-- Mostrar Comentários --}}
-        $('body').on('click', '.showComments', function() {
+        $('body').on('click', '.showComments', function () {
             var $type = $(this).attr('data-task-type');
             var $task = $(this).attr('data-task');
             var $endpoint = "";
@@ -263,16 +228,16 @@
                     $endpoint = "{{ route('app.task.comments.process', ':TASK') }}";
                     break;
                 case 'subscription_task':
-                    $endpoint = "{{ route('app.assinaturaTaskComments', ':TASK') }}";
+                    $endpoint = "{{ route('app.assinaturaTaskComments', ':TASK')  }}";
                     break;
             }
             $endpoint = $endpoint.replace(':TASK', $task);
             if ($endpoint != "") {
-                $.get($endpoint, function(response) {
+                $.get($endpoint, function (response) {
                     var $html = '';
-                    if (response.data.length) {
+                    if(response.data.length){
                         var $html = '';
-                        $.each(response.data, function(i, e) {
+                        $.each(response.data, function (i, e) {
                             $html += '<div class="panel panel-default">';
                             $html += '<div class="panel-heading">';
                             $html += '<h4><b>' + e.user + ' - ' + e.date + '</b></h4>';
@@ -280,9 +245,8 @@
                             $html += '<div class="panel-body">' + e.comment;
                             $html += '<div class="files">';
 
-                            $.each(e.files, function(x, z) {
-                                $html += '<a href="' + z +
-                                    '" class="btn btn-xs btn-default" target="_blank">';
+                            $.each(e.files, function (x, z) {
+                                $html += '<a href="' + z + '" class="btn btn-xs btn-default" target="_blank">';
                                 $html += '<i class="fa fa-paperclip"></i> Anexo';
                                 $html += '</a>';
                             })
@@ -292,8 +256,8 @@
                             $html += '</div>';
                         });
                         console.log($html)
-                    } else {
-                        $html += '<h4 class="text-center">Sem comentários</h4>';
+                    }else{
+                         $html += '<h4 class="text-center">Sem comentários</h4>';
                     }
                     $('.sidebar-right-blank').find('.body').append($html);
                 });
@@ -302,8 +266,8 @@
         });
 
         function showComments(type, task) {
-            $.get($endpoint, function(response) {
-                $.each(response.data, function(i, e) {
+            $.get($endpoint, function (response) {
+                $.each(response.data, function (i, e) {
                     var $html = '';
                     $html += '<div class="panel panel-default">';
                     $html += '<div class="panel-heading">';
@@ -312,9 +276,8 @@
                     $html += '<div class="panel-body">' + e.comment;
                     $html += '<div class="files">';
 
-                    $.each(e.files, function(x, z) {
-                        $html += '<a href="' + z +
-                            '" class="btn btn-xs btn-default" target="_blank">';
+                    $.each(e.files, function (x, z) {
+                        $html += '<a href="' + z + '" class="btn btn-xs btn-default" target="_blank">';
                         $html += '<i class="fa fa-paperclip"></i> Anexo';
                         $html += '</a>';
                     })

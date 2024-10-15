@@ -12,7 +12,6 @@
         {{-- Sidebar Menu --}}
         <ul class="sidebar-menu tree" data-widget="tree">
 
-
             @if(auth()->user()->hasAnyRole(['adm']))
             <li class="header dark-bg">Módulos</li>
             <li>
@@ -99,9 +98,6 @@
                     <li class="{{ menuPath(['app.documents.editalConvocacao'], 'active') }}">
                         <a href="{{ route('app.documents.editalConvocacao') }}">Edital de Convocação</a>
                     </li>
-                    <li class="{{ menuPath(['app.documents.listaPresenca'], 'active') }}">
-                        <a href="{{ route('app.documents.listaPresenca') }}">Lista de Presença</a>
-                    </li>
                     <li class="{{ menuPath(['app.documents.estatutoCongregacional'], 'active') }}">
                         <a href="{{ route('app.documents.estatutoCongregacional') }}">Congregacional</a>
                     </li>
@@ -136,13 +132,13 @@
                         <a href="{{ route('app.relatorios.processoAberto') }}">Processos Abertos</a>
                     </li>
                     <li class="{{ menuPath(['app.relatorios.processoFechado'], 'active') }}">
-                        <a href="{{ route('app.relatorios.processoFechado') }}">Processos Finalizados</a>
+                        <a href="{{ route('app.relatorios.processoFechado') }}">Processos Fechados</a>
                     </li>
                     <li class="{{ menuPath(['app.relatorios.tarefaAberta'], 'active') }}">
                         <a href="{{ route('app.relatorios.tarefaAberta') }}">Tarefas Abertas</a>
                     </li>
                     <li class="{{ menuPath(['app.relatorios.tarefaFechada'], 'active') }}">
-                        <a href="{{ route('app.relatorios.tarefaFechada') }}">Tarefas Finalizadas</a>
+                        <a href="{{ route('app.relatorios.tarefaFechada') }}">Tarefas Fechadas</a>
                     </li>
                     <li class="{{ menuPath(['app.relatorios.pagamentoAberto'], 'active') }}">
                         <a href="{{ route('app.relatorios.pagamentoAberto') }}">Pagamentos Abertos</a>
