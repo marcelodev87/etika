@@ -49,10 +49,10 @@ class Client extends Model
             $a .= ', ' . $this->street_number;
         }
         if ($this->complement) {
-            $a .= ' (' . $this->complement . ')';
+            $a .= ' - ' . $this->complement;
         }
 
-        $a .= ', ' . $this->city . ', ' . $this->neighborhood . ' - ' . $this->state . ' - ' . $this->zip;
+        $a .=  ' - ' . $this->neighborhood . ' - ' . $this->city . ' - ' . $this->state . ' - CEP: ' . $this->zip;
 
         return $a;
     }

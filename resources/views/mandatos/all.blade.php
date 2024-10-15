@@ -14,20 +14,19 @@
 
 
 @section('content')
-
 <div class="chart-box mt-2">
     <table class="table table-striped" id="datatable">
         <thead>
             <tr>
                 <th>Cod. Interno</th>
-                <th>Cliente</th>
+                <th>Igreja</th>
                 <th>Início</th>
                 <th>Término</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach($mandatos as $mandato)
+            @foreach ($mandatos as $mandato)
             <tr>
                 <td>{{ $mandato->client->internal_code }}</td>
                 <td>{{ $mandato->client->name }}</td>
@@ -52,14 +51,17 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-    //$("#datatable").dataTable();
-
-        $("#datatable").dataTable({
-            columnDefs: [
-                {orderable: false, targets: 4}
-            ],
-            language: $datatableBR,
+    $("#datatable").dataTable({
+            "columns": [
+                null,
+                null,
+                {
+                    "type": "date"
+                },                {
+                    "type": "date"
+                },
+                null
+            ]
         });
-
 </script>
 @endsection

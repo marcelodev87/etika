@@ -54,7 +54,7 @@ class ClientPersona extends Model
             $a .= ' - ' . $address->complement . '';
         }
 
-        $a .= ' - ' . $address->neighborhood . ' - ' . $address->city . ' - ' . $address->state . ' - ' . $address->zip;
+        $a .= ' - ' . $address->neighborhood . ' - ' . $address->city . ' - ' . $address->state . ' - CEP: ' . $address->zip;
 
         return $a;
     }

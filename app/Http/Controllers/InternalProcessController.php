@@ -60,7 +60,7 @@ class InternalProcessController extends Controller
     public function edit(InternalProcess $internalProcess)
     {
         $attached = $internalProcess->tasks()->pluck('id');
-        $tasks = InternalTask::whereNotIn('id', $attached)->orderBy('name')->get();
+        $tasks = InternalTask::whereNotIn('id', $attached)->get();
         return view('processes.edit', compact('internalProcess', 'tasks'));
     }
 
