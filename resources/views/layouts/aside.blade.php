@@ -12,13 +12,13 @@
         {{-- Sidebar Menu --}}
         <ul class="sidebar-menu tree" data-widget="tree">
 
-            @if(auth()->user()->hasAnyRole(['adm']))
             <li class="header dark-bg">Módulos</li>
             <li>
                 <a href="{!! route('app.processes.index') !!}">
                     <i class="fa fa-clipboard-check"></i> <span>Processos</span>
                 </a>
             </li>
+            @if(auth()->user()->hasAnyRole(['adm']))
             <li>
                 <a href="{!! route('app.tasks.index') !!}">
                     <i class="fa fa-check-circle"></i> <span>Tarefas</span>
