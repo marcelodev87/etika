@@ -143,7 +143,7 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
 
     # rota de processos internos
     Route::group(['prefix' => 'processos', 'as' => 'processes.'], function () {
-        Route::get('', ['uses' => 'InternalProcessController@index', 'as' => 'index', 'roles' => ['adm', 'usr']]);
+        Route::get('', ['uses' => 'InternalProcessController@index', 'as' => 'index'/* , 'roles' => ['adm', 'usr'] */]);
         Route::get('/adicionar', ['uses' => 'InternalProcessController@create', 'as' => 'create', 'roles' => ['adm', 'usr']]);
         Route::post('/', ['uses' => 'InternalProcessController@store', 'as' => 'store', 'roles' => ['adm', 'usr']]);
         Route::get('/{internalProcess}/editar', ['uses' => 'InternalProcessController@edit', 'as' => 'edit', 'roles' => ['adm', 'usr']]);
