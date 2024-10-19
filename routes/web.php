@@ -233,6 +233,20 @@ Route::group(['as' => 'app.', 'middleware' => ['auth', 'role']], function () {
         });
         Route::group(['prefix' => 'widgets', 'as' => 'widgets.'], function () {
             Route::get('clients-registred', ['uses' => 'WidgetController@clientsRegistred', 'as' => 'clientsRegistred']);
+            Route::get('new-processes', ['uses' => 'WidgetController@newProcesses', 'as' => 'newProcesses']);
+            Route::get('closed-processes', ['uses' => 'WidgetController@closedProcesses', 'as' => 'closedProcesses']);
+            Route::get('closed-processes-30', ['uses' => 'WidgetController@closedProcesses30', 'as' => 'closedProcesses30']);
+            Route::get('new-clients-subscription', ['uses' => 'WidgetController@newClientsSubscription', 'as' => 'newClientsSubscription']);
+            Route::get('expired-terms', ['uses' => 'WidgetController@expiredTerms', 'as' => 'expiredTerms']);
+            Route::get('digital-certificate', ['uses' => 'WidgetController@digitalCertificate', 'as' => 'digitalCertificate']);
+            Route::get('lawyer-signature', ['uses' => 'WidgetController@lawyerSignature', 'as' => 'lawyerSignature']);
+            Route::get('sent-processes', ['uses' => 'WidgetController@sentProcesses', 'as' => 'sentProcesses']);
+            Route::get('pending-tasks', ['uses' => 'WidgetController@pendingTasks', 'as' => 'pendingTasks']);
+            Route::get('pending-tasks-subscription', ['uses' => 'WidgetController@pendingTasksSubscription', 'as' => 'pendingTasksSubscription']);
+            Route::get('processes-payments', ['uses' => 'WidgetController@processesPayments', 'as' => 'processesPayments']);
+            Route::get('processes-payments-value', ['uses' => 'WidgetController@processesPaymentsValue', 'as' => 'processesPaymentsValue']);
+            Route::get('subscription-payments', ['uses' => 'WidgetController@subscriptionPayments', 'as' => 'subscriptionPayments']);
+            Route::get('subscription-payments-value', ['uses' => 'WidgetController@subscriptionPaymentsValue', 'as' => 'subscriptionPaymentsValue']);
         });
     });
 
