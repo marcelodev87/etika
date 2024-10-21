@@ -18,7 +18,7 @@ class RelatorioController extends Controller
 
     public function processoFechado()
     {
-        $processos = ClientProcess::where('closed', 1)->get();
+        $processos = ClientProcess::where('closed', 1)->with('tasks')->get();
         return view('relatorios.processosFechados', compact('processos'));
     }
 
@@ -83,10 +83,9 @@ class RelatorioController extends Controller
                 'responsible_id' => $t->user_id
             ];
             array_push($tarefas, $arr);
-
         }
 
-        return view('relatorios.tarefa', compact('tarefas','type'));
+        return view('relatorios.tarefa', compact('tarefas', 'type'));
     }
 
     public function tarefaFechada()
@@ -144,7 +143,6 @@ class RelatorioController extends Controller
                 'responsible_id' => $t->user_id
             ];
             array_push($tarefas, $arr);
-
         }
 
         return view('relatorios.tarefa', compact('tarefas', 'type'));
