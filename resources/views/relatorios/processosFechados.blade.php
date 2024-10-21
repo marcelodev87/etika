@@ -40,8 +40,11 @@
                     </a>
                 </td>
                 <td>{{ $processo->created_at->format('d/m/Y') }}</td>
+                @php
+                $latestTask = $processo->tasks->sortByDesc('end_at')->first();
+                @endphp
                 <td>
-                    {{ date('d/m/Y', strtotime($processo->tasks->sortByDesc('end_at')->first()->end_at)) }}
+                    {{ $latestTask ? date('d/m/Y', strtotime($latestTask->end_at)) : 'N/A' }}
                 </td>
                 <td class="text-right">
                     <button type="button" class="btn btn-xs btn-success"
